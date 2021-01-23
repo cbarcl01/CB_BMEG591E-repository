@@ -445,7 +445,7 @@ Now, we will make use of **samtools** to review some basic features of the align
 
 I ran the following commands (-F for mapped, -f for unmapped), then divided the output by 2 to account for forward and reverse strands
 
-```{bash, EVAL=FALSE}
+```{bash, eval=FALSE}
 samtools view -c -F 4 eg3.sam
 samtools view -c -f 4 eg3.sam
 ```
