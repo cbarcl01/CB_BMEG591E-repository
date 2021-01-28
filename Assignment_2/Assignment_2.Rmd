@@ -1,0 +1,360 @@
+---
+title: "BMEG 400E: Assignment 2"
+output:
+  html_document:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Assignment Overview 
+
+The goal of this assignment is to demonstrate the process of creating a pipeline. For this, we will be analyzing the data from the  research article (*https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7772509/*) by Choi, Won-Young, et al. (2020). 
+
+This work was a pair assignment been Sean Okawa and Charlotte Barlay.
+
+For reference all fastq files are paired-end and can be found under the following path:**/usr/local/share/data/assignment_2/**. 
+
+For iPSC:
+
+  - Input for iPSC: *input_iPSC_SRA66_subset_1.fastq.gz* and *input_iPSC_SRA66_subset_2.fastq.gz*
+
+  - H3K27me3 for iPSC: *H3K27me3_iPSC_SRA60_subset_1.fastq.gz* and *H3K27me3_iPSC_SRA60_subset_2.fastq.gz*
+
+
+
+  a. Analyze the reads quality: fastqc (*https://www.bioinformatics.babraham.ac.uk/projects/fastqc/*)
+
+
+  b. Mapping the reads to the genome: bowtie2 (*http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml*)
+  
+  
+  c. Convert sam to bam files: samtools (**)
+
+
+  d. Sort the alignment files by genomic position: sambamba (*https://lomereiter.github.io/sambamba/docs/sambamba-view.html*)
+
+
+  e. Filter for uniquely mapped reads: sambamba 
+
+
+**This assignment has 3 main goals:**
+
+  1. To go through *steps a-e* for the **input data**
+
+
+  2. To create a pipeline that does a-e automatically for the **H3K27me3 data**
+
+
+## 0. Getting the right tools 
+
+### Install conda
+
+The tools fastqc, bowtie2 and samtools have been previously loaded into the conda environment (called Gnme_Assignment_1), using the following code
+
+```{bash, eval=FALSE}
+conda install fastqc
+conda install bowtie2
+conda config --add channels bioconda
+conda config --add channels conda-forge
+conda install Gnme_Assignment_1 samtools==1.11
+```
+
+### Install sambamba 1pt
+```{bash, eval=FALSE}
+conda install -c bioconda sambamba
+```
+
+
+## 1. Analyzing ChIP-seq data 
+
+### a. Quality Controls
+
+#### i) The code 0.5 pt
+
+The following code utilises the fastqc tool to do a quality check of the sequence data, first activating the conda environment
+
+```{bash, eval=FALSE}
+conda activate Gnme_Assignment_1  # activate the conda environment
+cd /usr/local/share/data/assignment_2 # navigate to the subdirectory with the files for this assignment
+fastqc *fastq.gz -o /home/cbarcl01 # run fastqc on all fastq.gz 
+```
+
+
+#### ii) Copy html output to your computer, what are the differences between read 1 and read 2?
+
+The following code was used for a windows machine
+```{bash, eval=FALSE}
+C:\Users\cbarc>pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/input_iPSC_SRA66_subset_2_fastqc.html C:\Users\cbarc\OneDrive\Desktop
+
+C:\Users\cbarc>pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/input_iPSC_SRA66_subset_1_fastqc.html C:\Users\cbarc\OneDrive\Desktop
+```
+
+The following code was used for a mac machine
+```{bash, eval=FALSE}
+cp seanokawa@gi-edu-sv4.bme.ubc.ca:/home/seanokawa/assign1_so/input_iPSC_SRA66_subset_1_fastqc.html /Users/sokawa
+
+cp seanokawa@gi-edu-sv4.bme.ubc.ca:/home/seanokawa/assign1_so/input_iPSC_SRA66_subset_2_fastqc.html /Users/sokawa
+```
+
+### b. Mapping to the reference genome
+
+The following code was used to align the reads to the reference genome hg38:
+
+```{bash, eval=FALSE}
+bowtie2 -x /usr/local/share/indexes/hg38_bowtie2_index \ -1 /usr/local/share/data/assignment_2/input_iPSC_SRA66_subset_1.fastq.gz \ -2 /u         sr/local/share/data/assignment_2/input_iPSC_SRA66_subset_2.fastq.gz \ -S /home/cbarcl01/alignment.sam
+```
+
+
+**Per base sequence quality outputs**
+
+![Per base sequence quality for iPSC SRA66 subset 1 1](C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_2\Per_base_seq_quality_iPSC_SRA66_subset_1.jpg){#id .class width=75% height=75%}
+
+
+![Per base sequence quality for iPSC SRA66 subset 2](C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_2\Per_base_seq_quality_iPSC_SRA66_subset_2.jpg){#id .class width=75% height=75%}
+
+
+### c. Sam to Bam file convertion 
+
+
+The code below was run to convert .sam to .bam and the head command was used to double check the first few lines of data
+
+```{bash, eval=FALSE}
+samtools view -S -b -h alignment.sam > Alignment.bam #to convert sam file to bam file
+samtools view Alignment.bam | head # to check first few lines of bam file
+```
+
+
+### d. Bam indexing and sorting 
+
+```{bash, eval=FALSE}
+samtools view Alignment.bam | cut -f1,3,4 | head -5 #shows the first 5 reads in the file
+#SRR12694366.1000000     chr3    46631700
+#SRR12694366.1000000     chr3    46631857
+#SRR12694366.10000029    chr3    77719001
+#SRR12694366.10000029    chr3    77718984
+#SRR12694366.10000035    chr3    40015576
+```
+
+
+```{bash, eval=FALSE}
+sambamba sort Alignment.bam -o Alignment.sorted.bam #sorts the reads
+```
+
+
+#### View the read ID, chromosome, and genomic position for the first 5 reads, as before, but this time for the sorted bam file you just made.
+
+```{bash, eval=FALSE}
+samtools view Alignment.sorted.bam | cut -f1,3,4 | head -5
+#SRR12694366.7794671     chr12   133198776
+#SRR12694366.7794671     chr12   133198776
+#SRR12694366.26500791    chr3    9988
+#SRR12694366.33624963    chr3    10013
+#SRR12694366.33624963    chr3    10013
+```
+
+#### What changed?
+
+In the unsorted .bam file, the reads appear to be arranged in read_id order whereas after the sort they are arranged by genomic position.
+
+
+### e. Keep only uniquely mapped reads 
+
+Next, we want to create a version of the BAM file that contains only uniquely mapping reads.
+
+#### i) Filter the recently sorted bam file (previous step output) to include only uniquely mapped reads - 1 pt
+
+```{bash, eval=FALSE}
+sambamba view -h -F "[XS] == null and not unmapped and not duplicate"  Alignment.sorted.bam -o unique_mapped.bam
+```
+
+#### ii) How many reads were there before filtering for uniquely mapped reads? How many are there now? 
+
+The total number of reads (pre filtering for unique mapped reads only) was:
+
+```{bash, eval=FALSE}
+samtools view -c Alignment.sorted.bam
+```
+
+**Output** 4444490
+
+
+Filtering for total unique mapped reads only:
+
+```{bash, eval=FALSE}
+samtools view -c -F 4 unique_mapped.bam
+```
+
+**Output**: 3859882
+
+
+
+## 2. Implementing a pipeline 
+
+
+### a. Make a task list
+
+Start by making a tab delimited file with three columns: sampleID, fastqFile1, fastqFile2
+A sample first line is included here:
+```{}
+iPSC_input  input_iPSC_SRA66_subset_1.fastq.gz  input_iPSC_SRA66_subset_2.fastq.gz
+```
+This will be the list of tasks you want to accomplish. 
+
+### b. Working with a "job scheduler"
+
+#### i) download file from github
+
+```{bash, eval=FALSE}
+wget https://raw.githubusercontent.com/BMEGGenoInfo/Assignments/main/Assignment_2/runTheseJobsSerially.sh
+```
+
+#### ii) give script name
+
+```{bash, eval=FALSE}
+chmod +x runTheseJobsSerially.sh
+```
+  
+#### iii) run jobs serially
+
+```{bash, eval=FALSE}
+./runTheseJobsSerially.sh echo taskfile.tsv
+```
+
+
+### c. Your first pipeline
+
+Now we want to make a script that will run all the commands you performed above (in Q1), but for any of the samples. Below is a script which you can copy into a new file "fastqToFilteredBam.sh", which you will modify to include all the steps needed to go from a fastq to a sorted, filtered (uniquely mapping only) bam file.
+
+#### i) Open vim
+```{bash, eval=FALSE}
+#!/bin/bash
+set -e # this makes the whole script exit on any error.
+sample=$1
+fq1=$2
+fq2=$3
+logDir=MyLogDirectory # this is where all the files to keep track of progress will go.
+mkdir -p MyLogDirectory # make the directory where log files will go, if it doesn't exist already
+echo running pipeline for $sample
+if [ ! -e $logDir/$sample.fastqc.done ] #run this code only if $logDir/$sample.fastqc.done is missing
+then
+        echo Performing fastqc of sample $sample with the following fastqs:
+        ls /usr/local/share/data/assignment_2/$fq1 /usr/local/share/data/assignment_2/$fq2
+        
+        fastqc /usr/local/share/data/assignment_2/$fq1 -o
+        fastqc /usr/local/share/data/assignment_2/$fq1 -o
+        
+        bowtie2 -x /usr/local/share/indexes/hg38_bowtie2_index -1 /usr/local/share/data/assignment_2/input_iPSC_SRA66_subset_1.fastq.gz \ -2 /u         sr/local/share/data/assignment_2/input_iPSC_SRA66_subset_2.fastq.gz \ -S /home/cbarcl01/alignment.sam
+        
+        touch $logDir/$sample.fastqc.done #create the file that we were looking for at the beginning of this if statement so that this same code is not run next time
+else # $logDir/$sample.fastqc.done was not missing
+        echo Already performed fastqc of $sample
+fi
+#here is where you will be including the additional steps to take you from fastq.gz to sorted BAM containing only uniquely mapping reads.
+```
+
+Save the .sh file and exit vim:
+
+```{}
+:wq fastqToFilteredBam.sh
+```
+
+
+#### iii) Run the jobs serially - what happened?
+
+After saving fastqToFilteredBam.sh using vim, the following code was used:
+
+```{bash, eval=FALSE}
+./runTheseJobsSerially.sh ./fastqToFilteredBam.sh taskfile.tsv
+```
+
+The pipeline ran through the following stages (as stipulated in the pipeline) for the files given in the taskfile.tsv:
+* alignment
+* map to reference genome hg38
+* convert sam to bam
+* filter for mapped unique reads only
+
+
+#### iv) Run the pipeline again - what happened?
+
+Running the pipeline a second time results in no changes as the pipeline checks against existing files. If present the pipeline does not need to run again and moves to the next stage. As all stages have completed the pipeline completes with no changes made.
+
+
+```{bash, eval=FALSE}
+#?# What can you do to make it run the same way as it did the first time? Answer below with the command(s) that would make it run the same way as the first time - 2 pts
+```
+
+#### v) 
+
+There is a section in the pipeline that will only run if the fastqc is missing: 
+
+```{bash, eval=FALSE}
+if [ ! -e $logDir/$sample.fastqc.done ] #run this code only if $logDir/$sample.fastqc.done is missing
+```
+
+In order to get this to run again, we need to remove the fastq.gz files from the directory:
+
+```{bash, eval=FALSE}
+rm ./$sample.fastqc.done
+```
+
+
+### d. Filling in the pipeline
+
+The pipeline below should take files from fastq to sorted, uniquely mapping BAM file. There are added 'echo' code.
+
+You should test this script by running it on the two samples (iPSC input, and iPSC ChIP). 
+
+```{bash, eval=FALSE}
+## Test the script by running this, with your modified pipeline script in place of fastqToFilteredBam.sh
+./runTheseJobsSerially.sh ./fastqToFilteredBam.sh task_file
+```
+
+When you are done, enter the code for your pipeline in the space provided below - 10 pts
+```{bash, eval=FALSE}
+#fill these variables with the arguments given to this script
+sample=$1
+fq1=$2
+fq2=$3
+logDir=MyLogDirectory # this is where all the files to keep track of progress will go.
+path="$PWD"
+mkdir -p MyLogDirectory # make the directory where log files will go, if it doesn't exist already
+echo running pipeline for $sample
+if [ ! -e $logDir/$sample.fastqc.done ] #run this code only if $logDir/$sample.fastqc.done is missing
+then
+        echo Performing fastqc of sample $sample with the following fastqs:
+        ls /usr/local/share/data/assignment_2/$fq1 /usr/local/share/data/assignment_2/$fq2
+
+        #enter commands to run fastqc here
+        fastqc /usr/local/share/data/assignment_2/$fq1 -o $logDir/
+        fastqc /usr/local/share/data/assignment_2/$fq2 -o $logDir/
+
+        #Alignment command here
+        echo Performing alignment  of sample $sample with hg38 index:
+
+        bowtie2 -x /usr/local/share/indexes/hg38_bowtie2_index -1 /usr/local/share/data/assignment_2/input_iPSC_SRA66_subset_1.fastq.gz -2 /usr/local/share/data/assignment_2/input_iPSC_SRA66_subset_2.fastq.gz -S $path/$logDir/$sample.sam
+        #SAM to BMA conversion command
+        echo Converting sam file to bam file
+        samtools view -S -b $path/$logDir/$sample.sam -o $path/$logDir/$sample.bam
+        #Sort command
+        echo Sorting BAM file by Genomic Location
+        sambamba sort $path/$logDir/$sample.bam $path/$logDir/$sample.sorted.bam
+        #Filter for only unique mapped reads
+        echo Filtering reads by removing duplicates and include only mapped reads
+        sambamba view -h -F "[XS] == null and not unmapped and not duplicate" $path/$logDir/$sample.sorted.bam -o $path/$logDir/$sample.sorted.unique_map.bamm
+        #Number of reads before and after filter
+        
+        echo Number of reads before filter
+        samtools view -c $path/$logDir/$sample.bam
+        echo Number of reads after filter
+        samtools view -c $path/$logDir/$sample.sorted.unique_map.bam
+
+
+       touch $logDir/$sample.fastqc.done #create the file that we were looking for at the beginning of this if statement so that this same code is not run next time
+else # $logDir/$sample.fastqc.done was not missing
+        echo Already performed fastqc of $sample
+fi
+```
+l
