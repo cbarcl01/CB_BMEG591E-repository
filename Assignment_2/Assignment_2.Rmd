@@ -113,7 +113,9 @@ bowtie2 -x /usr/local/share/indexes/hg38_bowtie2_index \ -1 /usr/local/share/dat
 ![Per base sequence quality for iPSC SRA66 subset 1 1](C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_2\Per_base_seq_quality_iPSC_SRA66_subset_1.jpg){#id .class width=75% height=75%}
 
 
-![Per base sequence quality for iPSC SRA66 subset 2](C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_2\Per_base_seq_quality_iPSC_SRA66_subset_2.jpg){#id .class width=75% height=75%}
+![Per base sequence quality for iPSC SRA66 subset 2 2](C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_2\Per_base_seq_quality_iPSC_SRA66_subset_2.jpg){#id .class width=75% height=75%}
+
+From the .html output, read 1 seems to have slightly better read quality than read 2. The files pass quality checks although the GC content is slightly higher.
 
 
 ### c. Sam to Bam file convertion 
