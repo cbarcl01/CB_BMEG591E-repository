@@ -288,7 +288,7 @@ Running the pipeline a second time results in no changes as the pipeline checks 
 #?# What can you do to make it run the same way as it did the first time? Answer below with the command(s) that would make it run the same way as the first time - 2 pts
 ```
 
-#### v) 
+#### v) How to run the pipeline as it did in step iii
 
 There is a section in the pipeline that will only run if the fastqc is missing: 
 
@@ -311,7 +311,7 @@ You should test this script by running it on the two samples (iPSC input, and iP
 
 ```{bash, eval=FALSE}
 ## Test the script by running this, with your modified pipeline script in place of fastqToFilteredBam.sh
-./runTheseJobsSerially.sh ./fastqToFilteredBam.sh task_file
+./runTheseJobsSerially.sh ./fastqToFilteredBam.sh taskfile.tsv
 ```
 
 #### i) Enter the code for your pipeline - 10 pts
