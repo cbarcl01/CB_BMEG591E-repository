@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 The goal of this assignment is to demonstrate the process of creating a pipeline. For this, we will be analyzing the data from the  research article (*https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7772509/*) by Choi, Won-Young, et al. (2020). 
 
-This work was a pair assignment been Sean Okawa and Charlotte Barlay.
+This work was a pair assignment between **Sean Okawa** and **Charlotte Barclay**.
 
 For reference all fastq files are paired-end and can be found under the following path:**/usr/local/share/data/assignment_2/**. 
 
@@ -312,7 +312,8 @@ You should test this script by running it on the two samples (iPSC input, and iP
 ./runTheseJobsSerially.sh ./fastqToFilteredBam.sh task_file
 ```
 
-When you are done, enter the code for your pipeline in the space provided below - 10 pts
+#### i) Enter the code for your pipeline - 10 pts
+
 ```{bash, eval=FALSE}
 #fill these variables with the arguments given to this script
 sample=$1
@@ -335,7 +336,7 @@ then
         echo Performing alignment  of sample $sample with hg38 index:
 
         bowtie2 -x /usr/local/share/indexes/hg38_bowtie2_index -1 /usr/local/share/data/assignment_2/input_iPSC_SRA66_subset_1.fastq.gz -2 /usr/local/share/data/assignment_2/input_iPSC_SRA66_subset_2.fastq.gz -S $path/$logDir/$sample.sam
-        #SAM to BMA conversion command
+        #SAM to BAM conversion command
         echo Converting sam file to bam file
         samtools view -S -b $path/$logDir/$sample.sam -o $path/$logDir/$sample.bam
         #Sort command
@@ -343,7 +344,7 @@ then
         sambamba sort $path/$logDir/$sample.bam $path/$logDir/$sample.sorted.bam
         #Filter for only unique mapped reads
         echo Filtering reads by removing duplicates and include only mapped reads
-        sambamba view -h -F "[XS] == null and not unmapped and not duplicate" $path/$logDir/$sample.sorted.bam -o $path/$logDir/$sample.sorted.unique_map.bamm
+        sambamba view -h -F "[XS] == null and not unmapped and not duplicate" $path/$logDir/$sample.sorted.bam -o $path/$logDir/$sample.sorted.unique_map.bam
         #Number of reads before and after filter
         
         echo Number of reads before filter
@@ -357,4 +358,9 @@ else # $logDir/$sample.fastqc.done was not missing
         echo Already performed fastqc of $sample
 fi
 ```
-l
+
+
+#### ii) Run through the newly created pipeline for iPSC ChIP
+
+First we identified a new 'taskfile', which contained the iPSC ChIP information. We then ran this pipeline with our new taskfile and got the following output:
+

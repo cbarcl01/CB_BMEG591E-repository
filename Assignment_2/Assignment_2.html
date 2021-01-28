@@ -402,7 +402,7 @@ summary {
 <div id="assignment-overview" class="section level1">
 <h1>Assignment Overview</h1>
 <p>The goal of this assignment is to demonstrate the process of creating a pipeline. For this, we will be analyzing the data from the research article (<em><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7772509/" class="uri">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7772509/</a></em>) by Choi, Won-Young, et al. (2020).</p>
-<p>This work was a pair assignment been Sean Okawa and Charlotte Barlay.</p>
+<p>This work was a pair assignment between <strong>Sean Okawa</strong> and <strong>Charlotte Barclay</strong>.</p>
 <p>For reference all fastq files are paired-end and can be found under the following path:<strong>/usr/local/share/data/assignment_2/</strong>.</p>
 <p>For iPSC:</p>
 <ul>
@@ -455,7 +455,9 @@ fastqc *fastq.gz -o /home/cbarcl01 # run fastqc on all fastq.gz </code></pre>
 
 C:\Users\cbarc&gt;pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/input_iPSC_SRA66_subset_1_fastqc.html C:\Users\cbarc\OneDrive\Desktop</code></pre>
 <p>The following code was used for a mac machine</p>
-<pre class="bash"><code></code></pre>
+<pre class="bash"><code>cp seanokawa@gi-edu-sv4.bme.ubc.ca:/home/seanokawa/assign1_so/input_iPSC_SRA66_subset_1_fastqc.html /Users/sokawa
+
+cp seanokawa@gi-edu-sv4.bme.ubc.ca:/home/seanokawa/assign1_so/input_iPSC_SRA66_subset_2_fastqc.html /Users/sokawa</code></pre>
 </div>
 </div>
 <div id="b.-mapping-to-the-reference-genome" class="section level3">
@@ -598,7 +600,8 @@ fi
 <p>You should test this script by running it on the two samples (iPSC input, and iPSC ChIP).</p>
 <pre class="bash"><code>## Test the script by running this, with your modified pipeline script in place of fastqToFilteredBam.sh
 ./runTheseJobsSerially.sh ./fastqToFilteredBam.sh task_file</code></pre>
-<p>When you are done, enter the code for your pipeline in the space provided below - 10 pts</p>
+<div id="i-enter-the-code-for-your-pipeline---10-pts" class="section level4">
+<h4>i) Enter the code for your pipeline - 10 pts</h4>
 <pre class="bash"><code>#fill these variables with the arguments given to this script
 sample=$1
 fq1=$2
@@ -620,7 +623,7 @@ then
         echo Performing alignment  of sample $sample with hg38 index:
 
         bowtie2 -x /usr/local/share/indexes/hg38_bowtie2_index -1 /usr/local/share/data/assignment_2/input_iPSC_SRA66_subset_1.fastq.gz -2 /usr/local/share/data/assignment_2/input_iPSC_SRA66_subset_2.fastq.gz -S $path/$logDir/$sample.sam
-        #SAM to BMA conversion command
+        #SAM to BAM conversion command
         echo Converting sam file to bam file
         samtools view -S -b $path/$logDir/$sample.sam -o $path/$logDir/$sample.bam
         #Sort command
@@ -628,7 +631,7 @@ then
         sambamba sort $path/$logDir/$sample.bam $path/$logDir/$sample.sorted.bam
         #Filter for only unique mapped reads
         echo Filtering reads by removing duplicates and include only mapped reads
-        sambamba view -h -F &quot;[XS] == null and not unmapped and not duplicate&quot; $path/$logDir/$sample.sorted.bam -o $path/$logDir/$sample.sorted.unique_map.bamm
+        sambamba view -h -F &quot;[XS] == null and not unmapped and not duplicate&quot; $path/$logDir/$sample.sorted.bam -o $path/$logDir/$sample.sorted.unique_map.bam
         #Number of reads before and after filter
         
         echo Number of reads before filter
@@ -640,7 +643,11 @@ then
 else # $logDir/$sample.fastqc.done was not missing
         echo Already performed fastqc of $sample
 fi</code></pre>
-<p>l</p>
+</div>
+<div id="ii-run-through-the-newly-created-pipeline-for-ipsc-chip" class="section level4">
+<h4>ii) Run through the newly created pipeline for iPSC ChIP</h4>
+<p>First we identified a new ‘taskfile’, which contained the iPSC ChIP information. We then ran this pipeline with our new taskfile and got the following output:</p>
+</div>
 </div>
 </div>
 </div>
