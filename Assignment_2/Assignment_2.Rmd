@@ -99,14 +99,6 @@ cp seanokawa@gi-edu-sv4.bme.ubc.ca:/home/seanokawa/assign1_so/input_iPSC_SRA66_s
 cp seanokawa@gi-edu-sv4.bme.ubc.ca:/home/seanokawa/assign1_so/input_iPSC_SRA66_subset_2_fastqc.html /Users/sokawa
 ```
 
-### b. Mapping to the reference genome
-
-The following code was used to align the reads to the reference genome hg38:
-
-```{bash, eval=FALSE}
-bowtie2 -x /usr/local/share/indexes/hg38_bowtie2_index \ -1 /usr/local/share/data/assignment_2/input_iPSC_SRA66_subset_1.fastq.gz \ -2 /u         sr/local/share/data/assignment_2/input_iPSC_SRA66_subset_2.fastq.gz \ -S /home/cbarcl01/alignment.sam
-```
-
 
 **Per base sequence quality outputs**
 
@@ -116,6 +108,16 @@ bowtie2 -x /usr/local/share/indexes/hg38_bowtie2_index \ -1 /usr/local/share/dat
 ![Per base sequence quality for iPSC SRA66 subset 2 2](C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_2\Per_base_seq_quality_iPSC_SRA66_subset_2.jpg){#id .class width=75% height=75%}
 
 From the .html output, read 1 seems to have slightly better read quality than read 2. The files pass quality checks although the GC content is slightly higher.
+
+
+### b. Mapping to the reference genome
+
+The following code was used to align the reads to the reference genome hg38:
+
+```{bash, eval=FALSE}
+bowtie2 -x /usr/local/share/indexes/hg38_bowtie2_index \ -1 /usr/local/share/data/assignment_2/input_iPSC_SRA66_subset_1.fastq.gz \ -2 /u         sr/local/share/data/assignment_2/input_iPSC_SRA66_subset_2.fastq.gz \ -S /home/cbarcl01/alignment.sam
+```
+
 
 
 ### c. Sam to Bam file convertion 
@@ -146,7 +148,7 @@ sambamba sort Alignment.bam -o Alignment.sorted.bam #sorts the reads
 ```
 
 
-#### View the read ID, chromosome, and genomic position for the first 5 reads, as before, but this time for the sorted bam file you just made.
+#### i) View the read ID, chromosome, and genomic position for the first 5 reads, as before, but this time for the sorted bam file you just made.
 
 ```{bash, eval=FALSE}
 samtools view Alignment.sorted.bam | cut -f1,3,4 | head -5
@@ -157,7 +159,7 @@ samtools view Alignment.sorted.bam | cut -f1,3,4 | head -5
 #SRR12694366.33624963    chr3    10013
 ```
 
-#### What changed?
+#### ii) What changed?
 
 In the unsorted .bam file, the reads appear to be arranged in read_id order whereas after the sort they are arranged by genomic position.
 
