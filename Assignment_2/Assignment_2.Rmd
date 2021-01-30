@@ -337,7 +337,7 @@ then
         #Alignment command here
         echo Performing alignment  of sample $sample with hg38 index:
 
-        bowtie2 -x /usr/local/share/indexes/hg38_bowtie2_index -1 /usr/local/share/data/assignment_2/input_iPSC_SRA66_subset_1.fastq.gz -2 /usr/local/share/data/assignment_2/input_iPSC_SRA66_subset_2.fastq.gz -S $path/$logDir/$sample.sam
+        bowtie2 -x /usr/local/share/indexes/hg38_bowtie2_index -1 /usr/local/share/data/assignment_2/$fq1 -2 /usr/local/share/data/assignment_2/$fq2 -S $path/$logDir/$sample.sam
         #SAM to BAM conversion command
         echo Converting sam file to bam file
         samtools view -S -b $path/$logDir/$sample.sam -o $path/$logDir/$sample.bam
@@ -364,5 +364,6 @@ fi
 
 #### ii) Run through the newly created pipeline for iPSC ChIP
 
-First we identified a new 'taskfile', which contained the iPSC ChIP information. We then ran this pipeline with our new taskfile and got the following output:
+First we identified a new 'taskfile', which contained the iPSC ChIP information. We then ran this pipeline with our new taskfile.
+
 
