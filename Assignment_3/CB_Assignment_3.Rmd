@@ -1,0 +1,187 @@
+---
+title: "Assignment 3: Mappability"
+output:
+  html_document:
+    toc: true
+    toc_depth: 4
+    toc_float: true
+    code_folding: hide
+---
+
+
+The data is located under the */usr/local/share/data/assignment_3/* path (unless otherwise specified). 
+
+The deliverable for this assignment will be both the Rmd file (this one, with your answers added). And the same being `knit` into an html. You will submit both Rmd and html. 
+
+
+## 0. Getting ready 0.5pt
+
+### a. Activate conda environment
+
+```{bash, eval=FALSE}
+conda activate Gnme_Assignment_1
+```
+
+Note: I didn't realise we would use the same environment the whole time when we set up the conda environment in assignment 1, hence the name 'Gnme_Assignment_1' :)
+
+### b. Install trimmomatic
+
+```{bash, eval=FALSE}
+ conda install -c bioconda trimmomatic
+```
+
+
+## 1. Sequencing parameters
+
+There are two main things that you want further clarification on before telling your Professor how do you want to do the next sequence run: appropriate sequence length and run type (paired-end or single-end). You have reviewed some of these concepts in class and you have a vague notion of what you should use, but after the traumatic event of losing all your data, you won't take any chances and decide to make sure that what you learned in class is right.
+
+
+### a. Sequence length
+
+You have decided that you want to see the percentage of uniquely mapped reads when you use different read lengths. 
+
+Use **ONLY** the **H3K27me3_iPSC_SRA60_subset_1.fastq.gz** file from your last assignment located in **/usr/local/share/data/assignment_2/ ** in the course server. 
+
+#### i) Use trimmomatic SE to crop the file to 25 bp in length 1 pt
+
+```{bash, eval=FALSE}
+#?# Use trimmomatic SE to crop the file down to 25 bp in length, type the command you use below - 1 pt
+## Note: Remember to gzip all your files! Look into the trimmomatic documentation for how to specify to compress your output
+```
+
+
+#### ii) Map 25 bp read file to reference genome 0.5 pt
+
+```{bash, eval=FALSE}
+#?# Use bowtie2 to map the _25bp_ read file you just created to the reference genome, type the command you use below: - 0.5 pt
+```
+
+#### iii) Number of uniquely mapped reads 0.5 pt
+
+```{bash, eval=FALSE}
+#?# Use sambamba view to get the number of uniquely mapped reads of the alignment output you got above,type the command you use below: - 0.5 pt
+## NOTE: Remember to use the following flag:
+## -F "[XS] == null and not unmapped and not duplicate"
+## Tip: Check for the sambamba documentation for options that will allow you to use the sam file as an input and automatically count the number of reads.
+```
+
+#### iv) Create a pipeline 5 pts
+
+**Pipeline (3pts)** 
+You realize that if you want to consider many different read lengths, copying and pasting the above for each read length will be very repetitive work and prone to bugs. Thus, you decide to use your recently acquired knowledge of pipelines to create a mini version of it that will take as input the desired read length, and output the number of uniquely mapped reads when reads of this length have been mapped to the genome. 
+
+```{bash, eval=FALSE}
+## The following files have already been trimmed and aligned against the hg38 genome build, and can be found here: /usr/local/share/data/assignment_3/
+## H3K27me3_iPSC_SRA60_subset_1_LEN_150_mapped.bam 
+## H3K27me3_iPSC_SRA60_subset_1_LEN_100_mapped.bam
+## H3K27me3_iPSC_SRA60_subset_1_LEN_75_mapped.bam
+## H3K27me3_iPSC_SRA60_subset_1_LEN_50_mapped.bam
+### Create a mini pipeline that uses sambamba view to get the number of uniquely mapped reads for the files above, plus the 25bp length file you created for the previous question.
+#?# Type the code of your mini pipeline below: - 3 pt
+## You do not need to build in robustness to failure here since only one command is run with a single numerical output (so it would be hard to miss a failed run). 
+## Have the pipeline also state the read length being considered before displaying the number of uniquely mapping reads.
+```
+
+**Job scheduler (1.5pt)**
+```{bash, eval=FALSE}
+## Copy the job scheduler simulator used for last assignment: *runTheseJobsSerially.sh* to the directory you are using to work on this assignment (working directory)
+## Substitute from the line below:
+## <your_mini_pipeline> with the name you gave the pipeline you created on the previous question
+## <your_taskfile> with a taskfile that includes the tasks you want to perform 
+./runTheseJobsSerially.sh <your_mini_pipeline> <your_taskfile>
+
+#?# Type the substituted line you used below: - 1.5 pt 
+```
+
+
+**Taskfile (0.5pt)**
+```{bash, eval=FALSE}
+#?# Type the content of your taskfile below: - 0.5 pt 
+```
+
+
+
+Now that you have the number of uniquely mapped reads for the different reads size, you want to make a nice graph to show your supervisor you know what you are talking about when you say the sequence length has an effect on the number of uniquely mapped reads. **On your local computer**:
+
+```{r, eval=FALSE}
+## First, we create a dataframe with two columns, one (reads_length) for the different read lengths and another (uniquely_mapped_reads for the number of uniquely mapped reads
+#?# Substitute the sequence lengths with their respective number of uniquely mapped reads, that you got from sambamba view: - 1 pt
+length_mapped_reads.df <- data.frame(reads_length=c(150,100,75,50,25),
+                          uniquely_mapped_reads=c(X,X,X,X,X))## Here
+
+
+## If you don't have it already, install the "ggplot2" package on your Rstudio 
+## Go to packages on the bottom left part of the screen --> install --> type: ggplot2
+## Accept to install the required dependencies :) 
+                    
+#?# Create a scatterplot using ggplot2 - 2 pt
+## Use the reads_length for the x axis, uniquely_mapped_reads for the y axis; 
+## Use the number of uniqquely mapped reads for the y axis
+
+
+## Tips:
+## You can look for tutorials on the internet, or use ggplot2's help to learn how to do this. 
+## To search for help on a function, use the ? command. For instance: 
+?geom_point
+```
+
+
+### b. Paired-end vs Single-end reads
+
+
+Now that you have proven that the longest read length yields the highest number of uniquely mapped reads, you decide to test the difference between a paired-end run versus a single-end run. 
+
+```{bash, eval=FALSE}
+## Using the following files: 
+# /usr/local/share/data/assignment_3/H3K27me3_iPSC_SRA60_subset_1_LEN_25.fastq.gz
+# /usr/local/share/data/assignment_3/H3K27me3_iPSC_SRA60_subset_2_LEN_25.fastq.gz
+## And the index of the hg38 genome build: 
+## /usr/local/share/indexes/hg38_bowtie2_index
+#?# Perform a paired-end (PE) analysis, type the command you used below: - 0.5 pt
+
+
+#?# Do a single-end (SE) analysis of the subset_1 file , type the command you used below: - 0.5 pt
+
+
+#?# Convert the PE sam file to bam format, type the command you used below: - 0.5 pt
+
+
+#?# Convert the SE sam file to bam format, type the command you used below: - 0.5 pt
+
+
+## Before moving on: remove the PE and SE sam alignment files!
+#?# Use sambamba view to get the number of uniquely mapped reads for the PE alignment, type the command you used below: - 0.5 pt 
+
+
+#?# Use sambamba view to get the number of uniquely mapped reads for the SE alignment, type the command you used below: - 0.5 pt 
+
+
+```
+
+Your supervisor liked so much the graphical representation of your data, that he asks you to do a barplot for the SE versus PE alignment comparison.**On your local computer:**
+
+```{r, eval=FALSE}
+## First, we create a dataframe with two columns, one (run_type) for the different run types and another (uniquely_mapped_reads for the number of uniquely mapped reads.
+#?# Substitute the SE and PE with their respective number of uniquely mapped reads that you got from sambamba view: - 1 pt
+sequence_run.df <- data.frame(run_type=c("Single End", "Paired End"),
+                              uniquely_mapped_reads=c(SE,PE))
+                              
+                              
+#?# Using ggplot, create a barplot that shows the different number of uniquely mapped reads between the two run types: - 2 pt
+## Use the run_type in the x-axis
+## Use the uniquely_mapped_reads in the y-axis
+
+
+#?# Does the run type makes a difference? If there is, is it large? - 1 pt
+
+
+#?# In your own words explain the difference between SE and PE read alignment. - 1 pt
+
+
+#?# Given that the 50 bp reads (from last graph) contain the same number of bases as two 25 bp reads (25 bp PE; 25+25=50), why are the number of uniquely mapping reads different between these two? Which has more? Why do you think this is? - 3 pts
+  
+```
+
+Knit this document and upload it and your Rmd file to your private GitHub repo. Submit URLs to both for the assignment submission.
+
+Correctly knitting your assignment to html - 2 pts
