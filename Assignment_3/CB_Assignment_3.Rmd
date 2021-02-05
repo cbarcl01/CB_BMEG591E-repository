@@ -5,7 +5,6 @@ output:
     toc: true
     toc_depth: 4
     toc_float: true
-    code_folding: hide
 ---
 
 
@@ -23,6 +22,7 @@ conda activate Gnme_Assignment_1
 ```
 
 Note: I didn't realise we would use the same environment the whole time when we set up the conda environment in assignment 1, hence the name 'Gnme_Assignment_1' :)
+
 
 ### b. Install trimmomatic
 
@@ -45,25 +45,36 @@ Use **ONLY** the **H3K27me3_iPSC_SRA60_subset_1.fastq.gz** file from your last a
 #### i) Use trimmomatic SE to crop the file to 25 bp in length 1 pt
 
 ```{bash, eval=FALSE}
-#?# Use trimmomatic SE to crop the file down to 25 bp in length, type the command you use below - 1 pt
-## Note: Remember to gzip all your files! Look into the trimmomatic documentation for how to specify to compress your output
+trimmomatic SE -threads 4 /usr/local/share/data/assignment_2/H3K27me3_iPSC_SRA60_subset_1.fastq.gz ./H3K27me3_iPSC_SRA60_subset_1.trimmed.fastq.gz CROP:25
 ```
+
 
 
 #### ii) Map 25 bp read file to reference genome 0.5 pt
 
 ```{bash, eval=FALSE}
-#?# Use bowtie2 to map the _25bp_ read file you just created to the reference genome, type the command you use below: - 0.5 pt
+bowtie2 -x /usr/local/share/indexes/hg38_bowtie2_index \ -U ./H3K27me3_iPSC_SRA60_subset_1.trimmed.fastq.gz \ -S ./H3K27me3_iPSC_SRA60_subset_1.aligned.sam
 ```
+
+
 
 #### iii) Number of uniquely mapped reads 0.5 pt
 
 ```{bash, eval=FALSE}
-#?# Use sambamba view to get the number of uniquely mapped reads of the alignment output you got above,type the command you use below: - 0.5 pt
-## NOTE: Remember to use the following flag:
-## -F "[XS] == null and not unmapped and not duplicate"
-## Tip: Check for the sambamba documentation for options that will allow you to use the sam file as an input and automatically count the number of reads.
+sambamba view -h -F "[XS] == null and not unmapped and not duplicate"  ./H3K27me3_iPSC_SRA60_subset_1.aligned.sam -o unique_mapped.bam
 ```
+
+
+**Output**
+
+1891826 reads; of these:
+  1891826 (100.00%) were unpaired; of these:
+    7842 (0.41%) aligned 0 times
+    1325510 (70.07%) aligned exactly 1 time
+    558474 (29.52%) aligned >1 times
+99.59% overall alignment rate
+
+
 
 #### iv) Create a pipeline 5 pts
 
@@ -71,59 +82,84 @@ Use **ONLY** the **H3K27me3_iPSC_SRA60_subset_1.fastq.gz** file from your last a
 You realize that if you want to consider many different read lengths, copying and pasting the above for each read length will be very repetitive work and prone to bugs. Thus, you decide to use your recently acquired knowledge of pipelines to create a mini version of it that will take as input the desired read length, and output the number of uniquely mapped reads when reads of this length have been mapped to the genome. 
 
 ```{bash, eval=FALSE}
-## The following files have already been trimmed and aligned against the hg38 genome build, and can be found here: /usr/local/share/data/assignment_3/
-## H3K27me3_iPSC_SRA60_subset_1_LEN_150_mapped.bam 
-## H3K27me3_iPSC_SRA60_subset_1_LEN_100_mapped.bam
-## H3K27me3_iPSC_SRA60_subset_1_LEN_75_mapped.bam
-## H3K27me3_iPSC_SRA60_subset_1_LEN_50_mapped.bam
-### Create a mini pipeline that uses sambamba view to get the number of uniquely mapped reads for the files above, plus the 25bp length file you created for the previous question.
-#?# Type the code of your mini pipeline below: - 3 pt
-## You do not need to build in robustness to failure here since only one command is run with a single numerical output (so it would be hard to miss a failed run). 
-## Have the pipeline also state the read length being considered before displaying the number of uniquely mapping reads.
+#!/bin/bash
+set -e 
+sample=$1
+filename=$2
+last=LEN_25
+echo running pipeline for $sample
+if [ $sample == "$last" ];
+then
+      sambamba view -h -F "[XS] == null and not unmapped and not duplicate" ./$filename -o ./uniquelyMappedReads.bam
+else        
+      sambamba view -h -F "[XS] == null and not unmapped and not duplicate" /usr/local/share/data/assignment_3/$filename -o ./uniquelyMappedReads.bam
+fi
 ```
 
-**Job scheduler (1.5pt)**
-```{bash, eval=FALSE}
-## Copy the job scheduler simulator used for last assignment: *runTheseJobsSerially.sh* to the directory you are using to work on this assignment (working directory)
-## Substitute from the line below:
-## <your_mini_pipeline> with the name you gave the pipeline you created on the previous question
-## <your_taskfile> with a taskfile that includes the tasks you want to perform 
-./runTheseJobsSerially.sh <your_mini_pipeline> <your_taskfile>
 
-#?# Type the substituted line you used below: - 1.5 pt 
+**Job scheduler (1.5pt)**
+
+```{bash, eval=FALSE}
+./runTheseJobsSerially.sh ./sambambaPipeline.sh ./taskfile.tsv
 ```
 
 
 **Taskfile (0.5pt)**
+
 ```{bash, eval=FALSE}
-#?# Type the content of your taskfile below: - 0.5 pt 
+LEN_150 H3K27me3_iPSC_SRA60_subset_1_LEN_150_mapped.bam
+LEN_100 H3K27me3_iPSC_SRA60_subset_1_LEN_100_mapped.bam
+LEN_75 H3K27me3_iPSC_SRA60_subset_1_LEN_75_mapped.bam
+LEN_50 H3K27me3_iPSC_SRA60_subset_1_LEN_50_mapped.bam
+LEN_25 H3K27me3_iPSC_SRA60_subset_1.aligned.sam
 ```
+
+**Output**
+running pipeline for LEN_150
+1572284
+running pipeline for LEN_100
+1505177
+running pipeline for LEN_75
+1459621
+running pipeline for LEN_50
+1401739
+running pipeline for LEN_25
+1325969
+(Gnme_Assignment_1) [cbarcl01@SBME-GI-EDU-SV4 ~]$
 
 
 
 Now that you have the number of uniquely mapped reads for the different reads size, you want to make a nice graph to show your supervisor you know what you are talking about when you say the sequence length has an effect on the number of uniquely mapped reads. **On your local computer**:
 
+
+#### v) Create a dataframe 1pt
+
 ```{r, eval=FALSE}
-## First, we create a dataframe with two columns, one (reads_length) for the different read lengths and another (uniquely_mapped_reads for the number of uniquely mapped reads
-#?# Substitute the sequence lengths with their respective number of uniquely mapped reads, that you got from sambamba view: - 1 pt
+library(tidyverse)
 length_mapped_reads.df <- data.frame(reads_length=c(150,100,75,50,25),
-                          uniquely_mapped_reads=c(X,X,X,X,X))## Here
-
-
-## If you don't have it already, install the "ggplot2" package on your Rstudio 
-## Go to packages on the bottom left part of the screen --> install --> type: ggplot2
-## Accept to install the required dependencies :) 
-                    
-#?# Create a scatterplot using ggplot2 - 2 pt
-## Use the reads_length for the x axis, uniquely_mapped_reads for the y axis; 
-## Use the number of uniqquely mapped reads for the y axis
-
-
-## Tips:
-## You can look for tutorials on the internet, or use ggplot2's help to learn how to do this. 
-## To search for help on a function, use the ? command. For instance: 
-?geom_point
+                       uniquely_mapped_reads=c(1572284,1505177,1459621,1401739,1325969))
 ```
+
+
+```{r}
+library(tidyverse)
+length_mapped_reads.df <- data.frame(reads_length=c(150,100,75,50,25),
+                       uniquely_mapped_reads=c(1572284,1505177,1459621,1401739,1325969))
+```
+
+
+#### vi) Create a scatterplot 2pt
+
+```{r, eval=FALSE}
+ggplot(data = length_mapped_reads.df) + 
+  geom_point(mapping = aes(x = reads_length, y = uniquely_mapped_reads))
+```
+
+```{r}
+ggplot(data = length_mapped_reads.df) + 
+  geom_point(mapping = aes(x = reads_length, y = uniquely_mapped_reads))
+```
+
 
 
 ### b. Paired-end vs Single-end reads
