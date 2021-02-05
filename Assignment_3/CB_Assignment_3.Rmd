@@ -134,12 +134,6 @@ Now that you have the number of uniquely mapped reads for the different reads si
 
 #### v) Create a dataframe 1pt
 
-```{r, eval=FALSE}
-library(tidyverse)
-length_mapped_reads.df <- data.frame(reads_length=c(150,100,75,50,25),
-                       uniquely_mapped_reads=c(1572284,1505177,1459621,1401739,1325969))
-```
-
 
 ```{r}
 library(tidyverse)
@@ -150,11 +144,6 @@ length_mapped_reads.df <- data.frame(reads_length=c(150,100,75,50,25),
 
 #### vi) Create a scatterplot 2pt
 
-```{r, eval=FALSE}
-ggplot(data = length_mapped_reads.df) + 
-  geom_point(mapping = aes(x = reads_length, y = uniquely_mapped_reads))
-```
-
 ```{r}
 ggplot(data = length_mapped_reads.df) + 
   geom_point(mapping = aes(x = reads_length, y = uniquely_mapped_reads))
@@ -164,33 +153,76 @@ ggplot(data = length_mapped_reads.df) +
 
 ### b. Paired-end vs Single-end reads
 
+#### i) Paired-end 0.5 pt
 
 Now that you have proven that the longest read length yields the highest number of uniquely mapped reads, you decide to test the difference between a paired-end run versus a single-end run. 
 
 ```{bash, eval=FALSE}
-## Using the following files: 
-# /usr/local/share/data/assignment_3/H3K27me3_iPSC_SRA60_subset_1_LEN_25.fastq.gz
-# /usr/local/share/data/assignment_3/H3K27me3_iPSC_SRA60_subset_2_LEN_25.fastq.gz
-## And the index of the hg38 genome build: 
-## /usr/local/share/indexes/hg38_bowtie2_index
-#?# Perform a paired-end (PE) analysis, type the command you used below: - 0.5 pt
+bowtie2 -x /usr/local/share/indexes/hg38_bowtie2_index \ -1 /usr/local/share/data/assignment_3/H3K27me3_iPSC_SRA60_subset_1_LEN_25.fastq.gz \ -2 /usr/local/share/data/assignment_3/H3K27me3_iPSC_SRA60_subset_2_LEN_25.fastq.gz \ -S /home/cbarcl01/PEBowtie.aligned.sam
+
+```
+
+*Output*
+
+1891826 reads; of these:
+  1891826 (100.00%) were paired; of these:
+    78520 (4.15%) aligned concordantly 0 times
+    1497655 (79.16%) aligned concordantly exactly 1 time
+    315651 (16.68%) aligned concordantly >1 times
+    ----
+    78520 pairs aligned concordantly 0 times; of these:
+      30451 (38.78%) aligned discordantly 1 time
+    ----
+    48069 pairs aligned 0 times concordantly or discordantly; of these:
+      96138 mates make up the pairs; of these:
+        14782 (15.38%) aligned 0 times
+        32898 (34.22%) aligned exactly 1 time
+        48458 (50.40%) aligned >1 times
+99.61% overall alignment rate
 
 
-#?# Do a single-end (SE) analysis of the subset_1 file , type the command you used below: - 0.5 pt
+#### i) Single-end 0.5 pt
+
+```{bash, eval=FALSE}
+bowtie2 -x /usr/local/share/indexes/hg38_bowtie2_index \ -U /usr/local/share/data/assignment_3/H3K27me3_iPSC_SRA60_subset_1_LEN_25.fastq.gz \ -S /home/cbarcl01/SEBowtie.aligned.sam
+```
+
+*Output*
+
+1891826 reads; of these:
+  1891826 (100.00%) were unpaired; of these:
+    7842 (0.41%) aligned 0 times
+    1325510 (70.07%) aligned exactly 1 time
+    558474 (29.52%) aligned >1 times
+99.59% overall alignment rate
 
 
-#?# Convert the PE sam file to bam format, type the command you used below: - 0.5 pt
+#### iii) Convert the PE sam file to bam format 0.5 pt
+
+```{bash, eval=FALSE}
+samtools view -S -b ./PEBowtie.aligned.sam > ./PEBowtie.bam
+```
 
 
-#?# Convert the SE sam file to bam format, type the command you used below: - 0.5 pt
+#### iv) Convert the SE sam file to bam format, type the command you used below 0.5 pt
+
+```{bash, eval=FALSE}
+samtools view -S -b ./SEBowtie.aligned.sam > ./SEBowtie.bam
+```
 
 
 ## Before moving on: remove the PE and SE sam alignment files!
 #?# Use sambamba view to get the number of uniquely mapped reads for the PE alignment, type the command you used below: - 0.5 pt 
 
+```{bash, eval=FALSE}
+sambamba view -h -F "[XS] == null and not unmapped and not duplicate"  ./PEBowtie.bam
+```
 
 #?# Use sambamba view to get the number of uniquely mapped reads for the SE alignment, type the command you used below: - 0.5 pt 
 
+```{bash, eval=FALSE}
+sambamba view -h -F "[XS] == null and not unmapped and not duplicate"  ./SEBowtie.bam
+```
 
 ```
 
