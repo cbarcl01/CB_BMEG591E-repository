@@ -67,12 +67,12 @@ sambamba view -h -F "[XS] == null and not unmapped and not duplicate"  ./H3K27me
 
 **Output**
 
-1891826 reads; of these:
-  1891826 (100.00%) were unpaired; of these:
-    7842 (0.41%) aligned 0 times
-    1325510 (70.07%) aligned exactly 1 time
-    558474 (29.52%) aligned >1 times
-99.59% overall alignment rate
+1891826 reads; of these:</br>
+  1891826 (100.00%) were unpaired; of these:</br>
+    7842 (0.41%) aligned 0 times</br>
+    1325510 (70.07%) aligned exactly 1 time</br>
+    558474 (29.52%) aligned >1 times</br>
+99.59% overall alignment rate</br>
 
 
 
@@ -162,23 +162,23 @@ bowtie2 -x /usr/local/share/indexes/hg38_bowtie2_index \ -1 /usr/local/share/dat
 
 ```
 
-*Output*
+*Output* </br>
 
-1891826 reads; of these:
-  1891826 (100.00%) were paired; of these:
-    78520 (4.15%) aligned concordantly 0 times
-    1497655 (79.16%) aligned concordantly exactly 1 time
-    315651 (16.68%) aligned concordantly >1 times
+1891826 reads; of these:</br>
+  1891826 (100.00%) were paired; of these:</br>
+    78520 (4.15%) aligned concordantly 0 times</br>
+    1497655 (79.16%) aligned concordantly exactly 1 time</br>
+    315651 (16.68%) aligned concordantly >1 times</br>
     ----
-    78520 pairs aligned concordantly 0 times; of these:
-      30451 (38.78%) aligned discordantly 1 time
+    78520 pairs aligned concordantly 0 times; of these:</br>
+      30451 (38.78%) aligned discordantly 1 time</br>
     ----
-    48069 pairs aligned 0 times concordantly or discordantly; of these:
-      96138 mates make up the pairs; of these:
-        14782 (15.38%) aligned 0 times
-        32898 (34.22%) aligned exactly 1 time
-        48458 (50.40%) aligned >1 times
-99.61% overall alignment rate
+    48069 pairs aligned 0 times concordantly or discordantly; of these:</br>
+      96138 mates make up the pairs; of these:</br>
+        14782 (15.38%) aligned 0 times</br>
+        32898 (34.22%) aligned exactly 1 time</br>
+        48458 (50.40%) aligned >1 times</br>
+99.61% overall alignment rate</br>
 
 
 #### i) Single-end 0.5 pt
@@ -187,14 +187,14 @@ bowtie2 -x /usr/local/share/indexes/hg38_bowtie2_index \ -1 /usr/local/share/dat
 bowtie2 -x /usr/local/share/indexes/hg38_bowtie2_index \ -U /usr/local/share/data/assignment_3/H3K27me3_iPSC_SRA60_subset_1_LEN_25.fastq.gz \ -S /home/cbarcl01/SEBowtie.aligned.sam
 ```
 
-*Output*
+*Output*</br>
 
-1891826 reads; of these:
-  1891826 (100.00%) were unpaired; of these:
-    7842 (0.41%) aligned 0 times
-    1325510 (70.07%) aligned exactly 1 time
-    558474 (29.52%) aligned >1 times
-99.59% overall alignment rate
+1891826 reads; of these:</br>
+  1891826 (100.00%) were unpaired; of these:</br>
+    7842 (0.41%) aligned 0 times</br>
+    1325510 (70.07%) aligned exactly 1 time</br>
+    558474 (29.52%) aligned >1 times</br>
+99.59% overall alignment rate</br>
 
 
 #### iii) Convert the PE sam file to bam format 0.5 pt
@@ -211,44 +211,61 @@ samtools view -S -b ./SEBowtie.aligned.sam > ./SEBowtie.bam
 ```
 
 
-## Before moving on: remove the PE and SE sam alignment files!
-#?# Use sambamba view to get the number of uniquely mapped reads for the PE alignment, type the command you used below: - 0.5 pt 
+#### v) Sambamba view to get the number of uniquely mapped reads for the SE alignment 0.5 pt  
 
 ```{bash, eval=FALSE}
-sambamba view -h -F "[XS] == null and not unmapped and not duplicate"  ./PEBowtie.bam
+sambamba view -h -F "[XS] == null and not unmapped and not duplicate"  ./PEBowtie.bam | wc -l
 ```
 
-#?# Use sambamba view to get the number of uniquely mapped reads for the SE alignment, type the command you used below: - 0.5 pt 
+*Output*
+
+2686694
+
+
+#### vi) Sambamba view to get the number of uniquely mapped reads for the SE alignment 0.5 pt 
 
 ```{bash, eval=FALSE}
-sambamba view -h -F "[XS] == null and not unmapped and not duplicate"  ./SEBowtie.bam
+sambamba view -h -F "[XS] == null and not unmapped and not duplicate"  ./SEBowtie.bam | wc -l
 ```
 
-```
+*Output*
+
+1325969
+
 
 Your supervisor liked so much the graphical representation of your data, that he asks you to do a barplot for the SE versus PE alignment comparison.**On your local computer:**
 
-```{r, eval=FALSE}
-## First, we create a dataframe with two columns, one (run_type) for the different run types and another (uniquely_mapped_reads for the number of uniquely mapped reads.
-#?# Substitute the SE and PE with their respective number of uniquely mapped reads that you got from sambamba view: - 1 pt
+#### vii) Create dataframe with SE and PE uniquely mapped reads 1pt
+
+```{r}
 sequence_run.df <- data.frame(run_type=c("Single End", "Paired End"),
-                              uniquely_mapped_reads=c(SE,PE))
-                              
-                              
-#?# Using ggplot, create a barplot that shows the different number of uniquely mapped reads between the two run types: - 2 pt
-## Use the run_type in the x-axis
-## Use the uniquely_mapped_reads in the y-axis
-
-
-#?# Does the run type makes a difference? If there is, is it large? - 1 pt
-
-
-#?# In your own words explain the difference between SE and PE read alignment. - 1 pt
-
-
-#?# Given that the 50 bp reads (from last graph) contain the same number of bases as two 25 bp reads (25 bp PE; 25+25=50), why are the number of uniquely mapping reads different between these two? Which has more? Why do you think this is? - 3 pts
-  
+                              uniquely_mapped_reads=c(1325969,2686694))
 ```
+
+
+#### viii) Create a barplot 2pt
+
+```{r}
+ggplot(sequence_run.df) + 
+  geom_bar(aes(x = run_type, y = uniquely_mapped_reads),
+           stat = "identity")
+```
+
+#### ix) Does run type make a difference? 1pt
+
+Yes, the paired end has more than double the uniquely mapped reads compared to single end.
+
+#### x) In your own words explain the difference between SE and PE read alignment 1 pt
+
+In paired end sequencing both ends of the DNA fragment are sequenced. The distance between the start and end of the read is then know, which increases accuracy and generates a better alignment. Paired end will naturally double the reads (due to the fragment being run in both directions), however additional variants such as insertion-deletion can be identified, explaining why we see > double the reads in paired end vs single end.
+
+#### xi) Given that the 50 bp reads (from last graph) contain the same number of bases as two 25 bp reads (25 bp PE; 25+25=50), why are the number of uniquely mapping reads different between these two? Which has more? Why do you think this is? - 3 pts
+
+From the results and graph we can see: </br>
+50 bp reads = 1401739</br>
+25 bp reads = 1325969</br>
+Therefore 50 bp has more uniquely mapped reads. This fits with the consensus that smaller size fragments (such as the 25 bp) may prevent unique alignment of repeat sequences to the reference sequence as there is an increased chance of the read mapping equally well to multiple places (ambiguously mapping)
+
 
 Knit this document and upload it and your Rmd file to your private GitHub repo. Submit URLs to both for the assignment submission.
 
