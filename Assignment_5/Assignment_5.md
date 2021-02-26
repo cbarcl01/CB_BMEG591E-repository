@@ -8,6 +8,9 @@ Assignment 5
           - [1. b) Copy to computer and load to
             IGV](#1-b-copy-to-computer-and-load-to-igv)
       - [2. Narrow vs Broad peaks](#2-narrow-vs-broad-peaks)
+          - [2. a) computeMatrix](#2-a-computematrix)
+          - [2. b) Heatmap using
+            Deeptools](#2-b-heatmap-using-deeptools)
       - [3. Peak calling](#3-peak-calling)
           - [a. Peak calling with macs2](#a-peak-calling-with-macs2)
           - [b. Understanding the peaks](#b-understanding-the-peaks)
@@ -143,21 +146,43 @@ pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/input_chr3
 ## Tip, use the "File" tab to "load from file" option to choose the files from your computer directories
 
 ## 3. Change the visualization of the files to see the following position: ** chr3:93,470,124-93,471,058 **
+
 #?# Include a screenshot of your IGV session right after this code chunk (using the Rmarkdown syntax)  - 2 pt
+
 #?# Explore this region by zooming in and out and navigating around. What do you see? Is there something similar across all the different files that stands out on this region? Is there anything peculiar about the DNA sequence at this locus?- 3 pt
+
 ## Tip: sometimes track signal will be truncated to a pre-set maximum. If you right-click the track label (left) and select "autoscale", it will automatically adust the scales of the track to the range of your data. Try playing around with the track settings to see their effect.
 
 ## 4. This file (/usr/local/share/data/assignment_5/hg38_blacklisted_regions.bed) contains the hg38 blacklisted regions. Load it into IGV along with all the other files. 
+
+### 4.1 first I copied to my local computer then I loaded it into IGV 
+
+pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/usr/local/share/data/assignment_5/hg38.blacklist.bed C:\Users\cbarc\OneDrive\Desktop
 
 ## 5. Look at the following region again (chr3:93,470,124-93,471,058). 
 #?# What can you say now about the similarities between the files at this region? In your own words, explain what a blacklisted region is and if you think this region should be excluded a ChIP-seq analysis. - 1.5 pt
 ```
 
-**Add screenshot of your IGV session here: **
+**Explore this region, what do you see? Is there something similar
+across all the different files that stands out on this region? Is there
+anything peculiar about the DNA sequence at this locus?3 pt**
 
-``` r
-##![Image screenshot name 1](C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\XXX.jpg)
-```
+**Add screenshot of your IGV session here**
+
+\#\#![Image screenshot name
+1](C:\\Users\\cbarc\\OneDrive\\Desktop\\git_temp\\CB_BMEG591E-repository\\Assignment_5\\IGV_Screenshot.png)
+
+***What can you say now about the similarities between the files at this
+region?***
+
+The similarities between these files align with the blacklisted region,
+potentially therefore what we are seeing is due to the noise at the
+blacklisted region rather than true signal reads.
+
+***Explain what a blacklisted region is and if you think this region
+should be excluded in a ChIP-seq analysis***
+
+Blacklisted regions are regions in the human genome
 
 ## 2\. Narrow vs Broad peaks
 
@@ -171,6 +196,8 @@ Active transcription marks (H3K4me3 and H3K27ac) tend to form a sharper
 coverage peaks at transcription start sites (H3K27ac is also at
 enhancers), while repression marks cover a broader area (H3K27me3).
 Here, we’re going to inspect their distributions relative to genes.
+
+### 2\. a) computeMatrix
 
 ``` bash
 
@@ -189,7 +216,12 @@ Here, we’re going to inspect their distributions relative to genes.
 ## - Use all 3 input-normalized bigWig files (H3K4me3, H3K27ac, H3K27me3) as signal tracks
 #?# Write the command you used to run it below: - 1.5 pt
 
-computeMatrix reference-point -S /usr/local/share/data/assignment_5/H3K4me3_norm.bw /usr/local/share/data/assignment_5/H3K27me3_norm.bw /usr/local/share/data/assignment_5/H3K27ac_norm.bw -R /usr/local/share/data/assignment_5/reference_genes.bed -a 1000 -b 1000 -o ./computematrixRP.gz
+computeMatrix scale-regions -S /usr/local/share/data/assignment_5/H3K4me3_norm.bw /usr/local/share/data/assignment_5/H3K27me3_norm.bw /usr/local/share/data/assignment_5/H3K27ac_norm.bw -R /usr/local/share/data/assignment_5/reference_genes.bed -a 1000 -b 1000 -o ./computematrixRP.gz
+```
+
+### 2\. b) Heatmap using Deeptools
+
+``` bash
 
 ## Now that the scores matrix has been computed, we can use it to create a heatmap to provide a better visual representation of the reads distrubution across our reference genes (provided in the reference_gened.bed file)
 ## Use the deepTools ** plotHeatmap ** function to create a heatmap following this criteria: 
@@ -199,11 +231,11 @@ computeMatrix reference-point -S /usr/local/share/data/assignment_5/H3K4me3_norm
 #?# Type the command you used to run it below: - 1.5
 
 plotHeatmap -m ./computematrixRP.gz \
-     -out Heatmap2.png \
+     -out Heatmap1.png \
      --colorMap 'Blues' --kmeans 3
      
-     
-pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/Heatmap2.png C:\Users\cbarc\OneDrive\Desktop ##to copy to local comp for screenshot
+##then used the below code to copy to local comp for screenshot     
+pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/Heatmap1.png C:\Users\cbarc\OneDrive\Desktop 
 
 #?# Add a screenshot of the plot right after this code chunk using Rmarkdown syntaxis - 1 pt 
 
@@ -211,19 +243,34 @@ pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/Heatmap2.p
 #?# Explain what you are looking at (Axes, colours, curves). Where are the marks located? What are the differences between the clusters? - 3 pts
 ```
 
-**Add screenshot here: **
+**Add screenshot here**
 
-\#\#![Heatmap](C:\\Users\\cbarc\\OneDrive\\Desktop\\git_temp\\CB_BMEG591E-repository\\Assignment_5\\Heatmap2.png)
+\#\#![Heatmap for normalised bigwig
+files](C:\\Users\\cbarc\\OneDrive\\Desktop\\git_temp\\CB_BMEG591E-repository\\Assignment_5\\Heatmap1.png)
 
 ``` bash
 ## Now the above heatmap was made with the ratio of ChIP to input. Repeat the process above, but this time using the raw bigwig files (not input-normalized). 
 #?# Type the commands you used for this below - 1 pt
 
+computeMatrix scale-regions -S /home/cbarcl01/Assignment_5/H3K27me3_chr3_subset.bw  /home/cbarcl01/Assignment_5/H3K4me3_chr3_subset.bw  /home/cbarcl01/Assignment_5/H3K27ac_chr3_subset.bw -R /usr/local/share/data/assignment_5/reference_genes.bed -a 1000 -b 1000 -o ./computematrix2.gz
+
+plotHeatmap -m ./computematrix2.gz \
+     -out Heatmap2.png \
+     --colorMap 'Blues' --kmeans 3
+     
+pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/Heatmap2.png C:\Users\cbarc\OneDrive\Desktop 
+
+
 #?# Include a screenshot of this analysis, below this code block. - 1 pt
 #?# How does this compare to the input-normalized data? Why do you think this is? - 1 pt
 ```
 
-**Add screenshot here: **
+**Add screenshot here**
+
+![Heatmap with raw bigwig
+files](C:\\Users\\cbarc\\OneDrive\\Desktop\\git_temp\\CB_BMEG591E-repository\\Assignment_5\\Heatmap2.png)
+
+***How does this compare to the input-normalized data? Why? 1 pt***
 
 ## 3\. Peak calling
 
@@ -236,10 +283,18 @@ three histone marks. In order to get the enrichments, we will run the
 ``` bash
 
 ## Tip: Make sure to read the documentation (using the -h flag) for the *masc2 callpeak* command
+
 ## Run the callpeak command of the macs2 tool, once for each of H3K27ac, H3K27Me3, H3K4Me3
 ## Each time, use the input as the control 
 ## For H3K27Me3, you should call "broad" peaks because these signals tend to form longer domains and not acute peaks.
+
 #?# Type the commands you used below: - 1.5 pt
+
+macs2 callpeak -t /usr/local/share/data/assignment_5/H3K27ac_chr3_subset.bam -c /usr/local/share/data/assignment_5/input_chr3_subset.bam > ./H3K27ac_callpeaks.narrowPeak
+
+macs2 callpeak -t /usr/local/share/data/assignment_5/H3K4me3_chr3_subset.bam -c /usr/local/share/data/assignment_5/input_chr3_subset.bam > ./H3K4me3_callpeaks.narrowPeak
+
+macs2 callpeak -t --broad /usr/local/share/data/assignment_5/H3K27Me3_chr3_subset.bam -c /usr/local/share/data/assignment_5/input_chr3_subset.bam > ./H3K27Me3_callpeaks.broadPeak
 ```
 
 ### b. Understanding the peaks

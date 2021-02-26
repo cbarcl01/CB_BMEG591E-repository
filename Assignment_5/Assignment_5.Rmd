@@ -125,15 +125,15 @@ pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/usr/local/share/data/assignment_5/hg3
 **Explore this region, what do you see? Is there something similar across all the different files that stands out on this region? Is there anything peculiar about the DNA sequence at this locus?3 pt**
 
 
-**Add screenshot of your IGV session here **
+**Add screenshot of your IGV session here**
 
 ##![Image screenshot name 1](C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\IGV_Screenshot.png)
 
-**What can you say now about the similarities between the files at this region?**
+***What can you say now about the similarities between the files at this region?***
 
 The similarities between these files align with the blacklisted region, potentially therefore what we are seeing is due to the noise at the blacklisted region rather than true signal reads. 
 
-**Explain what a blacklisted region is and if you think this region should be excluded in a ChIP-seq analysis**
+***Explain what a blacklisted region is and if you think this region should be excluded in a ChIP-seq analysis***
 
 Blacklisted regions are regions in the human genome
 
@@ -162,8 +162,10 @@ While exploring the bigwig files of the epigenetic marks on IGV, you probably no
 ## - Use all 3 input-normalized bigWig files (H3K4me3, H3K27ac, H3K27me3) as signal tracks
 #?# Write the command you used to run it below: - 1.5 pt
 
-computeMatrix reference-point -S /usr/local/share/data/assignment_5/H3K4me3_norm.bw /usr/local/share/data/assignment_5/H3K27me3_norm.bw /usr/local/share/data/assignment_5/H3K27ac_norm.bw -R /usr/local/share/data/assignment_5/reference_genes.bed -a 1000 -b 1000 -o ./computematrixRP.gz
+computeMatrix scale-regions -S /usr/local/share/data/assignment_5/H3K4me3_norm.bw /usr/local/share/data/assignment_5/H3K27me3_norm.bw /usr/local/share/data/assignment_5/H3K27ac_norm.bw -R /usr/local/share/data/assignment_5/reference_genes.bed -a 1000 -b 1000 -o ./computematrixRP.gz
 ```
+
+
 
 ### 2. b) Heatmap using Deeptools
 
@@ -178,11 +180,11 @@ computeMatrix reference-point -S /usr/local/share/data/assignment_5/H3K4me3_norm
 #?# Type the command you used to run it below: - 1.5
 
 plotHeatmap -m ./computematrixRP.gz \
-     -out Heatmap2.png \
+     -out Heatmap1.png \
      --colorMap 'Blues' --kmeans 3
      
 ##then used the below code to copy to local comp for screenshot     
-pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/Heatmap2.png C:\Users\cbarc\OneDrive\Desktop 
+pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/Heatmap1.png C:\Users\cbarc\OneDrive\Desktop 
 
 #?# Add a screenshot of the plot right after this code chunk using Rmarkdown syntaxis - 1 pt 
 
@@ -191,22 +193,22 @@ pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/Heatmap2.p
 
 ```
 
-**Add screenshot here: **
+**Add screenshot here**
 
-##![Heatmap for normalised bigwig files](C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\Heatmap2.png)
+##![Heatmap for normalised bigwig files](C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\Heatmap1.png)
 
 
 ```{bash, eval=FALSE}
 ## Now the above heatmap was made with the ratio of ChIP to input. Repeat the process above, but this time using the raw bigwig files (not input-normalized). 
 #?# Type the commands you used for this below - 1 pt
 
-computeMatrix reference-point -S /home/cbarcl01/Assignment_5/H3K27me3_chr3_subset.bw  /home/cbarcl01/Assignment_5/H3K4me3_chr3_subset.bw  /home/cbarcl01/Assignment_5/H3K27ac_chr3_subset.bw -R /usr/local/share/data/assignment_5/reference_genes.bed -a 1000 -b 1000 -o ./computematrix2.gz
+computeMatrix scale-regions -S /home/cbarcl01/Assignment_5/H3K27me3_chr3_subset.bw  /home/cbarcl01/Assignment_5/H3K4me3_chr3_subset.bw  /home/cbarcl01/Assignment_5/H3K27ac_chr3_subset.bw -R /usr/local/share/data/assignment_5/reference_genes.bed -a 1000 -b 1000 -o ./computematrix2.gz
 
 plotHeatmap -m ./computematrix2.gz \
-     -out Heatmap3.png \
+     -out Heatmap2.png \
      --colorMap 'Blues' --kmeans 3
      
-pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/Heatmap3.png C:\Users\cbarc\OneDrive\Desktop 
+pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/Heatmap2.png C:\Users\cbarc\OneDrive\Desktop 
 
 
 #?# Include a screenshot of this analysis, below this code block. - 1 pt
@@ -214,9 +216,12 @@ pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/Heatmap3.p
 
 ```
 
-**Add screenshot here: **
+**Add screenshot here**
 
-##![Heatmap with raw bigwig files](C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\Heatmap3.png)
+![Heatmap with raw bigwig files](C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\Heatmap2.png)
+
+***How does this compare to the input-normalized data? Why? 1 pt***
+
 
 
 ## 3. Peak calling 
@@ -229,12 +234,18 @@ Now we want to identify enriched regions of the genome for each of our three his
 ```{bash, eval=FALSE}
 
 ## Tip: Make sure to read the documentation (using the -h flag) for the *masc2 callpeak* command
+
 ## Run the callpeak command of the macs2 tool, once for each of H3K27ac, H3K27Me3, H3K4Me3
 ## Each time, use the input as the control 
 ## For H3K27Me3, you should call "broad" peaks because these signals tend to form longer domains and not acute peaks.
+
 #?# Type the commands you used below: - 1.5 pt
 
+macs2 callpeak -t /usr/local/share/data/assignment_5/H3K27ac_chr3_subset.bam -c /usr/local/share/data/assignment_5/input_chr3_subset.bam > ./H3K27ac_callpeaks.narrowPeak
 
+macs2 callpeak -t /usr/local/share/data/assignment_5/H3K4me3_chr3_subset.bam -c /usr/local/share/data/assignment_5/input_chr3_subset.bam > ./H3K4me3_callpeaks.narrowPeak
+
+macs2 callpeak -t --broad /usr/local/share/data/assignment_5/H3K27Me3_chr3_subset.bam -c /usr/local/share/data/assignment_5/input_chr3_subset.bam > ./H3K27Me3_callpeaks.broadPeak
 
 ```
 
