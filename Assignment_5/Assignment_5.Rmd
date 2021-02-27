@@ -162,7 +162,8 @@ While exploring the bigwig files of the epigenetic marks on IGV, you probably no
 ## - Use all 3 input-normalized bigWig files (H3K4me3, H3K27ac, H3K27me3) as signal tracks
 #?# Write the command you used to run it below: - 1.5 pt
 
-computeMatrix scale-regions -S /usr/local/share/data/assignment_5/H3K4me3_norm.bw /usr/local/share/data/assignment_5/H3K27me3_norm.bw /usr/local/share/data/assignment_5/H3K27ac_norm.bw -R /usr/local/share/data/assignment_5/reference_genes.bed -a 1000 -b 1000 -o ./computematrixRP.gz
+computeMatrix scale-regions -S /usr/local/share/data/assignment_5/H3K4me3_norm.bw /usr/local/share/data/assignment_5/H3K27ac_norm.bw /usr/local/share/data/assignment_5/H3K27me3_norm.bw -R /usr/local/share/data/assignment_5/reference_genes.bed -a 1000 -b 1000 -o ./computematrixRP.gz
+
 ```
 
 
@@ -257,9 +258,15 @@ Macs2 calls the peaks by analyzing the enrichments of sequences in the genome co
 ```{}
 
 ## 1. Copy the H3K4me3 .narrowPeak file to your local computer
+
+pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/H3K4me3_callpeaks.narrowPeak C:\Users\cbarc\OneDrive\Desktop 
+
+
 ## 2. Open IGV with and load the hg38 reference 
 
+
 ## 3. Load the following files:
+
 ### a. H3K4me3 bigwig file that you created in section 1 
 ### b. Input  bigwig file that you created in section 1 
 ## Note: remember to autoscale each file track!
@@ -273,6 +280,11 @@ Macs2 calls the peaks by analyzing the enrichments of sequences in the genome co
 
 
 ## 5. Load into the same session the following files:
+
+### Copy across to local
+
+pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/usr/local/share/data/assignment_5/H3K4me3_norm.bw C:\Users\cbarc\OneDrive\Desktop 
+
 ### c. H3K4me3 normalized using the input bigWig file that was pre-computed and you used on section 2
 ### d. H3K4me3 .narrowPeak file that you created in section 3a
 ## Note: remember to autoscale each file track!
@@ -300,9 +312,26 @@ For this assignment, we are working with 3 different epigenetic marks: H3K4me3, 
 
 
 ### Create 3 heatmaps following the specifications you used on part 2 (one for the peaks called for each epigenetic mark, bot containing data from all three tracks). Use the peak files of each of the epigenetic marks as reference files. Use ONLY the non-input normalized files: H3K27ac_norm.bw H3K27me3_norm.bw H3K4me3_norm.bw
+
 #?# Write the commands you used to compute the matrices and create the heatmaps below: - 3 pt
 
+computeMatrix scale-regions -S /usr/local/share/data/assignment_5/H3K4me3_norm.bw /usr/local/share/data/assignment_5/H3K27ac_norm.bw /usr/local/share/data/assignment_5/H3K27me3_norm.bw -R /home/cbarcl01/Assignment_5/H3K27ac_callpeaks.narrowPeak -a 1000 -b 1000 -o ./computematrixRP.gz
 
+plotHeatmap -m ./computematrix2.gz \
+     -out Heatmap2.png \
+     --colorMap 'Blues' --kmeans 3
+
+computeMatrix scale-regions -S /usr/local/share/data/assignment_5/H3K4me3_norm.bw /usr/local/share/data/assignment_5/H3K27ac_norm.bw /usr/local/share/data/assignment_5/H3K27me3_norm.bw -R /home/cbarcl01/Assignment_5/H3K4me3_callpeaks.narrowPeak  -a 1000 -b 1000 -o ./computematrixRP.gz
+
+plotHeatmap -m ./computematrix2.gz \
+     -out Heatmap2.png \
+     --colorMap 'Blues' --kmeans 3
+
+computeMatrix scale-regions -S /usr/local/share/data/assignment_5/H3K4me3_norm.bw /usr/local/share/data/assignment_5/H3K27ac_norm.bw /usr/local/share/data/assignment_5/H3K27me3_norm.bw -R /home/cbarcl01/Assignment_5/H3K27Me3_callpeaks.broadPeak  -a 1000 -b 1000 -o ./computematrixRP.gz
+
+plotHeatmap -m ./computematrix2.gz \
+     -out Heatmap2.png \
+     --colorMap 'Blues' --kmeans 3
 
 #?# Add screenshots of the 3 heatmaps you got using the epigenetic marks' peak files as reference files. Add them after this code chunk in the following order: H3K4me3, H3K27ac, H3K27me3 - 1.5 pt
 
