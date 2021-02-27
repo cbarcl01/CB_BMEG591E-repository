@@ -178,8 +178,7 @@ Blacklisted regions are regions within the genome that consistently have high (o
 
 **Add screenshot of your IGV session here**
 
-\#\#![Image screenshot name
-1](C:\\Users\\cbarc\\OneDrive\\Desktop\\git_temp\\CB_BMEG591E-repository\\Assignment_5\\IGV_Screenshot.png)
+![IGV\_screenshot1](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Assignment_5/IGV_Screenshot.png)
 
 ## 2\. Narrow vs Broad peaks
 
@@ -250,8 +249,8 @@ For the 2 active epigenetics marks (H3K27ac, H3K4me3), H3K4me3 seems to have gre
 
 **Add screenshot here**
 
-\#\#![Heatmap for normalised bigwig
-files](C:\\Users\\cbarc\\OneDrive\\Desktop\\git_temp\\CB_BMEG591E-repository\\Assignment_5\\Heatmap1.png)
+![Heatmap for normalised bigwig
+files](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Assignment_5/Heatmap1.png)
 
 ``` bash
 ## Now the above heatmap was made with the ratio of ChIP to input. Repeat the process above, but this time using the raw bigwig files (not input-normalized). 
@@ -276,7 +275,7 @@ Because the data is not input normalised, the signals appear stronger so the int
 **Add screenshot here**
 
 ![Heatmap with raw bigwig
-files](C:\\Users\\cbarc\\OneDrive\\Desktop\\git_temp\\CB_BMEG591E-repository\\Assignment_5\\Heatmap2.png)
+files](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Assignment_5/Heatmap2.png)
 
 ***How does this compare to the input-normalized data? Why? 1 pt***
 
@@ -371,8 +370,7 @@ Yes this is supported by the presence of the bar at the same regions in the H3K4
 
 ***SCREENSHOT OF IGV***
 
-![IGV
-Screenshot](C:\\Users\\cbarc\\OneDrive\\Desktop\\git_temp\\CB_BMEG591E-repository\\Assignment_5\\IGV_Screenshot2.png)
+![IGV\_Screenshot2](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Assignment_5/IGV_Screenshot2.png)
 
 ## c. Peak enrichments
 
@@ -424,17 +422,17 @@ pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/HeatmapH3K
 ***H3K4me3 screenshot***
 
 ![Heatmap for
-H3K4me3](C:\\Users\\cbarc\\OneDrive\\Desktop\\git_temp\\CB_BMEG591E-repository\\Assignment_5\\HeatmapH3K4me3.png)
+H3K4me3](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Assignment_5/HeatmapH3K4me3.png)
 
 ***H3K27ac screenshot***
 
 ![Heatmap for
-H3K27ac](C:\\Users\\cbarc\\OneDrive\\Desktop\\git_temp\\CB_BMEG591E-repository\\Assignment_5\\HeatmapH3K27ac.png)
+H3K27ac](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Assignment_5/HeatmapH3K27ac.png)
 
 ***H3K27me3 screenshot***
 
 ![Heatmap for
-H3K27me3](C:\\Users\\cbarc\\OneDrive\\Desktop\\git_temp\\CB_BMEG591E-repository\\Assignment_5\\HeatmapH3K27me3.png)
+H3K27me3](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Assignment_5/HeatmapH3K27me3.png)
 
 ``` bash
 
