@@ -106,9 +106,15 @@ pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/input_chr3
 
 #?# Include a screenshot of your IGV session right after this code chunk (using the Rmarkdown syntax)  - 2 pt
 
+See below
+
 #?# Explore this region by zooming in and out and navigating around. What do you see? Is there something similar across all the different files that stands out on this region? Is there anything peculiar about the DNA sequence at this locus?- 3 pt
 
-## Tip: sometimes track signal will be truncated to a pre-set maximum. If you right-click the track label (left) and select "autoscale", it will automatically adust the scales of the track to the range of your data. Try playing around with the track settings to see their effect.
+This region exibits very similar expression across both the active and inactive markers
+
+
+
+## Tip: sometimes track signal will be truncated to a pre-set maximum. If you right-click the track label (left) and select "autoscale", it will automatically adjust the scales of the track to the range of your data. Try playing around with the track settings to see their effect.
 
 ## 4. This file (/usr/local/share/data/assignment_5/hg38_blacklisted_regions.bed) contains the hg38 blacklisted regions. Load it into IGV along with all the other files. 
 
@@ -117,25 +123,21 @@ pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/input_chr3
 pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/usr/local/share/data/assignment_5/hg38.blacklist.bed C:\Users\cbarc\OneDrive\Desktop
 
 ## 5. Look at the following region again (chr3:93,470,124-93,471,058). 
-#?# What can you say now about the similarities between the files at this region? In your own words, explain what a blacklisted region is and if you think this region should be excluded a ChIP-seq analysis. - 1.5 pt
+#?# What can you say now about the similarities between the files at this region? 
 
+The similarities between these files align with the blacklisted region, potentially therefore what we are seeing is due to the noise at the blacklisted region rather than true signal reads.
+
+#?#In your own words, explain what a blacklisted region is and if you think this region should be excluded a ChIP-seq analysis. - 1.5 pt
+
+
+Blacklisted regions are regions within the genome that consistently have high (or "erroneous") signal/read counts, regardless of the ChIP-seq experiment/cell type being examined. These regions can impact any data normalisation or lead to false positive peaks so should be excluded. 
 
 ```
-
-**Explore this region, what do you see? Is there something similar across all the different files that stands out on this region? Is there anything peculiar about the DNA sequence at this locus?3 pt**
 
 
 **Add screenshot of your IGV session here**
 
 ##![Image screenshot name 1](C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\IGV_Screenshot.png)
-
-***What can you say now about the similarities between the files at this region?***
-
-The similarities between these files align with the blacklisted region, potentially therefore what we are seeing is due to the noise at the blacklisted region rather than true signal reads. 
-
-***Explain what a blacklisted region is and if you think this region should be excluded in a ChIP-seq analysis***
-
-Blacklisted regions are regions in the human genome
 
 
 
@@ -192,6 +194,14 @@ pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/Heatmap1.p
 
 #?# Explain what you are looking at (Axes, colours, curves). Where are the marks located? What are the differences between the clusters? - 3 pts
 
+The heat maps display data in a grid where each row represents a gene and each column represents a sample. The colour and intensity of the boxes is used to represent changes (not absolute values) of gene expression. The bottom axes displays gene distance in base pairs with the Transcription Start Site and Transcription End Site marked. The 3 clusters show  high/medium/low expression epigenetic marks.  
+
+For the line graphs above, the height of the line reflects the presence of epigenetic marks.
+
+For the 2 active epigenetics marks (H3K27ac, H3K4me3), H3K4me3 seems to have greater expression. The epigenetic marks appear to be at the Transcription Start Sites. 
+
+3 clusters show high/medium/low expression epigenetic marks. Cluster 1 seems to have the clearest intensity or increase in expression at the transcription start site vs silencing at the transcription end. For both marks highest intensity (measured by darkest colour) in Cluster 2 is at the located before the transcription start sites. 
+
 ```
 
 **Add screenshot here**
@@ -213,7 +223,10 @@ pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/Heatmap2.p
 
 
 #?# Include a screenshot of this analysis, below this code block. - 1 pt
+
 #?# How does this compare to the input-normalized data? Why do you think this is? - 1 pt
+
+Because the data is not input normalised, the signals appear stronger so the intensities can be more clearly defined. However this is not necessarily reflective of the relative difference in expression.
 
 ```
 
@@ -242,11 +255,11 @@ Now we want to identify enriched regions of the genome for each of our three his
 
 #?# Type the commands you used below: - 1.5 pt
 
-macs2 callpeak -t /usr/local/share/data/assignment_5/H3K27ac_chr3_subset.bam -c /usr/local/share/data/assignment_5/input_chr3_subset.bam > ./H3K27ac_callpeaks.narrowPeak
+macs2 callpeak -t /usr/local/share/data/assignment_5/H3K27ac_chr3_subset.bam -c /usr/local/share/data/assignment_5/input_chr3_subset.bam -n H3K27ac_callpeaks
 
-macs2 callpeak -t /usr/local/share/data/assignment_5/H3K4me3_chr3_subset.bam -c /usr/local/share/data/assignment_5/input_chr3_subset.bam > ./H3K4me3_callpeaks.narrowPeak
+macs2 callpeak -t /usr/local/share/data/assignment_5/H3K4me3_chr3_subset.bam -c /usr/local/share/data/assignment_5/input_chr3_subset.bam -n H3K4me3_callpeaks
 
-macs2 callpeak -t --broad /usr/local/share/data/assignment_5/H3K27Me3_chr3_subset.bam -c /usr/local/share/data/assignment_5/input_chr3_subset.bam > ./H3K27Me3_callpeaks.broadPeak
+macs2 callpeak -t /usr/local/share/data/assignment_5/H3K27me3_chr3_subset.bam -c /usr/local/share/data/assignment_5/input_chr3_subset.bam --broad -n H3K27me3_callpeaks
 
 ```
 
@@ -255,15 +268,16 @@ macs2 callpeak -t --broad /usr/local/share/data/assignment_5/H3K27Me3_chr3_subse
 
 Macs2 calls the peaks by analyzing the enrichments of sequences in the genome compared to the input. The algorithm uses different measures to ensure the enrichments are statistically significant and make biological sense based on the sequence length, the expected peaks (narrow or broad) and other parameters. We will focus on the H3K4me3 mark to visualize how are the peaks are identified.
 
-```{}
+```{bash, eval = FALSE}
 
 ## 1. Copy the H3K4me3 .narrowPeak file to your local computer
 
-pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/H3K4me3_callpeaks.narrowPeak C:\Users\cbarc\OneDrive\Desktop 
+pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/H3K4me3_callpeaks_peaks.narrowPeak C:\Users\cbarc\OneDrive\Desktop 
 
 
 ## 2. Open IGV with and load the hg38 reference 
 
+Done
 
 ## 3. Load the following files:
 
@@ -273,17 +287,23 @@ pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/H3K4me3_ca
 
 ## 4. Go to this position: * chr3:44,608,952-44,670,849 *
 
-#?# Compare the input and H3K4me3 signal trakcs (a and b), are there regions that you consider to have an enriched signal in the H3K4me3 track compared to the input? If yes, how many?- 0.5 pt 
+Done
+
+#?# Compare the input and H3K4me3 signal tracks (a and b), are there regions that you consider to have an enriched signal in the H3K4me3 track compared to the input? If yes, how many?- 0.5 pt 
+
+Yes, two regions of 'peaks' can be seen in the H3K4me3 signal track.
 
 #?# Why do you consider those regions to have an enrichment? Would you need to confirm that the enrichment is statistically significant? If so, what do you think would be a way to test for the significance (you can mention the tools used on this assignment or explain conceptually what would you do to confirm an enrichment)? - 1 pt
 
-
+These regions could have enrichment because there appears to be an increase in coverage in these two regions. However this is just an observation, so in order to confirm if the enrichment is statistically significant, we would need to calculate the p-value which is the probability that the result observed could occur under the null hypothesis and test for this.We can use Macs2 call peaks feature to analyzing the enrichments of sequences compared to the input and test for statistical significance.
 
 ## 5. Load into the same session the following files:
 
 ### Copy across to local
 
 pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/usr/local/share/data/assignment_5/H3K4me3_norm.bw C:\Users\cbarc\OneDrive\Desktop 
+
+pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/usr/local/share/data/assignment_5/H3K4me3_callpeaks_peaks.narrowPeak C:\Users\cbarc\OneDrive\Desktop 
 
 ### c. H3K4me3 normalized using the input bigWig file that was pre-computed and you used on section 2
 ### d. H3K4me3 .narrowPeak file that you created in section 3a
@@ -293,19 +313,26 @@ pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/usr/local/share/data/assignment_5/H3K
 
 #?# Does the region/s you thought had an enrichment show differences between the input and the H3K4me3 mark in the bamCompare (file c)? - 0.5 pt
 
+Yes the two peaks identified in the previous question differ from the input file and the H3K4me3_callpeaks_peaks.narrowpeak confirms this.
+
+
 #?# Are these visually enriched regions you selected, found in file d (narrowPeak)? What does that mean? - 1 pt
+
+Yes this is supported by the presence of the bar at the same regions in the H3K4me3_callpeaks_peaks.narrowpeak track. This means that this region is statistically signifiant in H3K4me3, compared to the input file (based on the algorithim run in the call peaks function).
 
 #?# Add a screenshot of your IGV session right after this chunk, using Rmarkdown syntax - 1pt
 
 
 ```
-*** SCREENSHOT OF IGV***
+***SCREENSHOT OF IGV***
+
+![IGV Screenshot](C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\IGV_Screenshot2.png)
+
 
 
 ## c. Peak enrichments
 
 For this assignment, we are working with 3 different epigenetic marks: H3K4me3, H3K27me3 and H3K27ac. Each of these marks a different transcription state (i.e., activation or repression). Thus, to better visualize the differences in the called peaks for each of these epigenetic marks you will create a heatmap plot (like the one you created on part 2) using their called peaks files (.narrowPeak or .broadPeak). 
-
 
 
 ```{bash, eval=FALSE}
@@ -315,23 +342,32 @@ For this assignment, we are working with 3 different epigenetic marks: H3K4me3, 
 
 #?# Write the commands you used to compute the matrices and create the heatmaps below: - 3 pt
 
-computeMatrix scale-regions -S /usr/local/share/data/assignment_5/H3K4me3_norm.bw /usr/local/share/data/assignment_5/H3K27ac_norm.bw /usr/local/share/data/assignment_5/H3K27me3_norm.bw -R /home/cbarcl01/Assignment_5/H3K27ac_callpeaks.narrowPeak -a 1000 -b 1000 -o ./computematrixRP.gz
+computeMatrix scale-regions -S /usr/local/share/data/assignment_5/H3K4me3_norm.bw /usr/local/share/data/assignment_5/H3K27ac_norm.bw /usr/local/share/data/assignment_5/H3K27me3_norm.bw -R /home/cbarcl01/Assignment_5/H3K27ac_callpeaks_peaks.narrowPeak -a 1000 -b 1000 -o ./computematrixH3K27ac.gz
 
-plotHeatmap -m ./computematrix2.gz \
-     -out Heatmap2.png \
+plotHeatmap -m ./computematrixH3K27ac.gz \
+     -out HeatmapH3K27ac.png \
      --colorMap 'Blues' --kmeans 3
 
-computeMatrix scale-regions -S /usr/local/share/data/assignment_5/H3K4me3_norm.bw /usr/local/share/data/assignment_5/H3K27ac_norm.bw /usr/local/share/data/assignment_5/H3K27me3_norm.bw -R /home/cbarcl01/Assignment_5/H3K4me3_callpeaks.narrowPeak  -a 1000 -b 1000 -o ./computematrixRP.gz
+pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/HeatmapH3K27ac.png C:\Users\cbarc\OneDrive\Desktop 
 
-plotHeatmap -m ./computematrix2.gz \
-     -out Heatmap2.png \
+
+computeMatrix scale-regions -S /usr/local/share/data/assignment_5/H3K4me3_norm.bw /usr/local/share/data/assignment_5/H3K27ac_norm.bw /usr/local/share/data/assignment_5/H3K27me3_norm.bw -R /home/cbarcl01/Assignment_5/H3K4me3_callpeaks_peaks.narrowPeak -a 1000 -b 1000 -o ./computematrixH3K4me3.gz
+
+plotHeatmap -m ./computematrixH3K4me3.gz \
+     -out HeatmapH3K4me3.png \
      --colorMap 'Blues' --kmeans 3
+     
+pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/HeatmapH3K4me3.png C:\Users\cbarc\OneDrive\Desktop 
 
-computeMatrix scale-regions -S /usr/local/share/data/assignment_5/H3K4me3_norm.bw /usr/local/share/data/assignment_5/H3K27ac_norm.bw /usr/local/share/data/assignment_5/H3K27me3_norm.bw -R /home/cbarcl01/Assignment_5/H3K27Me3_callpeaks.broadPeak  -a 1000 -b 1000 -o ./computematrixRP.gz
 
-plotHeatmap -m ./computematrix2.gz \
-     -out Heatmap2.png \
+computeMatrix scale-regions -S /usr/local/share/data/assignment_5/H3K4me3_norm.bw /usr/local/share/data/assignment_5/H3K27ac_norm.bw /usr/local/share/data/assignment_5/H3K27me3_norm.bw -R /home/cbarcl01/Assignment_5/H3K27me3_callpeaks_peaks.broadPeak  -a 1000 -b 1000 -o ./computematrixH3K27me3.gz
+
+plotHeatmap -m ./computematrixH3K27me3.gz \
+     -out HeatmapH3K27me3.png \
      --colorMap 'Blues' --kmeans 3
+     
+pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/HeatmapH3K27me3.png C:\Users\cbarc\OneDrive\Desktop 
+
 
 #?# Add screenshots of the 3 heatmaps you got using the epigenetic marks' peak files as reference files. Add them after this code chunk in the following order: H3K4me3, H3K27ac, H3K27me3 - 1.5 pt
 
@@ -340,21 +376,34 @@ plotHeatmap -m ./computematrix2.gz \
 
 
 ***H3K4me3 screenshot***
+
+![Heatmap for H3K4me3](C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\HeatmapH3K4me3.png)
+
 ***H3K27ac screenshot***
+
+![Heatmap for H3K27ac](C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\HeatmapH3K27ac.png)
+
 ***H3K27me3 screenshot***
 
-```{}
+![Heatmap for H3K27me3](C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\HeatmapH3K27me3.png)
+
+```{bash, eval = FALSE}
 
 #?# Do you see an overlap between the peaks of different epigenetic marks? Which epigenetic marks? - 1 pt
 
+Yes, there is an overlap between H3K27ac and H3K4me3
 
 #?# Why do you think these epigenetic marks overlap? - 1 pt
 
+These are both describing active transcription state, so would expect there to be overlap
 
 #?# Explain the pattern you see for the peaks of H3K27me3, do they look similar or different to the other two marks? Why do you think this happens? - 1pt
 
 
+
 #?# Why do you think the borders of the elements have such clearly-defined borders with respect to the ChIP signal? -1 pt
+
+As it is comparing the to the call to peak statistical anaylsis, it is comparing to a binary yes/no option which makes the borders much more clearly defined, with respect to the TSS and TSE.
 
 ```
 

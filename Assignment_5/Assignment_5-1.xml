@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Session genome="hg19" hasGeneTrack="true" hasSequenceTrack="true" locus="chr3:93470013-93471463" version="8">
+    <Resources>
+        <Resource name="C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\input_chr3_subset.bw" path="input_chr3_subset.bw"/>
+        <Resource name="C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\H3K27ac_chr3_subset.bw" path="H3K27ac_chr3_subset.bw"/>
+        <Resource name="C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\hg38.blacklist.bed" path="hg38.blacklist.bed"/>
+        <Resource name="C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\H3K4me3_chr3_subset.bw" path="H3K4me3_chr3_subset.bw"/>
+        <Resource name="C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\H3K27me3_chr3_subset.bw" path="H3K27me3_chr3_subset.bw"/>
+    </Resources>
+    <Panel height="368" name="DataPanel" width="1517">
+        <Track attributeKey="H3K4me3_chr3_subset.bw" autoScale="true" clazz="org.broad.igv.track.DataSourceTrack" fontSize="10" id="C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\H3K4me3_chr3_subset.bw" name="H3K4me3_chr3_subset.bw" renderer="BAR_CHART" visible="true" windowFunction="mean">
+            <DataRange baseline="0.0" drawBaseline="true" flipAxis="false" maximum="334.0" minimum="0.0" type="LINEAR"/>
+        </Track>
+        <Track attributeKey="H3K27ac_chr3_subset.bw" autoScale="true" clazz="org.broad.igv.track.DataSourceTrack" fontSize="10" id="C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\H3K27ac_chr3_subset.bw" name="H3K27ac_chr3_subset.bw" renderer="BAR_CHART" visible="true" windowFunction="mean">
+            <DataRange baseline="0.0" drawBaseline="true" flipAxis="false" maximum="90.0" minimum="0.0" type="LINEAR"/>
+        </Track>
+        <Track attributeKey="H3K27me3_chr3_subset.bw" autoScale="true" clazz="org.broad.igv.track.DataSourceTrack" fontSize="10" id="C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\H3K27me3_chr3_subset.bw" name="H3K27me3_chr3_subset.bw" renderer="BAR_CHART" visible="true" windowFunction="mean">
+            <DataRange baseline="0.0" drawBaseline="true" flipAxis="false" maximum="147.0" minimum="0.0" type="LINEAR"/>
+        </Track>
+        <Track attributeKey="input_chr3_subset.bw" autoScale="true" clazz="org.broad.igv.track.DataSourceTrack" fontSize="10" id="C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\input_chr3_subset.bw" name="input_chr3_subset.bw" renderer="BAR_CHART" visible="true" windowFunction="mean">
+            <DataRange baseline="0.0" drawBaseline="true" flipAxis="false" maximum="23153.0" minimum="0.0" type="LINEAR"/>
+        </Track>
+    </Panel>
+    <Panel height="213" name="FeaturePanel" width="1517">
+        <Track attributeKey="Reference sequence" clazz="org.broad.igv.track.SequenceTrack" fontSize="10" id="Reference sequence" name="Reference sequence" sequenceTranslationStrandValue="POSITIVE" shouldShowTranslation="false" visible="true"/>
+        <Track attributeKey="RefSeq Genes" clazz="org.broad.igv.track.FeatureTrack" color="0,0,178" colorScale="ContinuousColorScale;0.0;444.0;255,255,255;0,0,178" fontSize="10" height="35" id="hg19_genes" name="RefSeq Genes" visible="true"/>
+        <Track attributeKey="hg38.blacklist.bed" clazz="org.broad.igv.track.FeatureTrack" color="0,0,178" fontSize="10" id="C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\hg38.blacklist.bed" name="hg38.blacklist.bed" visible="true"/>
+    </Panel>
+    <PanelLayout dividerFractions="0.6292517006802721"/>
+    <Regions>
+        <Region chromosome="chr3" end="93470579" start="93470578"/>
+    </Regions>
+    <HiddenAttributes>
+        <Attribute name="DATA FILE"/>
+        <Attribute name="DATA TYPE"/>
+        <Attribute name="NAME"/>
+    </HiddenAttributes>
+</Session>
