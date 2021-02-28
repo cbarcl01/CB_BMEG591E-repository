@@ -398,7 +398,7 @@ These are both describing active transcription state, so would expect there to b
 
 #?# Explain the pattern you see for the peaks of H3K27me3, do they look similar or different to the other two marks? Why do you think this happens? - 1pt
 
-The peaks appear to be different for H3K27me3, with little variation in expression, however for cluster 1 it seems to be that there is a downturn in expression between TSS and TES. This is likely because it represents inactive transcription (rather than active for the other two marks).
+The peaks appear to be different for H3K27me3, with little variation in expressio when compared with the two active marks. A darker colour is observed between TSS and TES  when the narrowpeak file for H3K27me3 is used as the reference. This is likely because H3K27me3 represents inactive transcription (rather than active for the other two marks).
 
 #?# Why do you think the borders of the elements have such clearly-defined borders with respect to the ChIP signal? -1 pt
 
