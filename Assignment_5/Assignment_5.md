@@ -438,7 +438,7 @@ H3K27me3](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Assignm
 
 #?# Do you see an overlap between the peaks of different epigenetic marks? Which epigenetic marks? - 1 pt
 
-Yes, there is an overlap between H3K27ac and H3K4me3
+Yes, there is an overlap between the active H3K27ac and H3K4me3, with an increase in expression after TSS to TES, this is particularly apparent in Cluster 2.
 
 #?# Why do you think these epigenetic marks overlap? - 1 pt
 
@@ -446,7 +446,7 @@ These are both describing active transcription state, so would expect there to b
 
 #?# Explain the pattern you see for the peaks of H3K27me3, do they look similar or different to the other two marks? Why do you think this happens? - 1pt
 
-
+The peaks appear to be different for H3K27me3, with little variation in expressio when compared with the two active marks. A darker colour is observed between TSS and TES  when the narrowpeak file for H3K27me3 is used as the reference. This is likely because H3K27me3 represents inactive transcription (rather than active for the other two marks).
 
 #?# Why do you think the borders of the elements have such clearly-defined borders with respect to the ChIP signal? -1 pt
 
