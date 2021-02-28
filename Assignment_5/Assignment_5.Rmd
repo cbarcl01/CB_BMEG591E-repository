@@ -232,7 +232,7 @@ Because the data is not input normalised, the signals appear stronger so the int
 
 **Add screenshot here**
 
-![Heatmap with raw bigwig files](C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\Heatmap2.png)
+![Heatmap with raw bigwig files](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Assignment_5/Heatmap2.png)
 
 ***How does this compare to the input-normalized data? Why? 1 pt***
 
