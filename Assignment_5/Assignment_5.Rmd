@@ -194,13 +194,13 @@ pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Assignment_5/Heatmap1.p
 
 #?# Explain what you are looking at (Axes, colours, curves). Where are the marks located? What are the differences between the clusters? - 3 pts
 
-The heat maps display data in a grid where each row represents a gene and each column represents a sample. The colour and intensity of the boxes is used to represent changes (not absolute values) of gene expression. The bottom axes displays gene distance in base pairs with the Transcription Start Site and Transcription End Site marked. The 3 clusters show  high/medium/low expression epigenetic marks.  
+The heat maps display data in a grid where each row represents a gene and each column represents a sample. The colour and intensity of the boxes is used to represent changes (not absolute values) of gene expression. The bottom axes displays gene distance in base pairs with the Transcription Start Site and Transcription End Site marked. The 3 clusters show high/medium/low expression regions of the genome.  
 
 For the line graphs above, the height of the line reflects the presence of epigenetic marks.
 
-For the 2 active epigenetics marks (H3K27ac, H3K4me3), H3K4me3 seems to have greater expression. The epigenetic marks appear to be at the Transcription Start Sites. 
+For the 2 active epigenetics marks (H3K27ac, H3K4me3), H3K4me3 seems to be more prevalent. The epigenetic marks appear to be found near the Transcription Start Site
 
-3 clusters show high/medium/low expression epigenetic marks. Cluster 1 seems to have the clearest intensity or increase in expression at the transcription start site vs silencing at the transcription end. For both marks highest intensity (measured by darkest colour) in Cluster 2 is at the located before the transcription start sites. 
+Cluster 1 seems to have the hughest itesnity out of the the three. Cluster 1 also seems to show a peak in intensity immediately after the TSS, with decrease in intensity suggesting silencing at TES for the active H3K4me3 and H3K27ac. For both active marks the highest expression (the darkest colour) in Cluster 2 is located before the TSS with values decreasing immediately after the TSS. Cluster 3 seems to be more homogenous/constant across the markers, with a narrower eak in expression at the TSS in H3K4me3.
 
 ```
 
@@ -211,9 +211,9 @@ For the 2 active epigenetics marks (H3K27ac, H3K4me3), H3K4me3 seems to have gre
 
 ```{bash, eval=FALSE}
 ## Now the above heatmap was made with the ratio of ChIP to input. Repeat the process above, but this time using the raw bigwig files (not input-normalized). 
-#?# Type the commands you used for this below - 1 pt
+#?# Type the commands you used for this below - 1 pt (H3K4me3, H3K27ac, H3K27me3)
 
-computeMatrix scale-regions -S /home/cbarcl01/Assignment_5/H3K27me3_chr3_subset.bw  /home/cbarcl01/Assignment_5/H3K4me3_chr3_subset.bw  /home/cbarcl01/Assignment_5/H3K27ac_chr3_subset.bw -R /usr/local/share/data/assignment_5/reference_genes.bed -a 1000 -b 1000 -o ./computematrix2.gz
+computeMatrix scale-regions -S  /home/cbarcl01/Assignment_5/H3K4me3_chr3_subset.bw  /home/cbarcl01/Assignment_5/H3K27ac_chr3_subset.bw /home/cbarcl01/Assignment_5/H3K27me3_chr3_subset.bw -R /usr/local/share/data/assignment_5/reference_genes.bed -a 1000 -b 1000 -o ./computematrix2.gz
 
 plotHeatmap -m ./computematrix2.gz \
      -out Heatmap2.png \
@@ -232,7 +232,7 @@ Because the data is not input normalised, the signals appear stronger so the int
 
 **Add screenshot here**
 
-![Heatmap with raw bigwig files](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Assignment_5/Heatmap2.png)
+![Heatmap with raw bigwig files](C:\Users\cbarc\OneDrive\Desktop\git_temp\CB_BMEG591E-repository\Assignment_5\Heatmap2.png)
 
 ***How does this compare to the input-normalized data? Why? 1 pt***
 
