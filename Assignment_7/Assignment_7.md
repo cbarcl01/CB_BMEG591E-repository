@@ -9,6 +9,7 @@ Assignment 7: PGS
       - [a. PCA-specific QC](#a-pca-specific-qc)
       - [b. PCA computation](#b-pca-computation)
       - [c. Visualization](#c-visualization)
+  - [Imputation](#imputation)
   - [Polygenic Scores (PGS)](#polygenic-scores-pgs)
       - [PGS accuracy](#pgs-accuracy)
 
@@ -299,40 +300,94 @@ between populations which makes this decision difficult.
 \#?\# Do you think looking at the top two PCs is sufficient to tell what
 population is best? Why/why not? - 2 pt
 
-```` 
+No. There is still a lot of overlap between the clusters which it’s
+difficult to determine the best Population for imputation and
+comparison.
 
 # Imputation
 
-Imputation of genetic data is a very computationally intensive analysis, that can take a long time. So we have performed it for you. Using the chromosome 17 imputation information located in */usr/local/share/data/assignment_7/* under the *Mini_cohort_chr17_imputation_results.info.gz* we will calculate some post-imputation metrics. 
+Imputation of genetic data is a very computationally intensive analysis,
+that can take a long time. So we have performed it for you. Using the
+chromosome 17 imputation information located in
+*/usr/local/share/data/assignment\_7/* under the
+*Mini\_cohort\_chr17\_imputation\_results.info.gz* we will calculate
+some post-imputation metrics.
 
-
-```r
+``` r
 ## Load the Mini_cohort_chr17_imputation_results.info.gz file to your Rstudio environment 
 ### Copy to local machine
 
 pscp -P 22 cbarcl01@gi-edu-sv4.bme.ubc.ca:/usr/local/share/data/assignment_7/Mini_cohort_chr17_imputation_results.info C:\Users\cbarc\OneDrive\Desktop
-````
+```
 
 ``` r
 ## Load the Mini_cohort_chr17_imputation_results.info.gz file to your Rstudio environment 
-chr17 <-read.table("C:/Users/cbarc/OneDrive/Desktop/git_temp/CB_BMEG591E-repository/Assignment_7/Mini_cohort_chr17_imputation_results.info.gz")
+chr17 <-read.table("C:/Users/cbarc/OneDrive/Desktop/git_temp/CB_BMEG591E-repository/Assignment_7/Mini_cohort_chr17_imputation_results.info.gz", header = TRUE)
 
 chr17 <- as_tibble(chr17)
 
 ##Use the information in the file to answer the following questions. Accompany each of the answers with the code you used to get to them and a brief explanation of your thought process behind.
+
 #?# What is the percentage of imputed SNPs? 0.5 pt
 
+Impute <- chr17 %>%
+   filter (Genotyped == "Imputed") #filtering on value imputed to identify all records imputed
 
+Impute <- count(Impute) #saving as a new variable the number of records where 'imputed'
+
+Genotype <- chr17 %>%
+   filter (Genotyped == "Genotyped")  #filtering on value imputed to identify all records genotyped
+
+Genotype <- count(Genotype) #saving as a new variable the number of records where 'genotyped'
+
+
+Total <- count(chr17) #counting rows in dataset to get total
+
+
+PerImputed <- (Impute / Total)*100 ## calculates new variable 'Per' where Imputed SNPs number is divided by the total and multiplied by 100.
+```
+
+\#?\# What is the percentage of imputed SNPs? 0.5 pt
+
+Imputed SNPs is str(PerImputed)
+
+``` r
 ## The metric of imputation quality is Rsq, this is the estimated value of the squared correlation between imputed and true genotypes. Since true genotypes are not available, this calculation is based on the idea that poorly imputed genotype counts will shrink towards their expectations based on allele frequencies observed in the population (https://genome.sph.umich.edu/wiki/Minimac3_Info_File#Rsq).  An Rsq < 0.3 is often used to flag poorly imputed SNPs. 
+
 #?# What is the percentage of poorly imputed SNPs?
 
 
-#?# Create a histogram to visualize the distribution of the MAF - 1 pt
+PoorImpute <- chr17 %>%
+   filter (Genotyped == "Imputed", Rsq <= 0.3) #filtering on value imputed to identify all records poorly imputed
+
+PoorImpute <- count(PoorImpute) #saving as a new variable the number of records where 'imputed'
+
+PerPoorImputed <- (PoorImpute / Total)*100 ## calculates new variable 'Per' where Imputed SNPs number is divided by the total and multiplied by 100.
 ```
+
+\#?\# What is the percentage of poorly imputed SNPs? 0.5 pt
+
+The percentage of poorly imputed SNPs, ie at a value of \< 0.3 is
+str(PerPoorImputed)
+
+``` r
+#?# Create a histogram to visualize the distribution of the MAF - 1 pt
+
+ggplot(chr17, aes(x=MAF)) +
+   geom_histogram(bins =20)
+```
+
+![](Assignment_7_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 \#?\# Which MAF is most frequent? What does that mean? - 1 pt
 
 \#?\# What is the maximum MAF? Why is that? - 1 pt
+
+From the histogram distribution we can see the maximum MAF is 0.5. MAF
+is the minor allele frequency. As the 4 bases pair together, this means
+there is always only 1 of 2 options and therefore the maximum MAF is
+0.5. If the MAF was \> than 0.5 this would be the common allele and the
+remainder would be the MAF value.
 
 # Polygenic Scores (PGS)
 
@@ -367,32 +422,94 @@ effectSize x dosage. The formula is outlined below, where:
 ## 2.  -MiniCohort_Tapas_SNPdosages.txt- 
 ## Both are located in the A7 directory on github.
 
+TapasE <-read.table("C:/Users/cbarc/OneDrive/Desktop/git_temp/CB_BMEG591E-repository/Assignment_7/Tapas_enjoyability_GWAS_sumStats.txt", header = TRUE)
+
+TapasE <- as_tibble(TapasE)
+
+TapasSNP <-read.table("C:/Users/cbarc/OneDrive/Desktop/git_temp/CB_BMEG591E-repository/Assignment_7/MiniCohort_Tapas_SNPdosages.txt", header = TRUE)
+
+TapasSNP <- as_tibble(TapasSNP)
+
 ## Using the base PRS formula outlined below, calculate the Tapas enjoyability PGS for the individuals in the Mini Cohort 
 #?# Include your rationale and the documented code you used - 5pt
 
+#check that the SNPs are in the same order in both data sets, if they are we can use matrix multiplication to calculate the PGS for individuals.
+
+x <- TapasSNP %>% 
+   select(rs58108140:rs188144421)
+
+identical(colnames(x) , TapasE$SNP)
+```
+
+    ## [1] TRUE
+
+``` r
+#They are identical so we can now conduct matrix multiplication.
+y <- TapasE %>%
+   select(Effect_Size)
+
+x <- as.matrix(x)
+y <- as.matrix(y)
+PGS <- x %*% y
+PGS <- as.data.frame(PGS)
 
 #?# Use ggplot to plot the distribution of the Tapas PGS: - 2 pt
 ## Include the code and the graph in your analysis! 
 ## Tip: http://www.cookbook-r.com/Graphs/Plotting_distributions_(ggplot2)/
 
-
-
-
-#?# What is the distribution of the tapas PGS? - 1pt
+ggplot(PGS, aes(x=Effect_Size)) + geom_density()
 ```
+
+![](Assignment_7_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+
+\#?\# What is the distribution of the tapas PGS? - 1pt
+
+This is displaying a Bimodal distribution. Data look to be normally
+distributed, but with 2 peaks. This often implies that our data include
+two different normally distributed groups.
 
 ## PGS accuracy
 
 ``` r
 ## The Tapas enjoyability was measured in a range of 0-1, with 0 being hating tapas and 1 being completely in love with tapas.
-## This tapas likability is captured in the "Tapas_enjoyability" column of the -MiniCohort_Tapas_SNPdosages.txt- file. 
+## This tapas likability is captured in the "Tapas_enjoyability" column of the -MiniCohort_Tapas_SNPdosages.txt- file.
+
 #?# Make a scatterplot with a linear regression line, where x is the Tapas-PGS and y is their actual Tapas enjoyability - 2 pt
 ## Tip: http://www.sthda.com/english/wiki/ggplot2-scatter-plots-quick-start-guide-r-software-and-data-visualization
 
+z<- PGS %>% mutate(SNP = TapasSNP$IID, Tapas_enjoyability = TapasSNP$Tapas_enjoyability)
 
+ggplot(z, aes(x=Effect_Size, y=Tapas_enjoyability)) + 
+  geom_point()+
+  geom_smooth(method=lm)
+```
 
+    ## `geom_smooth()` using formula 'y ~ x'
+
+![](Assignment_7_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+
+``` r
 #?# What is the correlation coeficient between the PGS and Tapas enjoyability? Is Spearman or Pearson correlation more appropriate here? Why? - 3 pt
 
-
-#?# How predictive is the PGS for tapas preference? Include in your answer why do you think it is/isn't accurate and what could affect its predicitvity - 2pt 
+cor(z$Effect_Size, z$Tapas_enjoyability, method ="pearson")
 ```
+
+    ## [1] 0.1409448
+
+``` r
+cor(z$Effect_Size, z$Tapas_enjoyability, method ="spearman")
+```
+
+    ## [1] 0.171456
+
+In this case Spearman rank correlation appears to be the best option. As
+the variable Tapas\_enjoyability is between 0 and 1 and is rounded to 1
+decimal place it becomes essentially ordinal. Spearman rank works with
+ordinal data, where Pearson does not.
+
+\#?\# How predictive is the PGS for tapas preference? Include in your
+answer why do you think it is/isn’t accurate and what could affect its
+predicitvity - 2pt
+
+I do not believe PGS is very predicitve of tapas preference. The
+correlation coefficient is close to 0.
