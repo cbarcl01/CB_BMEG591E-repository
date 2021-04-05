@@ -30,11 +30,22 @@ data, as well as written explanations for what is being done and why,
 and interpretations of results. This should flow in chronological order
 (e.g. starting with fastqs and ending with the last graph).
 
+**Create an Index**
+
 ``` bash
 bowtie2-build /home/cbarcl01/Group_Project/Mnemiopsis_leidyi.MneLei_Aug2011.dna.nonchromosomal.fa.gz MleIdx
 ```
 
+**Install BLAT**
+
 ``` bash
+conda install -c bioconda ucsc-blat
+```
+
+**Alignment**
+
+``` bash
+#Unzip fas_nt.ga format
 gunzip /home/cbarcl01/Group_Project/AGCP01.1.fsa_nt.gz > /home/cbarcl01/Group_Project/AGCP01_extract.fasta #note I tried this without the output defined first
 
 bowtie2 -x /home/cbarcl01/Group_Project/MleIdx \ -U /home/cbarcl01/Group_Project/AGCP01.1.fsa_nt  \ -S /home/cbarcl01/Group_Project/TEST.sam

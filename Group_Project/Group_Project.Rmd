@@ -10,9 +10,9 @@ output:
 
 
 ```{r, eval=FALSE}
-pscp -P 22 C:\Users\cbarc\OneDrive\Documents\BMEG591E_Genome_Informatics\Group_Project\Mnemiopsis_leidyi.MneLei_Aug2011.dna.nonchromosomal.fa.gz cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Group_Project
+pscp -P 22 C:\Users\cbarc\OneDrive\Documents\BMEG591E_Genome_Informatics\Group_Project\Mle_sequence.fasta cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Group_Project
 
-pscp -P 22 C:\Users\cbarc\OneDrive\Documents\BMEG591E_Genome_Informatics\Group_Project\AGCP01.1.fsa_nt.gz cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Group_Project
+pscp -P 22 C:\Users\cbarc\OneDrive\Documents\BMEG591E_Genome_Informatics\Group_Project\mle_RefSeq_genome.fasta cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Group_Project
 ```
 
 ## Introduction
@@ -31,9 +31,19 @@ integrated data processing, QC, analysis, results, graphs, and other data, as we
 bowtie2-build /home/cbarcl01/Group_Project/Mnemiopsis_leidyi.MneLei_Aug2011.dna.nonchromosomal.fa.gz MleIdx
 ```
 
+**Install BLAT and abyss**
 
+Abyss is an assembly tool as could not find Phusion package.
 
 ```{bash, eval=FALSE}
+conda install -c bioconda ucsc-blat
+conda install -c bioconda abyss
+```
+
+**Alignment**
+
+```{bash, eval=FALSE}
+#Unzip fas_nt.ga format
 gunzip /home/cbarcl01/Group_Project/AGCP01.1.fsa_nt.gz > /home/cbarcl01/Group_Project/AGCP01_extract.fasta #note I tried this without the output defined first
 
 bowtie2 -x /home/cbarcl01/Group_Project/MleIdx \ -U /home/cbarcl01/Group_Project/AGCP01.1.fsa_nt  \ -S /home/cbarcl01/Group_Project/TEST.sam
