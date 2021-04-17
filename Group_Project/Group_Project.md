@@ -4,24 +4,53 @@ model organism for the study of multicellularity
 Charlotte Barclay and Gabriel d’Alba
 31/03/2021
 
-  - [Introduction](#introduction)
+  - [1 Introduction](#1-introduction)
+      - [1.1 Motivation](#11-motivation)
+      - [1.2 Original Study](#12-original-study)
+      - [1.3 Activities](#13-activities)
   - [Method](#method)
   - [Results](#results)
   - [Conclusion](#conclusion)
+  - [Bibliography](#bibliography)
 
-``` r
-pscp -P 22 C:\Users\cbarc\OneDrive\Documents\BMEG591E_Genome_Informatics\Group_Project\Mnemiopsis_leidyi.MneLei_Aug2011.dna.nonchromosomal.fa.gz cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Group_Project
+**Install BLAT and abyss**
 
-pscp -P 22 C:\Users\cbarc\OneDrive\Documents\BMEG591E_Genome_Informatics\Group_Project\AGCP01.1.fsa_nt.gz cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Group_Project
+Abyss is an assembly tool as could not find Phusion package.
+
+``` bash
+conda install -c bioconda ucsc-blat
+conda install -c bioconda abyss
 ```
 
-## Introduction
+``` r
+pscp -P 22 C:\Users\cbarc\OneDrive\Documents\BMEG591E_Genome_Informatics\Group_Project\Mle_sequence.fasta cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Group_Project
+
+pscp -P 22 C:\Users\cbarc\OneDrive\Documents\BMEG591E_Genome_Informatics\Group_Project\mle_RefSeq_genome.fasta cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Group_Project
+```
+
+## 1 Introduction
+
+### 1.1 Motivation
+
+From ‘primordial soup’ to the vast array of biodiversity we see today,
+evolution and these origins of multicellularity still fascinate and
+elude scientists\[1\]. Accounts of the number of independent events that
+led to multicellularity differ amongst the scientific community\[2\],
+although there is a consensus that this happened once in the
+Animalia/Metazoan lineage\[2,3\]. Advances in sequencing and reduction
+in cost has led to increase in whole genomic sequences of non-bilateran
+animal species providing insight into the molecular mechanisms that
+govern multicellularity\[4\].
+
+![Schema of phylogenetic position of Mnemiopsis
+leidyi](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/Mle.jpg)
+
+### 1.2 Original Study
 
 overview of the original study, the scope of your re-analysis, and why
 you chose it
 
-![Schema of phylogenetic position of Mnemiopsis
-leidyi](C:\\Users\\cbarc\\OneDrive\\Desktop\\git_temp\\CB_BMEG591E-repository\\Group_Project\\Mle.jpg)
+### 1.3 Activities
 
 ## Method
 
@@ -30,26 +59,53 @@ data, as well as written explanations for what is being done and why,
 and interpretations of results. This should flow in chronological order
 (e.g. starting with fastqs and ending with the last graph).
 
+I have downloaded the assembled reference genome as well as the
+scaffolds. First I will create an Index from the reference genome to use
+to align the scaffolds to the assembled genome. In theory this should be
+close to 100% alignment as the reference is built from these scaffolds.
+
 **Create an Index**
 
 ``` bash
-bowtie2-build /home/cbarcl01/Group_Project/Mnemiopsis_leidyi.MneLei_Aug2011.dna.nonchromosomal.fa.gz MleIdx
+bowtie2-build /home/cbarcl01/Group_Project/Mnemiopsis_leidyi.MneLei_Aug2011.dna.nonchromosomal.fa.gz MleIndex
 ```
 
-**Install BLAT**
+**Investigate file**
+
+First I want to confirm if the number of contigs match the publication:
 
 ``` bash
-conda install -c bioconda ucsc-blat
+grep -c "^>" AGCP01.fasta
 ```
+
+24884
+
+As the raw data was not available in the time constraints, scaffolds in
+.fasta were used. In this instance Fastqc cannot be run so the following
+script was rub to assess the GC content.
 
 **Alignment**
 
 ``` bash
 #Unzip fas_nt.ga format
-gunzip /home/cbarcl01/Group_Project/AGCP01.1.fsa_nt.gz > /home/cbarcl01/Group_Project/AGCP01_extract.fasta #note I tried this without the output defined first
+gunzip /home/cbarcl01/Group_Project/AGCP01.1.fsa_nt. > /home/cbarcl01/Group_Project/AGCP01.fasta 
 
-bowtie2 -x /home/cbarcl01/Group_Project/MleIdx \ -U /home/cbarcl01/Group_Project/AGCP01.1.fsa_nt  \ -S /home/cbarcl01/Group_Project/TEST.sam
+bowtie2 -f -x /home/cbarcl01/Group_Project/MleIndex \ -U /home/cbarcl01/Group_Project/AGCP01.fasta  \ -S /home/cbarcl01/Group_Project/AGCP01.sam
 ```
+
+``` bash
+(Gnme_Assignment_1) [cbarcl01@SBME-GI-EDU-SV4 Group_Project]$ wc -l AGCP01.sam
+```
+
+*Result* 24882
+
+**Sam to Bam**
+
+``` bash
+samtools view -S -b -h alignment.sam > Alignment.bam
+```
+
+**Annotation**
 
 ## Results
 
@@ -63,3 +119,17 @@ and interpretations of results. This should flow in chronological order
 Summarize your findings and contrast this with what the original study
 found. Remark on anything surprising or anything you would do
 differently next time.
+
+## Bibliography
+
+1.  Van Gestel J, Tarnita CE. On the origin of biological construction,
+    with a focus on multicellularity. Proc Natl Acad Sci U S A.
+    2017;114(42):11018-11026. <doi:10.1073/pnas.1704631114>
+2.  Niklas KJ, Newman SA. The many roads to and from multicellularity. J
+    Exp Bot. 2020;71(11):3247-3253. <doi:10.1093/jxb/erz547>
+3.  Niklas KJ, Newman SA. The origins of multicellular organisms.
+    Published online 2013. <doi:10.1111/ede.12013>
+4.  Moreland RT, Nguyen AD, Ryan JF, Baxevanis AD. The Mnemiopsis Genome
+    Project Portal: Integrating new gene expression resources and
+    improving data visualization. Database. 2020;2020(1):1-9.
+    <doi:10.1093/database/baaa029>
