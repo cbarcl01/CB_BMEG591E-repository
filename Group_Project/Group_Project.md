@@ -42,6 +42,12 @@ in cost has led to increase in whole genomic sequences of non-bilateran
 animal species providing insight into the molecular mechanisms that
 govern multicellularity\[4\].
 
+Ctenophores have been proposed as a model organism for understanding the
+evolutionary mechanisms of multicellularity in animals\[4,5\], however
+their phylogenetic placement is still widely debated\[5–7\]. Ctenophores
+are a gelatinous phylum of marine metazoans with approximately 150 known
+species that form a clade of pre-bilateran animals\[8\].
+
 ![Schema of phylogenetic position of Mnemiopsis
 leidyi](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/Mle.jpg)
 
@@ -133,3 +139,15 @@ differently next time.
     Project Portal: Integrating new gene expression resources and
     improving data visualization. Database. 2020;2020(1):1-9.
     <doi:10.1093/database/baaa029>
+5.  Ryan JF, Pang K, Schnitzler CE, et al. The genome of the ctenophore
+    Mnemiopsis leidyi and its implications for cell type evolution.
+    Science (80- ). 2013;342(6164). <doi:10.1126/science.1242592>
+6.  Ryan JF, Pang K, Mullikin JC, Martindale MQ, Baxevanis AD. The
+    homeodomain complement of the ctenophore Mnemiopsis leidyi suggests
+    that Ctenophora and Porifera diverged prior to the ParaHoxozoa.
+    Evodevo. 2010;1(1):1-18. <doi:10.1186/2041-9139-1-9>
+7.  Ryan JF. Did the ctenophore nervous system evolve independently?
+    Zoology. 2014;117(4):225-226. <doi:10.1016/j.zool.2014.06.001>
+8.  Moroz LL, Kocot KM, Citarella MR, et al. The ctenophore genome and
+    the evolutionary origins of neural systems. Nature.
+    2014;510(7503):109-114. <doi:10.1038/nature13400>
