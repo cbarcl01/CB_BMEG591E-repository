@@ -8,7 +8,7 @@ Charlotte Barclay and Gabriel d’Alba
       - [1.1 Motivation](#11-motivation)
       - [1.2 Original Study](#12-original-study)
       - [1.3 Activities](#13-activities)
-  - [Method](#method)
+  - [2 Method](#2-method)
   - [Results](#results)
   - [Conclusion](#conclusion)
   - [Bibliography](#bibliography)
@@ -58,7 +58,7 @@ you chose it
 
 ### 1.3 Activities
 
-## Method
+## 2 Method
 
 integrated data processing, QC, analysis, results, graphs, and other
 data, as well as written explanations for what is being done and why,
