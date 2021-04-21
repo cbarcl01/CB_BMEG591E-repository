@@ -23,8 +23,6 @@ overview of the original study, the scope of your re-analysis, and why you chose
 
 ##### 1.2.1 Sample collection and Genome Assembly
 
-I have downloaded the assembled reference genome as well as the scaffolds. First I will create an Index from the reference genome to use to align the scaffolds to the assembled genome. In theory this should be close to 100% alignment as the reference is built from these scaffolds.
-
 Ryan et al collected 2 wild animals from the Vineyard Sound near Woods Hole, Massachussets (Figure 2) [Ryan paper ref]. Those animals were self-fertilized and DNA was isolated from the resulting embryos of one of them. Details of the DNA isolation protocol were not disclosed, but the authors mention the use of "GS FLX Titanium Rapid Library Preparation Kit" and the "GS FLX Titanium Library Paired End Adaptors Kit". The resulting isolated DNA was used for sequencing using a Roche 454 Genome Sequencer FLX machine located at the Roche Applied Science centre in Indianapolis, IN. 7,334,972 raw reads with an Average read length of 339 bases were generated in nine runs, yielding 2.5 Gb of sequence.
 
 ![Location where wild ctenophores were collected.](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/woodshole.png)
@@ -33,11 +31,11 @@ Those raw reads were then submitted for assembly using the Phusion assembler [ph
 
 #### 1.2.2 Estimation of Variation
 
-Although we did not cover this step, it is worth mentioning that the authors performed a third sequencing step - coming from a third animal (unsure of its origins, whether a developed embryo from the 2 wild ones or a third wild animal) to estimate variation on the genome. The sequencing was made through Illumina Mi-Seq and detected 589,252 Single Nucleotide Variants (SNVs) across 118,613,222 bases, resulting on a ratio of 1 SNV every 200 bases. These is of course interesting for population studies.
+Although we did not cover this step, it is worth mentioning that the authors performed a third sequencing step - coming from a third animal (unsure of its origins, whether a developed embryo from the 2 wild ones or a third wild animal) to estimate variation on the genome. The sequencing was made through Illumina Mi-Seq and detected 589,252 Single Nucleotide Variants (SNVs) across 118,613,222 bases, resulting on a ratio of 1 SNV every 200 bases. These are of course interesting for population studies.
 
 #### 1.2.3 Evaluation of completeness and correctness of genome assembly
 
-The authors extracted 15,752 M. leidyi Expressed Sequence Tags (ESTs) and aligned them to their assembled genome using BLAT [Blat ref] v. 34x12 with default parameters. They evaluated their alignment using a software developed by their group called baa.pl [baa.pl ref] later reformed into Isoblat [github link to isoblat] and obtained:
+The authors extracted 15,752 M. leidyi Expressed Sequence Tags (ESTs) and aligned them to their assembled genome using BLAT [Blat ref] v. 34x12 with default parameters. They evaluated their alignment using a software developed by their group called baa.pl [baa.pl ref] later reformed into Isoblat [github link to Isoblat] and obtained:
 
 1) 99.4% of the transcripts were mapped with BLAT 
 2) 98.2% of the positions in the mapped transcripts were aligned
@@ -63,7 +61,7 @@ They then loaded  the 49,850 Cufflink fragments, the 15,752 publicly available E
 
 ### 1.3 Re-analysis
 
-This study was chosen, as the origins of multicellularity and particularly the phylogenetic position of Ctenophores compared to other non-bilaterans is still widely debated. The original study was undertaken in 2011 and published in 2013 [5], since then of the tools the paper used, some have changed, some are no longer maintained and more data has been made available for gene annotation.
+This study was chosen, as the origins of multicellularity and particularly the phylogenetic position of Ctenophores compared to other non-bilaterans is still widely debated. The original study was undertaken in 2011 and published in 2013 [ref 5?], since then of the tools the paper used, some have changed, some are no longer maintained and more data has been made available for gene annotation.
 
 In our re-analysis, in the absence of raw reads we will investigate the files to confirm number of contigs and scaffolds before running the following analysis to assess for completeness of the assembly:
  - Replicate and validate the alignment of ESTs as seen in the original study using BLAT
@@ -85,7 +83,7 @@ integrated data processing, QC, analysis, results, graphs, and other data, as we
 
 #### 2.1.1 Mnemiopsis Genome Portal
 
-The data was accessed from the Mnemiopsis Genome Portal [Genome Portal ref], a public database for genomic and functional information on *M. leidyi*. The Portal is regularly maintained, with  a BLAST interface as well as a visualisation tool which allows exploration of the scaffolds and RNA seq data, similarly to the IGV Browser [4]. Alternatively the data from this study can be obtained from GenBank (here)[https://www.ncbi.nlm.nih.gov/assembly/GCA_000226015.1]. The files from both resources are the same, scaffold and contig .fasta files. Unfortunately after much searching for  raw reads, that data is not publicly available and in order to get the raw data we would need to get this directly from the authors which was not feasible in the given time. Instead the genome was downloaded from: https://research.nhgri.nih.gov/mnemiopsis/download/download.cgi?dl=genome.
+The data was accessed from the Mnemiopsis Genome Portal [Genome Portal ref], a public database for genomic and functional information on *M. leidyi*. The Portal is regularly maintained, with a BLAST interface as well as a visualization tool which allows exploration of the scaffolds and RNA seq data, similarly to the IGV Browser [ref 4?]. Alternatively the data from this study can be obtained from GenBank (here)[https://www.ncbi.nlm.nih.gov/assembly/GCA_000226015.1]. The files from both resources are the same, scaffold and contig .fasta files. Unfortunately after much searching for  raw reads, that data is not publicly available and in order to get the raw data we would need to get this directly from the authors which was not feasible in the given time. Instead the genome was downloaded from: https://research.nhgri.nih.gov/mnemiopsis/download/download.cgi?dl=genome.
 
 **LOADING GENOME**
 
@@ -93,9 +91,9 @@ The data was accessed from the Mnemiopsis Genome Portal [Genome Portal ref], a p
 
 #Download the scaffolds to local machine then imported to server using pscp
 
-pscp -P 22 -r C:\Users\heavy\Documents\bmeg-591\BMEG-591-Rep\Project\MlScaffold09.nt.gz
+pscp -P 22 -r C:\Users\heavy\Documents\bmeg-591\BMEG-591-Rep\Project\MlScaffold09.nt.gz gdalba@gi-edu-sv2.bme.ubc.ca:/home/gdalba/MlScaffold09.nt.gz
 
-#OR Download the contigs directly to server using wget
+#OR Download the contigs directly to server using wget - This comes from the alternative source, not the Genome Portal.
 
 wget -o ./Project/AGCP01.zip https://sra-download.ncbi.nlm.nih.gov/traces/wgs03/wgs_aux/AG/CP/AGCP01/AGCP01.1.fsa_nt.gz
 
@@ -118,7 +116,7 @@ We also downloaded the 15,752 publicly available ESTs from:  https://research.nh
 
 #Imported to server using pscp
 
-pscp -P 22 -r C:\Users\heavy\Documents\bmeg-591\BMEG-591-Rep\Project\MlESTs.gz
+pscp -P 22 -r C:\Users\heavy\Documents\bmeg-591\BMEG-591-Rep\Project\MlESTs.gz gdalba@gi-edu-sv2.bme.ubc.ca:/home/gdalba/MlESTs.gz
 
 #On server, unziped using gzip
 
@@ -138,7 +136,7 @@ grep -c "^>" MlESTs.fa
 
 #Imported to server using pscp
 
-pscp -P 22 -r C:\Users\heavy\Documents\bmeg-591\BMEG-591-Rep\Project\Ml_Trinity_transcripts.fa.gz
+pscp -P 22 -r C:\Users\heavy\Documents\bmeg-591\BMEG-591-Rep\Project\Ml_Trinity_transcripts.fa.gz gdalba@gi-edu-sv2.bme.ubc.ca:/home/gdalba/Ml_Trinity_transcripts.fa.gz
 
 #On server, unziped using gzip
 
@@ -361,10 +359,90 @@ conda install -c anaconda libboost
 
 ```
 
-We prepared a hints file using the ESTs aligned to the genome (through the BLAT output)
+We prepared a hints file using the ESTs aligned to the genome (through the BLAT output) with aid of the following tutorial: https://vcru.wisc.edu/simonlab/bioinformatics/programs/augustus/docs/tutorial2015/prediction.html. Originally, the authors loaded the *M. leidyi* RNA-seq reads (49,850 Cufflinks transcripts), publicly available mRNAs (161) and publicly available ESTs (15,752). We loaded the Cufflink Transcripts and the publicly available ESTs through the following:
+
+```{bash, eval=FALSE}
+
+#Ran filterPSL to exclude alignments below 80% of query length coverage
+
+#mle_blatalign.psl = BLAT alignment of ESTs to the assembled genome.
+#blatrnaalgin.psl = Trinity assembled transcripts
+#mle_cuffalign.psl = Cufflinks assembled transcripts
+
+cat mle_blatalign.psl | perl /home/gdalba/.conda/pkgs/augustus-3.2.2-0/scripts/filterPSL.pl --best --minCover=80 > filterMle_blatalign.psl
+
+cat blatrnaalign.psl | perl /home/gdalba/.conda/pkgs/augustus-3.2.2-0/scripts/filterPSL.pl --best --minCover=80 > filterMle_rnaalign.psl
+
+cat mle_cuffalign.psl | perl /home/gdalba/.conda/pkgs/augustus-3.2.2-0/scripts/filterPSL.pl --best --minCover=80 > filterMle_cuffalign.psl
+
+#As we can see, this filtering step reduced the amount of relevant alignments from 165481 to 14505, 318457 to 31271, and 2440089 to 50107 for mle_blatalign.psl, blatrnaalign.psl, and mle_cuffalign.psl respectively.
+
+wc -l mle_blatalign.psl filterMle_blatalign.psl
+  165481 mle_blatalign.psl
+   14505 filterMle_blatalign.psl
+  179986 total
+  
+wc -l blatrnaalign.psl filterMle_rnaalign.psl
+  318457 blatrnaalign.psl
+   31271 filterMle_rnaalign.psl
+  349728 total
+
+wc -l mle_cuffalign.psl filterMle_cuffalign.psl
+  2440089 mle_cuffalign.psl
+    50107 filterMle_cuffalign.psl
+  2490196 total
+
+#We then merge the two filtered files.
+
+cat filterMle_blatalign.psl filterMle_cuffalign.psl > combined_cuffhints.psl
+
+#And run blat2hints
+
+blat2hints.pl --nomult --in=combined_cuffhints.psl --out=hints.mle.gff
+
+```
+
+With the hints file ready, we can run Augustus. Augustus was originally trained using *Amphimedon queenslandica*, a data set that is already available through the tool itself.
 
 
-The original authors used Amphimedon queenslandica as their training data for Augustus prediction
+```{bash, eval=FALSE}
+
+augustus --progress=true --species=amphimedon --extrinsicCfgFile=extrinsic.ME.cfg --hintsfile=hints.mle.gff MlScaffold09.fa > augustus_annotation.gff
+
+where,
+--progress=true shows the performance of every step
+
+--species=amphimedon indicates the training dataset, alternatively, you would train your own dataset.
+
+--extrinsicCfgFile=extrinsic.ME.cfg loads a .cfg file containing metadatafrom the hints file, for instance, and parameters that help to assess the quality of the gene prediction and accurately decide where which gene elements are in a predicted sequence. The .ME.cfg file takes into account information coming from the ESTs located within the Hints file, which is useful in our case.
+
+--hintsfile=hints.mle.gff specifies the hints we generated in the previous steps.
+
+By default, Augustus predicts on both forward and reverse.
+```
+
+```{bash, eval=FALSE}
+
+#Assessing number of predicted genes by Augustus
+
+awk '$3=="gene"' augustus_annotation.gff | wc -l
+33354
+
+Example of Augustus output:
+
+ML5014  AUGUSTUS        gene    20      829     0.87    +       .       g11104
+ML5014  AUGUSTUS        transcript      20      829     0.87    +       .       g11104.t1
+ML5014  AUGUSTUS        start_codon     20      22      .       +       0       transcript_id "g11104.t1"; gene_id "g11104";
+ML5014  AUGUSTUS        CDS     20      829     0.87    +       0       transcript_id "g11104.t1"; gene_id "g11104";
+ML5014  AUGUSTUS        stop_codon      827     829     .       +       0       transcript_id "g11104.t1"; gene_id "g11104";
+# protein sequence = [MLQDSRSYAGTLAYSDHRLVVTRVNFKNICLCYKRHTQSSFKFDTSELTSNPTIQVKYRHSLNENLSNAVPALDPNSD
+# LNSLLESIKDAAKSSIGVTRHRKRNRSDNDEVKSLSNQRHMLRQQLNNNQSMDRTLLRSSINRLTNQIQQRLSILRSAAADAICNTISTTTDSKKMFE
+
+We can run this prediction against Mnemiopsis protein models using BLASTp (https://research.nhgri.nih.gov/mnemiopsis/sequenceserver/#), the best match (for this protein, is the protein model ML050010a, with an e-score of 6e-122) can then undergo regular Blastp analysis, revealing 83% identity (e-value: 4e-43) with an uncharacterized protein found in *Octopus sinensis*.
+
+```
+
+Multiple attempts to run PASA, HMMGene, and GENESH were made, but due to time constrains and technical challenges, we decided to run Augustus alone. Augustus predicted 33,354 protein-coding loci.
 
 ### 2.5 Differential Expression
 
