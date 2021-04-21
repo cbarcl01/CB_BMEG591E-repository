@@ -130,6 +130,10 @@ samtools view -S -b -h alignment.sam > Alignment.bam
 
 ### 2.3 Phylogeny
 
+In the original study, phylogenetic analysis was conducted using PhyloBayes "a Bayesian Monte Carlo Markov Chain (MCMC) sampler for phylogenetic
+reconstruction", comparing the whole genomes of 13 different animals in the 'Genome set' vs the EST data available in GenBank from 58 different animals in the 'EST set'. Unfortunately, one of the runs for EST alone took 204 days and as such was not reproducible for this assignment.
+
+The importance of phylogenetics is to identify similarity and in association with annotation, could be used to assess orthologs and genetically conserved regions that can be traced back to the root of metazoan divergence. Consequently, instead of replicating the whole genome or EST phylogenetics, we compared significant gene regions that are of interest to scientists in the origins of animal multicellularity.
 
 ### 2.4 RNA-seq expression
 
