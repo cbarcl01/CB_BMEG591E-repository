@@ -9,13 +9,11 @@ Charlotte Barclay and Gabriel Dall’Alba
       - [1.2 Original Study](#12-original-study)
           - [1.2.1 Sample collection and Genome
             Assembly](#121-sample-collection-and-genome-assembly)
-          - [1.2.2 Estimation of
-            Variation](#122-estimation-of-variation)
-          - [1.2.3 Evaluation of completeness and correctness of genome
-            assembly](#123-evaluation-of-completeness-and-correctness-of-genome-assembly)
-          - [1.2.4 Gene Prediction
-            pipeline](#124-gene-prediction-pipeline)
-          - [1.2.5 Phylogenetic analysis](#125-phylogenetic-analysis)
+          - [1.2.2 Evaluation of completeness and correctness of genome
+            assembly](#122-evaluation-of-completeness-and-correctness-of-genome-assembly)
+          - [1.2.3 Gene Prediction
+            pipeline](#123-gene-prediction-pipeline)
+          - [1.2.4 Phylogenetic analysis](#124-phylogenetic-analysis)
       - [1.3 Re-analysis](#13-re-analysis)
   - [2 Workflow: Methods and Results](#2-workflow-methods-and-results)
       - [2.1 Data gathering](#21-data-gathering)
@@ -25,7 +23,10 @@ Charlotte Barclay and Gabriel Dall’Alba
           - [2.2.1 Bowtie x BLAT](#221-bowtie-x-blat)
       - [2.3 ASSESSING GC CONTENT](#23-assessing-gc-content)
       - [2.4 Annotation](#24-annotation)
+      - [2.5 Differential Expression](#25-differential-expression)
       - [2.5 Phylogeny](#25-phylogeny)
+          - [2.5.1 Mnemiopsis Genome Project Portal: Track
+            Viewer](#251-mnemiopsis-genome-project-portal-track-viewer)
   - [Conclusion](#conclusion)
   - [Bibliography](#bibliography)
 
@@ -61,11 +62,6 @@ you chose it
 
 ##### 1.2.1 Sample collection and Genome Assembly
 
-I have downloaded the assembled reference genome as well as the
-scaffolds. First I will create an Index from the reference genome to use
-to align the scaffolds to the assembled genome. In theory this should be
-close to 100% alignment as the reference is built from these scaffolds.
-
 Ryan et al collected 2 wild animals from the Vineyard Sound near Woods
 Hole, Massachussets (Figure 2) \[Ryan paper ref\]. Those animals were
 self-fertilized and DNA was isolated from the resulting embryos of one
@@ -91,24 +87,13 @@ read aligner ELAND, and integrated into Phusion’s scaffolding step. This
 resulted in 5,100 scaffolds with an N50 of 187 Kb and an coverage of
 160X.
 
-#### 1.2.2 Estimation of Variation
-
-Although we did not cover this step, it is worth mentioning that the
-authors performed a third sequencing step - coming from a third animal
-(unsure of its origins, whether a developed embryo from the 2 wild ones
-or a third wild animal) to estimate variation on the genome. The
-sequencing was made through Illumina Mi-Seq and detected 589,252 Single
-Nucleotide Variants (SNVs) across 118,613,222 bases, resulting on a
-ratio of 1 SNV every 200 bases. These is of course interesting for
-population studies.
-
-#### 1.2.3 Evaluation of completeness and correctness of genome assembly
+#### 1.2.2 Evaluation of completeness and correctness of genome assembly
 
 The authors extracted 15,752 M. leidyi Expressed Sequence Tags (ESTs)
 and aligned them to their assembled genome using BLAT \[Blat ref\] v.
 34x12 with default parameters. They evaluated their alignment using a
 software developed by their group called baa.pl \[baa.pl ref\] later
-reformed into Isoblat \[github link to isoblat\] and obtained:
+reformed into Isoblat \[github link to Isoblat\] and obtained:
 
 1)  99.4% of the transcripts were mapped with BLAT
 2)  98.2% of the positions in the mapped transcripts were aligned
@@ -131,7 +116,7 @@ assembled. Further repeat analysis indicates allowed them to estimate a
 genome size of 150 Mb, which configures this genome to be one of the
 smallest 7% known genomes \[Ryan ref\].
 
-#### 1.2.4 Gene Prediction pipeline
+#### 1.2.3 Gene Prediction pipeline
 
 The authors provided a complex, in-depth pipeline for gene prediction
 with no common pattern between automated and manual steps. Firstly, the
@@ -156,16 +141,16 @@ predicted genes (or protein-coding loci), making up 58% of its total
 length, with 44% of those loci being homologous to known genes in
 non-ctenophores.
 
-#### 1.2.5 Phylogenetic analysis
+#### 1.2.4 Phylogenetic analysis
 
 ### 1.3 Re-analysis
 
 This study was chosen, as the origins of multicellularity and
 particularly the phylogenetic position of Ctenophores compared to other
 non-bilaterans is still widely debated. The original study was
-undertaken in 2011 and published in 2013 \[5\], since then of the tools
-the paper used, some have changed, some are no longer maintained and
-more data has been made available for gene annotation.
+undertaken in 2011 and published in 2013 \[ref 5?\], since then of the
+tools the paper used, some have changed, some are no longer maintained
+and more data has been made available for gene annotation.
 
 In our re-analysis, in the absence of raw reads we will investigate the
 files to confirm number of contigs and scaffolds before running the
@@ -193,9 +178,9 @@ and interpretations of results. This should flow in chronological order
 The data was accessed from the Mnemiopsis Genome Portal \[Genome Portal
 ref\], a public database for genomic and functional information on *M.
 leidyi*. The Portal is regularly maintained, with a BLAST interface as
-well as a visualisation tool which allows exploration of the scaffolds
-and RNA seq data, similarly to the IGV Browser \[4\]. Alternatively the
-data from this study can be obtained from GenBank
+well as a visualization tool which allows exploration of the scaffolds
+and RNA seq data, similarly to the IGV Browser \[ref 4?\]. Alternatively
+the data from this study can be obtained from GenBank
 (here)\[<https://www.ncbi.nlm.nih.gov/assembly/GCA_000226015.1>\]. The
 files from both resources are the same, scaffold and contig .fasta
 files. Unfortunately after much searching for raw reads, that data is
@@ -210,9 +195,9 @@ time. Instead the genome was downloaded from:
 
 #Download the scaffolds to local machine then imported to server using pscp
 
-pscp -P 22 -r C:\Users\heavy\Documents\bmeg-591\BMEG-591-Rep\Project\MlScaffold09.nt.gz
+pscp -P 22 -r C:\Users\heavy\Documents\bmeg-591\BMEG-591-Rep\Project\MlScaffold09.nt.gz gdalba@gi-edu-sv2.bme.ubc.ca:/home/gdalba/MlScaffold09.nt.gz
 
-#OR Download the contigs directly to server using wget
+#OR Download the contigs directly to server using wget - This comes from the alternative source, not the Genome Portal.
 
 wget -o ./Project/AGCP01.zip https://sra-download.ncbi.nlm.nih.gov/traces/wgs03/wgs_aux/AG/CP/AGCP01/AGCP01.1.fsa_nt.gz
 
@@ -235,7 +220,7 @@ We also downloaded the 15,752 publicly available ESTs from:
 
 #Imported to server using pscp
 
-pscp -P 22 -r C:\Users\heavy\Documents\bmeg-591\BMEG-591-Rep\Project\MlESTs.gz
+pscp -P 22 -r C:\Users\heavy\Documents\bmeg-591\BMEG-591-Rep\Project\MlESTs.gz gdalba@gi-edu-sv2.bme.ubc.ca:/home/gdalba/MlESTs.gz
 
 #On server, unziped using gzip
 
@@ -256,7 +241,7 @@ and loaded into the server.
 
 #Imported to server using pscp
 
-pscp -P 22 -r C:\Users\heavy\Documents\bmeg-591\BMEG-591-Rep\Project\Ml_Trinity_transcripts.fa.gz
+pscp -P 22 -r C:\Users\heavy\Documents\bmeg-591\BMEG-591-Rep\Project\Ml_Trinity_transcripts.fa.gz gdalba@gi-edu-sv2.bme.ubc.ca:/home/gdalba/Ml_Trinity_transcripts.fa.gz
 
 #On server, unziped using gzip
 
@@ -492,10 +477,387 @@ conda install -c anaconda libboost
 ```
 
 We prepared a hints file using the ESTs aligned to the genome (through
-the BLAT output)
+the BLAT output) with aid of the following tutorial:
+<https://vcru.wisc.edu/simonlab/bioinformatics/programs/augustus/docs/tutorial2015/prediction.html>.
+Originally, the authors loaded the *M. leidyi* RNA-seq reads (49,850
+Cufflinks transcripts), publicly available mRNAs (161) and publicly
+available ESTs (15,752). We loaded the Cufflink Transcripts and the
+publicly available ESTs through the following:
 
-The original authors used Amphimedon queenslandica as their training
-data for Augustus prediction
+``` bash
+
+#Ran filterPSL to exclude alignments below 80% of query length coverage
+
+#mle_blatalign.psl = BLAT alignment of ESTs to the assembled genome.
+#blatrnaalgin.psl = Trinity assembled transcripts
+#mle_cuffalign.psl = Cufflinks assembled transcripts
+
+cat mle_blatalign.psl | perl /home/gdalba/.conda/pkgs/augustus-3.2.2-0/scripts/filterPSL.pl --best --minCover=80 > filterMle_blatalign.psl
+
+cat blatrnaalign.psl | perl /home/gdalba/.conda/pkgs/augustus-3.2.2-0/scripts/filterPSL.pl --best --minCover=80 > filterMle_rnaalign.psl
+
+cat mle_cuffalign.psl | perl /home/gdalba/.conda/pkgs/augustus-3.2.2-0/scripts/filterPSL.pl --best --minCover=80 > filterMle_cuffalign.psl
+
+#As we can see, this filtering step reduced the amount of relevant alignments from 165481 to 14505, 318457 to 31271, and 2440089 to 50107 for mle_blatalign.psl, blatrnaalign.psl, and mle_cuffalign.psl respectively.
+
+wc -l mle_blatalign.psl filterMle_blatalign.psl
+  165481 mle_blatalign.psl
+   14505 filterMle_blatalign.psl
+  179986 total
+  
+wc -l blatrnaalign.psl filterMle_rnaalign.psl
+  318457 blatrnaalign.psl
+   31271 filterMle_rnaalign.psl
+  349728 total
+
+wc -l mle_cuffalign.psl filterMle_cuffalign.psl
+  2440089 mle_cuffalign.psl
+    50107 filterMle_cuffalign.psl
+  2490196 total
+
+#We then merge the two filtered files.
+
+cat filterMle_blatalign.psl filterMle_cuffalign.psl > combined_cuffhints.psl
+
+#And run blat2hints
+
+blat2hints.pl --nomult --in=combined_cuffhints.psl --out=hints.mle.gff
+```
+
+With the hints file ready, we can run Augustus. Augustus was originally
+trained using *Amphimedon queenslandica*, a data set that is already
+available through the tool itself.
+
+``` bash
+
+augustus --progress=true --species=amphimedon --extrinsicCfgFile=extrinsic.ME.cfg --hintsfile=hints.mle.gff MlScaffold09.fa > augustus_annotation.gff
+
+where,
+--progress=true shows the performance of every step
+
+--species=amphimedon indicates the training dataset, alternatively, you would train your own dataset.
+
+--extrinsicCfgFile=extrinsic.ME.cfg loads a .cfg file containing metadatafrom the hints file, for instance, and parameters that help to assess the quality of the gene prediction and accurately decide where which gene elements are in a predicted sequence. The .ME.cfg file takes into account information coming from the ESTs located within the Hints file, which is useful in our case.
+
+--hintsfile=hints.mle.gff specifies the hints we generated in the previous steps.
+
+By default, Augustus predicts on both forward and reverse.
+```
+
+``` bash
+
+#Assessing number of predicted genes by Augustus
+
+awk '$3=="gene"' augustus_annotation.gff | wc -l
+33354
+
+Example of Augustus output:
+
+ML5014  AUGUSTUS        gene    20      829     0.87    +       .       g11104
+ML5014  AUGUSTUS        transcript      20      829     0.87    +       .       g11104.t1
+ML5014  AUGUSTUS        start_codon     20      22      .       +       0       transcript_id "g11104.t1"; gene_id "g11104";
+ML5014  AUGUSTUS        CDS     20      829     0.87    +       0       transcript_id "g11104.t1"; gene_id "g11104";
+ML5014  AUGUSTUS        stop_codon      827     829     .       +       0       transcript_id "g11104.t1"; gene_id "g11104";
+# protein sequence = [MLQDSRSYAGTLAYSDHRLVVTRVNFKNICLCYKRHTQSSFKFDTSELTSNPTIQVKYRHSLNENLSNAVPALDPNSD
+# LNSLLESIKDAAKSSIGVTRHRKRNRSDNDEVKSLSNQRHMLRQQLNNNQSMDRTLLRSSINRLTNQIQQRLSILRSAAADAICNTISTTTDSKKMFE
+
+We can run this prediction against Mnemiopsis protein models using BLASTp (https://research.nhgri.nih.gov/mnemiopsis/sequenceserver/#), the best match (for this protein, is the protein model ML050010a, with an e-score of 6e-122) can then undergo regular Blastp analysis, revealing 83% identity (e-value: 4e-43) with an uncharacterized protein found in *Octopus sinensis*.
+```
+
+Multiple attempts to run PASA, HMMGene, and GENESH were made, but due to
+time constrains and technical challenges, we decided to run Augustus
+alone. Augustus predicted 33,354 protein-coding loci.
+
+### 2.5 Differential Expression
+
+First we download the temporal development expression profiles to from
+(GenBank)\[<https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60478>\].
+The introns of the genes are removed to form the mature mRNAs, so the
+reads that are counted correspond to the reads aligning to the exons of
+the genes.
+
+Load relevant libraries
+
+``` r
+# Load library for DESeq2
+library(DESeq2)
+```
+
+    ## Loading required package: S4Vectors
+
+    ## Loading required package: stats4
+
+    ## Loading required package: BiocGenerics
+
+    ## Warning: package 'BiocGenerics' was built under R version 4.0.5
+
+    ## Loading required package: parallel
+
+    ## 
+    ## Attaching package: 'BiocGenerics'
+
+    ## The following objects are masked from 'package:parallel':
+    ## 
+    ##     clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    ##     clusterExport, clusterMap, parApply, parCapply, parLapply,
+    ##     parLapplyLB, parRapply, parSapply, parSapplyLB
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     IQR, mad, sd, var, xtabs
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    ##     dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    ##     grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    ##     order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    ##     rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    ##     union, unique, unsplit, which.max, which.min
+
+    ## 
+    ## Attaching package: 'S4Vectors'
+
+    ## The following object is masked from 'package:base':
+    ## 
+    ##     expand.grid
+
+    ## Loading required package: IRanges
+
+    ## 
+    ## Attaching package: 'IRanges'
+
+    ## The following object is masked from 'package:grDevices':
+    ## 
+    ##     windows
+
+    ## Loading required package: GenomicRanges
+
+    ## Loading required package: GenomeInfoDb
+
+    ## Warning: package 'GenomeInfoDb' was built under R version 4.0.5
+
+    ## Loading required package: SummarizedExperiment
+
+    ## Loading required package: MatrixGenerics
+
+    ## Loading required package: matrixStats
+
+    ## Warning: package 'matrixStats' was built under R version 4.0.5
+
+    ## 
+    ## Attaching package: 'MatrixGenerics'
+
+    ## The following objects are masked from 'package:matrixStats':
+    ## 
+    ##     colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    ##     colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    ##     colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    ##     colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    ##     colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    ##     colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    ##     colWeightedMeans, colWeightedMedians, colWeightedSds,
+    ##     colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    ##     rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    ##     rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    ##     rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    ##     rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    ##     rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    ##     rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    ##     rowWeightedSds, rowWeightedVars
+
+    ## Loading required package: Biobase
+
+    ## Welcome to Bioconductor
+    ## 
+    ##     Vignettes contain introductory material; view with
+    ##     'browseVignettes()'. To cite Bioconductor, see
+    ##     'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+    ## 
+    ## Attaching package: 'Biobase'
+
+    ## The following object is masked from 'package:MatrixGenerics':
+    ## 
+    ##     rowMedians
+
+    ## The following objects are masked from 'package:matrixStats':
+    ## 
+    ##     anyMissing, rowMedians
+
+``` r
+# Load library for RColorBrewer
+library(RColorBrewer)
+
+# Load library for pheatmap
+library(pheatmap)
+```
+
+    ## Warning: package 'pheatmap' was built under R version 4.0.5
+
+``` r
+# Load library for tidyverse
+library(tidyverse)
+```
+
+    ## Warning: package 'tidyverse' was built under R version 4.0.5
+
+    ## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --
+
+    ## v ggplot2 3.3.3     v purrr   0.3.4
+    ## v tibble  3.1.0     v dplyr   1.0.5
+    ## v tidyr   1.1.3     v stringr 1.4.0
+    ## v readr   1.4.0     v forcats 0.5.1
+
+    ## Warning: package 'ggplot2' was built under R version 4.0.5
+
+    ## Warning: package 'tibble' was built under R version 4.0.5
+
+    ## Warning: package 'tidyr' was built under R version 4.0.5
+
+    ## Warning: package 'readr' was built under R version 4.0.5
+
+    ## Warning: package 'purrr' was built under R version 4.0.5
+
+    ## Warning: package 'dplyr' was built under R version 4.0.5
+
+    ## Warning: package 'stringr' was built under R version 4.0.5
+
+    ## Warning: package 'forcats' was built under R version 4.0.5
+
+    ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+    ## x dplyr::collapse()   masks IRanges::collapse()
+    ## x dplyr::combine()    masks Biobase::combine(), BiocGenerics::combine()
+    ## x dplyr::count()      masks matrixStats::count()
+    ## x dplyr::desc()       masks IRanges::desc()
+    ## x tidyr::expand()     masks S4Vectors::expand()
+    ## x dplyr::filter()     masks stats::filter()
+    ## x dplyr::first()      masks S4Vectors::first()
+    ## x dplyr::lag()        masks stats::lag()
+    ## x ggplot2::Position() masks BiocGenerics::Position(), base::Position()
+    ## x purrr::reduce()     masks GenomicRanges::reduce(), IRanges::reduce()
+    ## x dplyr::rename()     masks S4Vectors::rename()
+    ## x dplyr::slice()      masks IRanges::slice()
+
+``` r
+#load the data
+load("GSE60478_RNAseq.RData") 
+
+#explore the counts data
+head(GSE60478_ML_exp.tab)
+```
+
+    ##   X.Sample. Metazome_ML1_sample_0001 Metazome_ML1_sample_0002
+    ## 1 ML000110a                      127                      151
+    ## 2 ML000111a                        0                        0
+    ## 3 ML000112a                        0                        0
+    ## 4 ML000113a                        0                        0
+    ## 5 ML000114a                        0                        1
+    ## 6 ML000115a                        6                        7
+    ##   Metazome_ML1_sample_0003 Metazome_ML1_sample_0004 Metazome_ML1_sample_0005
+    ## 1                      101                       79                       22
+    ## 2                        0                        0                        0
+    ## 3                        0                        0                        4
+    ## 4                        0                        0                        0
+    ## 5                        0                        4                        1
+    ## 6                       13                       15                        0
+    ##   Metazome_ML1_sample_0006 Metazome_ML1_sample_0007 Metazome_ML1_sample_0008
+    ## 1                       66                       34                       70
+    ## 2                        0                        0                        0
+    ## 3                        0                        0                        0
+    ## 4                        0                        0                        0
+    ## 5                        0                        0                        2
+    ## 6                       21                        4                       19
+    ##   Metazome_ML1_sample_0009 Metazome_ML1_sample_0010 Metazome_ML1_sample_0011
+    ## 1                       70                       70                        9
+    ## 2                        0                        0                        0
+    ## 3                        0                        2                        0
+    ## 4                        3                        6                        0
+    ## 5                        0                        0                        0
+    ## 6                       31                       38                       28
+    ##   Metazome_ML1_sample_0012 Metazome_ML1_sample_0013 Metazome_ML1_sample_0014
+    ## 1                       21                       47                       70
+    ## 2                        0                        0                        0
+    ## 3                        0                        0                        3
+    ## 4                        2                        3                       14
+    ## 5                       17                        0                        1
+    ## 6                       25                        8                       27
+    ##   Metazome_ML1_sample_0015 Metazome_ML1_sample_0016 Metazome_ML1_sample_0017
+    ## 1                       12                        0                       61
+    ## 2                        0                        0                        0
+    ## 3                        0                        0                        0
+    ## 4                       11                        0                       57
+    ## 5                        0                        0                        2
+    ## 6                       10                        0                       37
+    ##   Metazome_ML1_sample_0018 Metazome_ML1_sample_0019 Metazome_ML1_sample_0020
+    ## 1                       68                       32                       27
+    ## 2                        0                        0                        0
+    ## 3                        1                        2                        1
+    ## 4                       42                       33                       21
+    ## 5                        1                        0                        0
+    ## 6                       23                       11                       14
+    ##   Metazome_ML1_sample_0021 Metazome_ML1_sample_0022 Metazome_ML1_sample_0023
+    ## 1                      150                       97                       24
+    ## 2                        0                        0                        0
+    ## 3                        0                        0                        0
+    ## 4                        0                        0                        0
+    ## 5                        0                        1                        0
+    ## 6                        5                        2                        0
+    ##   Metazome_ML1_sample_0024 Metazome_ML1_sample_0025 Metazome_ML1_sample_0026
+    ## 1                       26                       13                       69
+    ## 2                        0                        0                        0
+    ## 3                        1                        4                        0
+    ## 4                        0                        0                        0
+    ## 5                        3                        1                        0
+    ## 6                        3                        6                        6
+    ##   Metazome_ML1_sample_0027 Metazome_ML1_sample_0028 Metazome_ML1_sample_0029
+    ## 1                       65                        5                       75
+    ## 2                        0                        0                        0
+    ## 3                        0                        0                        4
+    ## 4                        0                        0                        1
+    ## 5                        0                        0                        0
+    ## 6                       28                        5                       18
+    ##   Metazome_ML1_sample_0030 Metazome_ML1_sample_0031 Metazome_ML1_sample_0032
+    ## 1                       23                       36                       24
+    ## 2                        0                        0                        0
+    ## 3                        6                        0                        0
+    ## 4                        2                        7                        1
+    ## 5                        0                        5                        0
+    ## 6                       10                       88                        6
+    ##   Metazome_ML1_sample_0033 Metazome_ML1_sample_0034 Metazome_ML1_sample_0035
+    ## 1                       83                        7                       17
+    ## 2                        0                        0                        0
+    ## 3                        0                        0                        0
+    ## 4                       18                        0                       14
+    ## 5                        0                        0                        0
+    ## 6                       32                        0                        2
+    ##   Metazome_ML1_sample_0036 Metazome_ML1_sample_0037 Metazome_ML1_sample_0038
+    ## 1                       34                       21                       12
+    ## 2                        0                        0                        0
+    ## 3                        0                        0                        0
+    ## 4                       14                       24                       69
+    ## 5                        0                        0                        0
+    ## 6                        7                       36                        8
+    ##   Metazome_ML1_sample_0039 Metazome_ML1_sample_0040
+    ## 1                       27                        6
+    ## 2                        0                        0
+    ## 3                        0                        2
+    ## 4                        4                       22
+    ## 5                        0                        1
+    ## 6                       12                       19
+
+``` r
+#explore the metadata
+head(GSE60478_ML_GEO_sample_sheet.tab) 
+```
+
+    ##   X.id name   flocell series lane il_barcode cel_barcode  project comment
+    ## 1    1    1 C4HYTACXX    ML1 L003          6          20 Metazome     0.0
+    ## 2    2    2 C4HYTACXX    ML1 L003          6           5 Metazome     1.0
+    ## 3    3    3 C4HYTACXX    ML1 L003          6           7 Metazome     2.0
+    ## 4    4    4 C4HYTACXX    ML1 L003          6          13 Metazome     3.0
+    ## 5    5    5 C4HYTACXX    ML1 L003          6           4 Metazome     4.0
+    ## 6    6    6 C4HYTACXX    ML1 L003          6          18 Metazome     4.5
 
 ### 2.5 Phylogeny
 
@@ -516,14 +878,29 @@ genome or EST phylogenetics (due to the aforementioned time
 limitations), we compared significant gene regions that are of interest
 to scientists in the origins of animal multicellularity.
 
-In the original study, Ryan et al. identified
+In the original study, Ryan et al. suggested through phylogenetic
+analysis that ionotropic glutamate receptors from *M. leidyi* form a
+sister clade to the bilaterian glutamate receptors. The gene model of
+interest was identified as ML00441a and both the transcript sequence and
+predicted protein sequence can be viewed
+(here)\[<https://research.nhgri.nih.gov/mnemiopsis/wiki/index.php/ML00441a>\].
 
-\#\#3 Results and Discussion
+#### 2.5.1 Mnemiopsis Genome Project Portal: Track Viewer
 
-integrated data processing, QC, analysis, results, graphs, and other
-data, as well as written explanations for what is being done and why,
-and interpretations of results. This should flow in chronological order
-(e.g. starting with fastqs and ending with the last graph).
+The following is a snap shot from the Mnemiopsis leidyi genome portal
+track for the gene region of interest. This viewer can be interrogated
+similarly to the IGV.
+
+\!(Mnemiopsis leidyi Genome Portal Track for
+ML00441a)\[C:\_BMEG591E-repository\_Project.png\]
+
+Search for Ionotropic glutamate receptors (synaptic scaffolding) in
+other ctenophore transcriptomes
+
+We used human GRIA2 (accession= NP\_000817), GRIN1 (accession=
+NP\_000823), GRIK2 (accession= NP\_001159719), and GRID2 (accession=
+NP\_001501) as TBLASTN queries against the seven ctenophore
+transcriptomes and the Trinity assembly of the M. leidyi RNA-seq data
 
 ## Conclusion
 
