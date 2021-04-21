@@ -1,32 +1,25 @@
 Group Project: Investigating the validity of *Mnemiopsis leidyi* as a
 model organism for the study of multicellularity
 ================
-Charlotte Barclay and Gabriel d’Alba
+Charlotte Barclay and Gabriel Dall’Alba
 31/03/2021
 
-  - [1 Introduction](#1-introduction)
-      - [1.1 Motivation](#11-motivation)
-      - [1.2 Original Study](#12-original-study)
-      - [1.3 Activities](#13-activities)
-  - [2 Method](#2-method)
-  - [Results](#results)
-  - [Conclusion](#conclusion)
-  - [Bibliography](#bibliography)
-
-**Install BLAT and abyss**
-
-Abyss is an assembly tool as could not find Phusion package.
-
-``` bash
-conda install -c bioconda ucsc-blat
-conda install -c bioconda abyss
-```
-
-``` r
-pscp -P 22 C:\Users\cbarc\OneDrive\Documents\BMEG591E_Genome_Informatics\Group_Project\Mle_sequence.fasta cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Group_Project
-
-pscp -P 22 C:\Users\cbarc\OneDrive\Documents\BMEG591E_Genome_Informatics\Group_Project\mle_RefSeq_genome.fasta cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Group_Project
-```
+-   [1 Introduction](#1-introduction)
+    -   [1.1 Motivation](#11-motivation)
+    -   [1.2 Original Study](#12-original-study)
+        -   [1.2.1 Paper methodology](#121-paper-methodology)
+-   [2 WORKFLOW (METHODS + RESULTS)](#2-workflow-methods--results)
+    -   [2.1 Data gathering](#21-data-gathering)
+        -   [2.1.1 Mnemiopsis Genome
+            Portal](#211-mnemiopsis-genome-portal)
+    -   [2.2 Evaluation of Correctness](#22-evaluation-of-correctness)
+        -   [2.2.1 Bowtie x BLAT](#221-bowtie-x-blat)
+    -   [2.2 Annotation](#22-annotation)
+    -   [2.3 Phylogeny](#23-phylogeny)
+    -   [2.4 RNA-seq expression](#24-rna-seq-expression)
+-   [Results](#results)
+-   [Conclusion](#conclusion)
+-   [Bibliography](#bibliography)
 
 ## 1 Introduction
 
@@ -34,19 +27,21 @@ pscp -P 22 C:\Users\cbarc\OneDrive\Documents\BMEG591E_Genome_Informatics\Group_P
 
 From ‘primordial soup’ to the vast array of biodiversity we see today,
 evolution and these origins of multicellularity still fascinate and
-elude scientists\[1\]. Accounts of the number of independent events that
-led to multicellularity differ amongst the scientific community\[2\],
-although there is a consensus that this happened once in the
-Animalia/Metazoan lineage\[2,3\]. Advances in sequencing and reduction
-in cost has led to increase in whole genomic sequences of non-bilateran
-animal species providing insight into the molecular mechanisms that
-govern multicellularity\[4\].
+elude scientists\[reference 1\]. Accounts of the number of independent
+events that led to multicellularity differ amongst the scientific
+community\[reference 2\], although there is a consensus that this
+happened once in the Animalia/Metazoan lineage\[references 2,3\].
+Advances in sequencing and reduction in cost has led to increase in
+whole genomic sequences of non-bilateran animal species providing
+insight into the molecular mechanisms that govern
+multicellularity\[reference 4\].
 
 Ctenophores have been proposed as a model organism for understanding the
-evolutionary mechanisms of multicellularity in animals\[4,5\], however
-their phylogenetic placement is still widely debated\[5–7\]. Ctenophores
-are a gelatinous phylum of marine metazoans with approximately 150 known
-species that form a clade of pre-bilateran animals\[8\].
+evolutionary mechanisms of multicellularity in animals\[references
+4,5\], however their phylogenetic placement is still widely
+debated\[references 5–7\]. Ctenophores are a gelatinous phylum of marine
+metazoans with approximately 150 known species that form a clade of
+pre-bilateran animals\[reference 8\].
 
 ![Schema of phylogenetic position of Mnemiopsis
 leidyi](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/Mle.jpg)
@@ -56,9 +51,9 @@ leidyi](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Pro
 overview of the original study, the scope of your re-analysis, and why
 you chose it
 
-### 1.3 Activities
+#### 1.2.1 Paper methodology
 
-## 2 Method
+##### 1.2.1.1 Sample collection and Genome Assembly
 
 integrated data processing, QC, analysis, results, graphs, and other
 data, as well as written explanations for what is being done and why,
@@ -70,48 +65,374 @@ scaffolds. First I will create an Index from the reference genome to use
 to align the scaffolds to the assembled genome. In theory this should be
 close to 100% alignment as the reference is built from these scaffolds.
 
-**Create an Index**
+Ryan et al collected 2 wild animals from the Vineyard Sound near Woods
+Hole, Massachussets (Figure 2) \[Ryan paper ref\]. Those animals were
+self-fertilized and DNA was isolated from the resulting embryos of one
+of them. Details of the DNA isolation protocol were not disclosed, but
+the authors mention the use of “GS FLX Titanium Rapid Library
+Preparation Kit” and the “GS FLX Titanium Library Paired End Adaptors
+Kit”. The resulting isolated DNA was used for sequencing using a Roche
+454 Genome Sequencer FLX machine located at the Roche Applied Science
+centre in Indianapolis, IN. 7,334,972 raw reads with an Average read
+length of 339 bases were generated in nine runs, yielding 2.5 Gb of
+sequence.
+
+![Location where wild ctenophores were
+collected.](C:\Users\heavy\Documents\bmeg-591\Group%20Project\CB_BMEG591E-repository\Group_Project\woodshole.png)
+
+Those raw reads were then submitted for assembly using the Phusion
+assembler \[phusion reference\], resulting in 24,884 contigs with a
+total of 150,340,428 bases and a reported N50 of 11,936 bases. The
+authors proceeded to sequence the embryos of the second wild animal
+using Illumina GA-iiX system. The resulting paired-end reads were
+filtered, mapped to the 24,884 assembled contigs using Illumina’s short
+read aligner ELAND, and integrated into Phusion’s scaffolding step. This
+resulted in 5,100 scaffolds with an N50 of 187 Kb and an coverage of
+160X.
+
+##### 1.2.1.2 Estimation of Variation
+
+Although we did not cover this step, it is worth mentioning that the
+authors performed a third sequencing step - coming from a third animal
+(unsure of its origins, whether a developed embryo from the 2 wild ones
+or a third wild animal) to estimate variation on the genome. The
+sequencing was made through Illumina Mi-Seq and detected 589,252 Single
+Nucleotide Variants (SNVs) across 118,613,222 bases, resulting on a
+ratio of 1 SNV every 200 bases. These is of course interesting for
+population studies.
+
+##### 1.2.1.3 Evaluation of completeness and correctness of genome assembly
+
+The authors extracted 15,752 M. leidyi Expressed Sequence Tags (ESTs)
+and aligned them to their assembled genome using BLAT \[Blat ref\] v.
+34x12 with default parameters. They evaluated their alignment using a
+software developed by their group called baa.pl \[baa.pl ref\] later
+reformed into Isoblat \[github link to isoblat\] and obtained:
+
+1.  99.4% of the transcripts were mapped with BLAT
+2.  98.2% of the positions in the mapped transcripts were aligned
+3.  95.2% of the transcripts mapped to a single scaffold.
+
+They further extracted and sequenced 79 Mb paired-end/83 Mb single-end
+RNA reads from M. leidyi embryos through Illumina GA-II platform and
+assembled them using Trinity \[Trinity Ref\]. Their final assembly had
+32,630 for paired-end and 27,315 for single-end transcripts
+respectively. They proceeded to align their Trinity-assembled
+transcripts to BLAT and analyze it through baa.pl with default
+parameters and generated the following statistics:
+
+1.  99.2% of the transcripts were mapped with BLAT
+2.  98.1% of the positions in the mapped transcripts were aligned
+3.  92.7% of the transcripts mapped to a single scaffold.
+
+Thus, they conclude that their assembly is likely complete and correctly
+assembled. Further repeat analysis indicates allowed them to estimate a
+genome size of 150 Mb, which configures this genome to be one of the
+smallest 7% known genomes \[Ryan ref\].
+
+##### 1.2.1.4 Gene Prediction pipeline
+
+The authors provided a complex, in-depth pipeline for gene prediction
+with no common pattern between automated and manual steps. Firstly, the
+authors sequenced another round of RNA-seq data, resulting in 162 Mb of
+RNA-seq data originating from mixed stage embryos (ranging from a few
+hours up until 15 hours post-fertilization). These reads were mapped to
+their assembled genome using TopHat \[tophat ref\] and then assembled
+into 49,850 transcript fragments using Cufflinks \[cufflink ref\].
+
+They then loaded the 49,850 Cufflink fragments, the 15,752 publicly
+available ESTs, and additional 161 alleged publicly available cDNA
+sequences into PASA \[pasa ref\] without providing details of this step.
+They masked the genome with a repeat library, excluding from the masking
+regions where RNA-seq mappings overlapped, resulting in 53,244 regions
+and 7,387,140 base pairs of sequence. This data was then submitted to
+several prediction softwares: GENESH \[genesh ref\]; AUGUSTUS \[augustus
+ref\] (version\_2.3.1); HMMgene \[hmmgene ref\] (version\_1.1); and
+GenomeScan \[genomescan ref\] (version\_0.1). They evaluated the
+predicted models using Evidence Modeler (EVM version\_r03062010) \[EVM
+ref\]. In total, the authors established that the genome contains 16,548
+predicted genes (or protein-coding loci), making up 58% of its total
+length, with 44% of those loci being homologous to known genes in
+non-ctenophores.
+
+## 2 WORKFLOW (METHODS + RESULTS)
+
+### 2.1 Data gathering
+
+#### 2.1.1 Mnemiopsis Genome Portal
+
+The Mnemiopsis Genome Portal \[Genome Portal ref\] is a public database
+for genomic and functional information on M. leidyi. We searched for
+available raw reads in order to perform the genome assembly both on the
+portal and on external databases. However, that data is not publicly
+available. In light of this, We decided to download the genome already
+assembled into scaffolds from the following link:
+<https://research.nhgri.nih.gov/mnemiopsis/download/download.cgi?dl=genome>.
+
+**LOADING GENOME**
 
 ``` bash
-bowtie2-build /home/cbarcl01/Group_Project/Mnemiopsis_leidyi.MneLei_Aug2011.dna.nonchromosomal.fa.gz MleIndex
+#Imported to server using pscp
+
+pscp -P 22 -r C:\Users\heavy\Documents\bmeg-591\BMEG-591-Rep\Project\MlScaffold09.nt.gz
+
+#On server, unziped using gzip
+
+gzip -d MlScaffold09.nt.gz
+
+#We confirmed the 5,100 scaffolds through:
+
+grep -c "^>" MlScaffold09.nt
+5100
 ```
 
-**Investigate file**
+**LOADING ESTs**
 
-First I want to confirm if the number of contigs match the publication:
+We also downloaded the 15,752 publicly available ESTs from:
+<https://research.nhgri.nih.gov/mnemiopsis/download/download.cgi?dl=est>.
 
 ``` bash
-grep -c "^>" AGCP01.fasta
+#Imported to server using pscp
+
+pscp -P 22 -r C:\Users\heavy\Documents\bmeg-591\BMEG-591-Rep\Project\MlESTs.gz
+
+#On server, unziped using gzip
+
+gzip -d MlESTs.gz
+
+#We confirmed the 15,752 ESTs through:
+grep -c "^>" MlESTs.fa
+15752
 ```
 
-24884
+**LOADING RNA DATA**
 
-As the raw data was not available in the time constraints, scaffolds in
-.fasta were used. In this instance Fastqc cannot be run so the following
-script was rub to assess the GC content.
-
-**Alignment**
+35,203 assembled transcripts using Trinity were downloaded from
+<https://research.nhgri.nih.gov/mnemiopsis/download/download.cgi?dl=transcript>
+and loaded into the server.
 
 ``` bash
-#Unzip fas_nt.ga format
-gunzip /home/cbarcl01/Group_Project/AGCP01.1.fsa_nt. > /home/cbarcl01/Group_Project/AGCP01.fasta 
+#Imported to server using pscp
 
-bowtie2 -f -x /home/cbarcl01/Group_Project/MleIndex \ -U /home/cbarcl01/Group_Project/AGCP01.fasta  \ -S /home/cbarcl01/Group_Project/AGCP01.sam
+pscp -P 22 -r C:\Users\heavy\Documents\bmeg-591\BMEG-591-Rep\Project\Ml_Trinity_transcripts.fa.gz
+
+#On server, unziped using gzip
+
+gzip -d Ml_Trinity_transcripts.fa.gz
+
+#We confirmed the 15,752 ESTs through:
+grep -c "^>" Ml_Trinity_transcripts.fa
+35203
+```
+
+### 2.2 Evaluation of Correctness
+
+#### 2.2.1 Bowtie x BLAT
+
+**BLAT**
+
+**BLAT INSTALLATION**
+
+BLAT v. 36x2 was installed through our conda environment:
+
+``` bash
+conda activate gdalba-conda
+
+conda install ucsc-blat
+```
+
+**RUNNING BLAT** We ran BLAT with default parameters as described in the
+paper as follows:
+
+``` bash
+blat MlScaffold09.nt MlESTs mle_blatalign.psl
+
+Loaded 155865547 letters in 5100 sequences
+Searched 10552828 bases in 15752 sequences
+mle_blatalign.psl
+```
+
+**BAA.PL/ISOBLAT INSTALLATION**
+
+We cloned baa.pl/Isoblat github repo
+(<https://github.com/josephryan/isoblat>) on our own machines and
+imported it to our server:
+
+``` bash
+#Importing baa.pl/Isoblat to server
+
+pscp -P 22 -r C:\Users\heavy\Documents\bmeg-591\BMEG-591-Rep\Project\baa.pl\isoblat gdalba@gi-edu-sv2.bme.ubc.ca:/home/gdalba/baa.pl
+
+#Installing baa.pl/Isoblat
+
+perl Makefile.PL
+make
+make install
+```
+
+**RUNNING BAA.PL/ISOBLAT**
+
+We ran baa.pl/Isoblat with default parameters as described in the paper
+as follows:
+
+``` bash
+isoblat --max_gap_to_consider_missing=5 --min_to_count_as_coverage=5 mle_blatalign.psl MlESTs.fa 2>/dev/null
+
+# running version 0.31 of isoblat
+# run with this command: /home/gdalba/.conda/envs/gdalba-conda/bin/isoblat mle_blatalign.psl MlESTs.fa
+# $max_gap_to_consider_missing = 5
+# $min_to_count_as_coverage    = 5
+
+Ratio of transcripts with a BLAT entry (15665/15752): 0.99447689182326
+```
+
+As it can be seen, only one of the three expected statistics were
+yielded as output. We are unsure of the reasons why baa.pl/Isoblat
+algorithm fails to capture enough information for the other two
+calculations (% of transcripts positions successfully aligned and % of
+transcripts that mapped to a single scaffold). We attempted to
+troubleshoot the algorithm itself to no luck. The algorithm attempted to
+read non-existent lines, returning non-numeric values and divisions
+either by non-numeric values or by zero.
+
+**RUNNING BLAT + BAA.PL/ISOBLAT FOR RNA DATA** We repeated the above
+steps using Trinity-assembled transcripts:
+
+``` bash
+blat MlScaffold09.fa Ml_Trinity_transcripts.fa blatrnaalign.psl
+Loaded 155865547 letters in 5100 sequences
+Searched 29298205 bases in 35203 sequences
+
+isoblat /home/gdalba/blatrnaalign.psl /home/gdalba/Ml_Trinity_transcripts.fa
+# running version 0.31 of isoblat
+# run with this command: /home/gdalba/.conda/envs/gdalba-conda/bin/isoblat /home/gdalba/blatrnaalign.psl /home/gdalba/Ml_Trinity_transcripts.fa
+# $max_gap_to_consider_missing = 5
+# $min_to_count_as_coverage    = 5
+Ratio of transcripts with a BLAT entry (34815/35203): 0.988978212084197
+```
+
+**BOWTIE2**
+
+We also attempted the same correctness evaluation using a different
+aligner - Bowtie2 \[bowtie2 ref\]. We performed steps similarly as to
+what was described in class. The main goal was to comparte different
+alignment tools and their output. Bowtie2 was already installed
+server-side.
+
+**CREATING AN INDEX**
+
+``` bash
+bowtie2-build MlScaffold09.nt /home/gdalba/genome_index/Mlindex
+```
+
+**RUNNING BOWTIE2 WITH ESTs**
+
+``` bash
+bowtie2 -x /home/gdalba/genome_index/Mlindex -f MlESTs -S /home/gdalba/mle_align.index
+
+15752 reads; of these:
+  15752 (100.00%) were unpaired; of these:
+    6989 (44.37%) aligned 0 times
+    8562 (54.36%) aligned exactly 1 time
+    201 (1.28%) aligned >1 times
+55.63% overall alignment rate
+```
+
+**RUNNING BOWTIE2 WITH TRINITY-ASSEMBLED RNA TRANSCRIPTS**
+
+``` bash
+bowtie2 -x /home/gdalba/genome_index/Mlindex -f Ml_Trinity_transcripts.fa -S /home/gdalba/mle_rnaalign.index
+
+
+35203 reads; of these:
+  35203 (100.00%) were unpaired; of these:
+    16346 (46.43%) aligned 0 times
+    17177 (48.79%) aligned exactly 1 time
+    1680 (4.77%) aligned >1 times
+53.57% overall alignment rate
+```
+
+**ASSESSING GC CONTENT**
+
+We employed 2 distinct GC content measurement approaches: a manual
+approach and a pre-built script.
+
+**BIOBASH SCRIPTS**
+
+We cloned the Github repo (<https://github.com/gibbslab/biobash>)
+containing several general utilities Bioinformatics scripts called
+BIOBASH, developed in Bash language. We imported the scripts using pscp
+and converted scripts of interest using the command “dos2unix -k -o
+<filename>”:
+
+**BIOBASH INSTALLATION**
+
+``` bash
+-P 22 -r C:\Users\heavy\Documents\bmeg-591\BMEG-591-Rep\Project\biobash gdalba@gi-edu-sv2.bme.ubc.ca:/home/gdalba/scripts
+
+dos2unix -k -o installbiobash
+chmod +x installbiobash
+./installbiobash
+```
+
+To test if the BIOBASH set os scripts were working, we repeated the
+validation of assembly file MlScaffold09.nt (converted into fasta) with
+bb\_count\_seqs script (script that count sequences) after
+troubleshooting and fixing minimal problems within the script:
+
+``` bash
+dos2unix -k -o bb_count_seqs
+chmod +x bb_count_seqs
+./bb_count_seqs /home/gdalba/MlScaffold09.fa
+5100 Scaffolds
+```
+
+We then ran bb\_get\_GC\_content after troubleshooting and fixing
+minimal problems within the script, which required a .fa file with a
+single header:
+
+``` bash
+grep -v ">" MlScaffold09.fa> > MlScaffold09_singleseq.fa
 ```
 
 ``` bash
-(Gnme_Assignment_1) [cbarcl01@SBME-GI-EDU-SV4 Group_Project]$ wc -l AGCP01.sam
+dos2unix -k -o bb_get_GC_content
+chmod +x bb_get_GC_content
+./bb_get_GC_content /home/gdalba/MlScaffold09_singleseq.fa
+37
 ```
 
-*Result* 24882
+bb\_get\_GC\_content reported a GC content of 37%. We then applied two
+perl approaches
 
-**Sam to Bam**
+**PERL: GC CONTENT**
 
 ``` bash
-samtools view -S -b -h alignment.sam > Alignment.bam
+perl -lane 'unless (/^>/) { $l += length(); $gc++ while /[GC]/ig } END { print $gc/$l}' /home/gdalba/MlScaffold09.fa
+0.374857844626818
 ```
 
-**Annotation**
+**PERL: GC CONTENT PER SCAFFOLD**
+
+``` bash
+perl -lane 'if (/^>(.+)/) {
+ printf "%s %d %.2f\n", $n, $l, $gc/$l if $l;
+ $n = $1; $l = 0; $gc = 0;
+} else {
+ $l += length($_);
+ $gc++ while /[GC]/ig;
+} END {
+ printf "%s %d %.2f\n", $n, $l, $gc/$l if $l;
+}' /home/gdalba/MlScaffold09.fa
+
+Resulting Average: 0,3754960784
+```
+
+### 2.2 Annotation
+
+### 2.3 Phylogeny
+
+### 2.4 RNA-seq expression
 
 ## Results
 
