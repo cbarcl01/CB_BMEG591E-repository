@@ -366,6 +366,41 @@ We prepared a hints file using the ESTs aligned to the genome (through the BLAT 
 
 The original authors used Amphimedon queenslandica as their training data for Augustus prediction
 
+### 2.5 Differential Expression
+
+First we download the temporal development expression profiles to from (GenBank)[https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60478]. The introns of the genes are removed to form the mature mRNAs, so the reads that are counted correspond to the reads aligning to the exons of the genes.
+
+Load relevant libraries
+
+```{r, eval=TRUE}
+# Load library for DESeq2
+library(DESeq2)
+
+# Load library for RColorBrewer
+library(RColorBrewer)
+
+# Load library for pheatmap
+library(pheatmap)
+
+# Load library for tidyverse
+library(tidyverse)
+```
+
+```{r, eval=TRUE}
+#load the data
+load("GSE60478_RNAseq.RData") 
+
+#explore the counts data
+head(GSE60478_ML_exp.tab)
+
+#explore the metadata
+head(GSE60478_ML_GEO_sample_sheet.tab) 
+```
+
+```{r, eval=TRUE}
+
+```
+
 ### 2.5 Phylogeny
 
 In the original study, phylogenetic analysis was conducted using PhyloBayes "a Bayesian Monte Carlo Markov Chain (MCMC) sampler for phylogenetic
@@ -373,8 +408,13 @@ reconstruction", comparing the whole genomes of 13 different animals in the 'Gen
 
 Phylogenetic analysis allows researchers the opportunity to identify potential similarity between species, indicating lineage {REF}. In conjunction with annotation, phylogeny could be used to assess orthologs and genetically conserved regions that can be traced back to the root of metazoan divergence. Consequently, instead of replicating the whole genome or EST phylogenetics (due to the aforementioned time limitations), we compared significant gene regions that are of interest to scientists in the origins of animal multicellularity. 
 
-In the original study, Ryan et al. identified 
+In the original study, Ryan et al. identified through phylogenetic analysis that ionotropic glutamate receptors from *M. leidyi* form a sister clade to the bilaterian glutamate receptors. The gene model of interest was identified as ML00441a, and in addition  the following is a snap shot from the Mnemiopsis leidyi genome portal track, which can be used to investigate target regions and compare to other data available, including transcriptome and protein data. 
 
+
+
+Search for Ionotropic glutamate receptors (synaptic scaffolding) in other ctenophore transcriptomes
+
+We used human GRIA2 (accession= NP_000817), GRIN1 (accession= NP_000823), GRIK2 (accession= NP_001159719), and GRID2 (accession= NP_001501) as TBLASTN queries against the seven ctenophore transcriptomes and the Trinity assembly of the M. leidyi RNA-seq data
 
 ## Conclusion
 
