@@ -1,36 +1,19 @@
 ---
 title: "Group Project: Investigating the validity of *Mnemiopsis leidyi* as a model organism for the study of multicellularity"
-author: "Charlotte Barclay and Gabriel d'Alba"
+author: "Charlotte Barclay and Gabriel Dall'Alba"
 date: "31/03/2021"
 output:
   github_document:
     toc: true
     toc_depth: 4
 ---
-
-**Install BLAT and abyss**
-
-Abyss is an assembly tool as could not find Phusion package.
-
-```{bash, eval=FALSE}
-conda install -c bioconda ucsc-blat
-conda install -c bioconda abyss
-```
-
-
-```{r, eval=FALSE}
-pscp -P 22 C:\Users\cbarc\OneDrive\Documents\BMEG591E_Genome_Informatics\Group_Project\Mle_sequence.fasta cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Group_Project
-
-pscp -P 22 C:\Users\cbarc\OneDrive\Documents\BMEG591E_Genome_Informatics\Group_Project\mle_RefSeq_genome.fasta cbarcl01@gi-edu-sv4.bme.ubc.ca:/home/cbarcl01/Group_Project
-```
-
 ## 1 Introduction
 
 ### 1.1 Motivation
 
-From ‘primordial soup’ to the vast array of biodiversity we see today, evolution and these origins of multicellularity still fascinate and elude scientists[1].  Accounts of the number of independent events that led to multicellularity differ amongst the scientific community[2], although there is a consensus that this happened once in the Animalia/Metazoan lineage[2,3]. Advances in sequencing and reduction in cost has led to increase in whole genomic sequences of non-bilateran animal species providing insight into the molecular mechanisms that govern multicellularity[4].
+From ‘primordial soup’ to the vast array of biodiversity we see today, evolution and these origins of multicellularity still fascinate and elude scientists[reference 1].  Accounts of the number of independent events that led to multicellularity differ amongst the scientific community[reference 2], although there is a consensus that this happened once in the Animalia/Metazoan lineage[references 2,3]. Advances in sequencing and reduction in cost has led to increase in whole genomic sequences of non-bilateran animal species providing insight into the molecular mechanisms that govern multicellularity[reference 4].
 
-Ctenophores have been proposed as a model organism for understanding the evolutionary mechanisms of multicellularity in animals[4,5], however their phylogenetic placement is still widely debated[5–7]. Ctenophores are a gelatinous phylum of marine metazoans with approximately 150 known species that form a clade of pre-bilateran animals[8].
+Ctenophores have been proposed as a model organism for understanding the evolutionary mechanisms of multicellularity in animals[references 4,5], however their phylogenetic placement is still widely debated[references 5–7]. Ctenophores are a gelatinous phylum of marine metazoans with approximately 150 known species that form a clade of pre-bilateran animals[reference 8].
 
 ![Schema of phylogenetic position of Mnemiopsis leidyi](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/Mle.jpg)
 
@@ -43,11 +26,54 @@ overview of the original study, the scope of your re-analysis, and why you chose
 
 ## 2 Method
 
+### 2.1 Paper methodology
+
+#### 2.1.1 Sample collection and Genome Assembly
+
 integrated data processing, QC, analysis, results, graphs, and other data, as well as written explanations for what is being done and why, and interpretations of results. This should flow in chronological order (e.g. starting with fastqs and ending with the last graph).
 
-I have downloaded the assembled reference genome as well as the scaffolds. First I will create an Index from the reference genome to use to align the scaffolds to the assembled genome. In theory this should be close to 100% alignment as the reference is built from these scaffolds. 
+I have downloaded the assembled reference genome as well as the scaffolds. First I will create an Index from the reference genome to use to align the scaffolds to the assembled genome. In theory this should be close to 100% alignment as the reference is built from these scaffolds.
 
-### 2.1 Preparation and QC
+Ryan et al collected 2 wild animals from the Vineyard Sound near Woods Hole, Massachussets (Figure 2) [Ryan paper ref]. Those animals were self-fertilized and DNA was isolated from the resulting embryos of one of them. Details of the DNA isolation protocol were not disclosed, but the authors mention the use of "GS FLX Titanium Rapid Library Preparation Kit" and the "GS FLX Titanium Library Paired End Adaptors Kit". The resulting isolated DNA was used for sequencing using a Roche 454 Genome Sequencer FLX machine located at the Roche Applied Science centre in Indianapolis, IN. 7,334,972 raw reads with an Average read length of 339 bases were generated in nine runs, yielding 2.5 Gb of sequence.
+
+![Location where wild ctenophores were collected.](C:\Users\heavy\Documents\bmeg-591\Group Project\CB_BMEG591E-repository\Group_Project\woodshole.png)
+
+Those raw reads were then submitted for assembly using the Phusion assembler [phusion reference], resulting in 24,884 contigs with a total of 150,340,428 bases and a reported N50 of 11,936 bases. The authors proceeded to sequence the embryos of the second wild animal using Illumina GA-iiX system. The resulting paired-end reads were filtered, mapped to the 24,884 assembled contigs using Illumina's short read aligner ELAND, and integrated into Phusion's scaffolding step. This resulted in 5,100 scaffolds with an N50 of 187 Kb and an coverage of 160X.
+
+#### 2.1.2 Estimation of Variation
+
+Although we did not cover this step, it is worth mentioning that the authors performed a third sequencing step - coming from a third animal (unsure of its origins, whether a developed embryo from the 2 wild ones or a third wild animal) to estimate variation on the genome. The sequencing was made through Illumina Mi-Seq and detected 589,252 Single Nucleotide Variants (SNVs) across 118,613,222 bases, resulting on a ratio of 1 SNV every 200 bases. These is of course interesting for population studies.
+
+#### 2.1.3 Evaluation of completeness and correctness of genome assembly
+
+The authors extracted 15,752 M. leidyi Expressed Sequence Tags (ESTs) and aligned them to their assembled genome using BLAT [Blat ref] v. 34x12 with default parameters. They evaluated their alignment using a software developed by their group called baa.pl [baa.pl ref] later reformed into Isoblat [github link to isoblat] and obtained:
+
+1) 99.4% of the transcripts were mapped with BLAT; 59 
+2) 98.2% of the positions in the mapped transcripts were aligned
+3) 95.2% of the 60 transcripts mapped to a single scaffold.  
+
+They further extracted and sequenced 79 Mb paired-end/83 Mb single-end RNA reads from M. leidyi embryos through Illumina GA-II platform and assembled them using Trinity [Trinity Ref]. Their final assembly had 32,630 for paired-end and 27,315 for single-end transcripts respectively. They proceeded to align their Trinity-assembled transcripts to BLAT and analyze it through baa.pl with default parameters and generated the following statistics:
+
+1) 99.2% of the transcripts were mapped with BLAT
+2) 98.1% of the 69 positions in the mapped transcripts were aligned
+3) 92.7% of the transcripts mapped 70 to a single scaffold.
+
+Thus, they conclude that their assembly is likely complete and correctly assembled. Further repeat analysis indicates allowed them to estimate a genome size of 150 Mb, which configures this genome to be one of the smallest 7% known genomes [Ryan ref].
+
+#### 2.1.4 Gene Prediction pipeline
+
+The authors provided a complex, in-depth pipeline for gene prediction with no common pattern between automated and manual steps. Firstly, the authors sequenced another round of RNA-seq data, resulting in 162 Mb of RNA-seq data originating from mixed stage embryos (ranging from a few hours up until 15 hours post-fertilization). These reads were mapped to their assembled genome using TopHat [tophat ref] and then assembled into 49,850 transcript fragments using Cufflinks [cufflink ref].
+
+They then loaded  the 49,850 Cufflink fragments, the 15,752 publicly available ESTs, and additional 161 alleged publicly available cDNA sequences into PASA [pasa ref] without providing details of this step. They masked the genome with a repeat library, excluding from the masking regions where RNA-seq mappings overlapped, resulting in 53,244 regions and 7,387,140 base pairs of sequence. This data was then submitted to several prediction softwares: GENESH [genesh ref]; AUGUSTUS [augustus ref] (version_2.3.1); HMMgene [hmmgene ref] (version_1.1); and GenomeScan [genomescan ref] (version_0.1). They evaluated the predicted models using Evidence Modeler (EVM version_r03062010) [EVM ref]. In total, the authors established that the genome contains 16,548 predicted genes (or protein-coding loci), making up 58% of its total length, with 44% of those loci being homologous to known genes in non-ctenophores.   
+
+
+
+### 2.2 BMEG Project 
+
+#### 2.2.1 Preparation and QC
+
+Our initial plan involved replicating the assembly of the genome, the evaluation of correctness and completeness, partial genome annotation and partial phylogeny
+
 
 **Download datasets**
 
