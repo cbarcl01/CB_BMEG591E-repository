@@ -57,13 +57,15 @@ They then loaded  the 49,850 Cufflink fragments, the 15,752 publicly available E
 
 This study was chosen, as the origins of multicellularity and particularly the phylogenetic position of Ctenophores compared to other non-bilaterans is still widely debated. The original study was undertaken in 2011 and published in 2013 [ref 5?], since then of the tools the paper used, some have changed, some are no longer maintained and more data has been made available for gene annotation.
 
-In our re-analysis, in the absence of raw reads we will investigate the files to confirm number of contigs and scaffolds before running the following analysis to assess for completeness of the assembly:
+In our re-analysis, in the absence of raw reads we will investigate the files to confirm number of contigs and scaffolds before running the following analysis to assess for completeness of the assembly: 
+
  - Replicate and validate the alignment of ESTs as seen in the original study using BLAT </br>
  - Replicate and validate the alignment of transcripts as seen in the original study using BLAT </br>
  - Compare alignment of ESTs with original tool BLAT and Bowtie </br>
  - Design Perl script to assess GC content in absence of fastqc files </br>
  
 Following this assessment for correctness of assembly, we will undertake the following analysis:
+
  - Annotation </br>
  - Phylogeny </br>
 
@@ -267,7 +269,7 @@ bowtie2 -x /home/gdalba/genome_index/Mlindex -f Ml_Trinity_transcripts.fa -S /ho
 
 ```
 
-### 2.3 ASSESSING GC CONTENT
+### 2.3 Assessing GC Content
 
 We employed 2 distinct GC content  measurement approaches: a manual approach and a pre-built script.
 

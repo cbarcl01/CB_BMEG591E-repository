@@ -21,7 +21,7 @@ Charlotte Barclay and Gabriel Dall’Alba
             Portal](#211-mnemiopsis-genome-portal)
       - [2.2 Evaluation of Correctness](#22-evaluation-of-correctness)
           - [2.2.1 Bowtie x BLAT](#221-bowtie-x-blat)
-      - [2.3 ASSESSING GC CONTENT](#23-assessing-gc-content)
+      - [2.3 Assessing GC Content](#23-assessing-gc-content)
       - [2.4 Annotation](#24-annotation)
       - [2.5 Differential Expression](#25-differential-expression)
       - [2.5 Phylogeny](#25-phylogeny)
@@ -158,15 +158,21 @@ and more data has been made available for gene annotation.
 
 In our re-analysis, in the absence of raw reads we will investigate the
 files to confirm number of contigs and scaffolds before running the
-following analysis to assess for completeness of the assembly: -
-Replicate and validate the alignment of ESTs as seen in the original
-study using BLAT </br> - Replicate and validate the alignment of
-transcripts as seen in the original study using BLAT </br> - Compare
-alignment of ESTs with original tool BLAT and Bowtie </br> - Design Perl
-script to assess GC content in absence of fastqc files </br>
+following analysis to assess for completeness of the assembly:
+
+  - Replicate and validate the alignment of ESTs as seen in the original
+    study using BLAT </br>
+  - Replicate and validate the alignment of transcripts as seen in the
+    original study using BLAT </br>
+  - Compare alignment of ESTs with original tool BLAT and Bowtie </br>
+  - Design Perl script to assess GC content in absence of fastqc files
+    </br>
 
 Following this assessment for correctness of assembly, we will undertake
-the following analysis: - Annotation </br> - Phylogeny </br>
+the following analysis:
+
+  - Annotation </br>
+  - Phylogeny </br>
 
 ## 2 Workflow: Methods and Results
 
@@ -387,7 +393,7 @@ bowtie2 -x /home/gdalba/genome_index/Mlindex -f Ml_Trinity_transcripts.fa -S /ho
 53.57% overall alignment rate
 ```
 
-### 2.3 ASSESSING GC CONTENT
+### 2.3 Assessing GC Content
 
 We employed 2 distinct GC content measurement approaches: a manual
 approach and a pre-built script.
