@@ -3,7 +3,7 @@ title: "Group Project: Investigating the validity of *Mnemiopsis leidyi* as a mo
 author: "Charlotte Barclay and Gabriel Dall'Alba"
 date: "31/03/2021"
 output:
-  github_document:
+    pdf_document: default
     toc: true
     toc_depth: 4
 ---
@@ -379,9 +379,8 @@ library(readxl)
 library(ggplot2)
 
 #Import the data
-Gc_per_scaffold <- read_excel("C:/Users/cbarc/Documents/CB_BMEG591E-repository/Group_Project/GC_Per_Scaffold.xlsx",
-                            col_types = c("text", "numeric", "numeric",
-                                          "skip", "skip", "skip", "skip", "skip"))
+Gc_per_scaffold <- read_excel("C:/Users/heavy/Documents/bmeg-591/Group Project/CB_BMEG591E-repository/Group_Project/GC_Per_Scaffold.xlsx",
+                              col_types = c("text", "numeric", "numeric", "skip", "skip", "skip", "skip", "skip"))
 
 
 
@@ -396,9 +395,8 @@ ggplot(Gc_per_scaffold, aes(Values)) +
   geom_histogram(aes(y=..density..), colour="black", fill="white",  binwidth= 0.01)+
   geom_density(alpha=.2, fill="#FF6666") +
   geom_vline(aes(xintercept=mean(Values)),
-              color="blue", linetype="dashed", size=1)
+             color="blue", linetype="dashed", size=1)
 ```
-
 
 ### 2.4 Annotation
 
