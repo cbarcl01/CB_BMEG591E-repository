@@ -23,66 +23,93 @@ Charlotte Barclay and Gabriel Dall’Alba
           - [2.2.1 Bowtie x BLAT](#221-bowtie-x-blat)
       - [2.3 Assessing GC Content](#23-assessing-gc-content)
       - [2.4 Annotation](#24-annotation)
-      - [2.5 Differential Expression](#25-differential-expression)
-      - [2.5 Phylogeny](#25-phylogeny)
-          - [2.5.1 Mnemiopsis Genome Project Portal: Track
-            Viewer](#251-mnemiopsis-genome-project-portal-track-viewer)
-          - [2.5.2 BLAST](#252-blast)
-          - [2.5.3 Create a Phylogenetic Tree using
-            FigTree.](#253-create-a-phylogenetic-tree-using-figtree)
+      - [2.4 Phylogeny](#24-phylogeny)
+          - [2.4.1 Mnemiopsis Genome Project Portal: Track
+            Viewer](#241-mnemiopsis-genome-project-portal-track-viewer)
+          - [2.4.2 BLAST](#242-blast)
+          - [2.4.3 Create a Phylogenetic Tree using
+            FigTree.](#243-create-a-phylogenetic-tree-using-figtree)
   - [3. Discussion](#3-discussion)
-  - [Conclusion](#conclusion)
-  - [Bibliography](#bibliography)
+  - [4. Conclusion](#4-conclusion)
+  - [5. Bibliography](#5-bibliography)
 
 ## 1 Introduction
 
 ### 1.1 Motivation
 
-From ‘primordial soup’ to the vast array of biodiversity we see today,
-evolution and these origins of multicellularity still fascinate and
-elude scientists\[reference 1\]. Accounts of the number of independent
-events that led to multicellularity differ amongst the scientific
-community\[reference 2\], although there is a consensus that this
-happened once in the Animalia/Metazoan lineage\[references 2,3\].
-Advances in sequencing and reduction in cost has led to increase in
-whole genomic sequences of both the Bilateria (the clade of most animal
-species) and the non-bilateran species, providing insight into the
-molecular mechanisms that govern multicellularity \[reference 4\]. The
-four non-bilaterian metazoan lineages are the Porifera (sponges),
-Placozoa, Cnidaria (corals, jellyfish and sea anemones) and Ctenophora
-(comb jellies)\[5\].
+\<\<\<\<\<\<\< HEAD The origins of multicellularity that led to the
+biodiversity of today, is a complex topic that still fascinates and
+eludes scientists\[reference 1\]. This can be attributed to the fact
+that multicellularity was not a singular event \[bonner paper, Parfrey
+paper, Ruiz-trillo paper\] and accounts of the number of independent
+events that led to multicellularity differ widely amongst the scientific
+community, although there is a consensus that this happened once in the
+Animalia/Metazoan lineage\[references 2,3\]. Recent molecular evidence
+indicates that the earliest metazoan (i.e. first multicellular animal)
+traces back 600 million years \[morris, sebé-pedrós\]. Ultimately,
+multicellularity is a fascinating topic of investigation as it
+highlights how convergent evolution can repeatedly employ the same
+strategy in face of a multitude of reasons, such as in response to
+selective pressures or, in a more speculative sense, due to some
+universal trajectory that life tends to follow.
 
-Ctenophores are a gelatinous phylum of marine metazoans with
+Investigating the mechanisms that allows multicellularity to emerge is
+fundamental to properly formulate meaningful hypotheses that can link or
+(reveal the independency of) the multiple emergency of multicellularity
+events. Independent of the approach, nowadays this research is
+inseparable of genomics. Advances in sequencing and reduction in cost
+has led to increase in whole genomic sequences of both the Bilateria
+(the clade of most animal species) and the non-bilateran species,
+providing insight into the molecular mechanisms that govern
+multicellularity \[reference 4\]. The four non-bilaterian metazoan
+lineages are the Porifera (sponges), Placozoa, Cnidaria (corals,
+jellyfish and sea anemones) and Ctenophora (comb jellies)\[5\].
+
+The Ctenophora are a gelatinous phylum of marine metazoans with
 approximately 150 known species and in contrast to other basal metazoans
 they have both a nervous system and a mesoderm-derived muscular
 system\[reference 6\]. Ctenophores have been proposed as a model
 organism for understanding the evolutionary mechanisms of
 multicellularity in animals\[references 4,5\], however their
 phylogenetic placement is still widely debated\[references 5,7-8\].
+Ctenophores haven’t yet been fully explored and thus, they remain a
+promising and relatively unknown group.
 
 ![Schema of phylogenetic position of Mnemiopsis
 leidyi](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/Mle.jpg)
 
 ### 1.2 Original Study
 
+The paper describes the first attempt to provide a reference genome to
+the ctenophore *Mnemiopsis leidyi*. Their results helped to propose
+Ctenophores as the sister-group to all other animals, also revealing a
+surprisingly complex set of neural genes similar to Sponges, providing
+another interesting question: if Ctenophores are the sister group and
+therefore, branching earlier than sponges, what happened to the nervous
+system in sponges? The results were provoking as they shook established
+hypothesis for the earliest branches of the animal tree of life. With
+the goal of understanding the emergence of multicellularity in animals,
+it only makes sense to spend efforts into having a relaible reference
+genome to one of the most promising model organisms for this research
+question.
+
 ##### 1.2.1 Sample collection and Genome Assembly
 
 Ryan et al collected two wild animals from the Vineyard Sound near Woods
-Hole, Massachussets (Fig. 2) \[Ryan paper ref\]. Those animals were
-self-fertilized and DNA was isolated from the resulting embryos of one
-of them. Details of the DNA isolation protocol were not disclosed, but
-the authors mention the use of “GS FLX Titanium Rapid Library
-Preparation Kit” and the “GS FLX Titanium Library Paired End Adaptors
-Kit”. The resulting isolated DNA was used for sequencing using a Roche
-454 Genome Sequencer FLX machine located at the Roche Applied Science
-centre in Indianapolis, IN. 7,334,972 raw reads with an Average read
-length of 339 bases were generated in nine runs, yielding 2.5 Gb of
-sequence.
+Hole, Massachussets (Fig. 2) \[Ryan paper ref\]. The animals were
+self-fertilized and DNA was isolated from one of the resulting embryos.
+Full details of the DNA isolation protocol were not disclosed, although
+the use of “GS FLX Titanium Rapid Library Preparation Kit” and “GS FLX
+Titanium Library Paired End Adaptors Kit” were mentioned. The resulting
+isolated DNA was used for sequencing using a Roche 454 Genome Sequencer
+FLX machine located at the Roche Applied Science centre in Indianapolis,
+IN. In total, 7,334,972 raw reads with an Average read length of 339
+bases were generated in nine runs, yielding 2.5 Gb of sequence.
 
 ![Location where wild ctenophores were
 collected.](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/woodshole.png)
 
-Raw reads were then submitted for assembly using the Phusion assembler
+Raw reads were submitted for assembly using the Phusion assembler
 \[phusion reference\], resulting in 24,884 contigs with a total of
 150,340,428 bases and a reported N50 of 11,936 bases. The authors
 proceeded to sequence the embryos of the second wild animal using
@@ -94,11 +121,12 @@ resulted in 5,100 scaffolds with an N50 of 187 Kb and an coverage of
 
 #### 1.2.2 Evaluation of completeness and correctness of genome assembly
 
-The authors extracted 15,752 M. leidyi Expressed Sequence Tags (ESTs)
-and aligned them to their assembled genome using BLAT \[Blat ref\] v.
-34x12 with default parameters. They evaluated their alignment using a
-software developed by their group called baa.pl \[baa.pl ref\] later
-reformed into Isoblat \[github link to Isoblat\] and obtained:
+In the original study 15,752 M. leidyi Expressed Sequence Tags (ESTs)
+were downloaded from GenBank and aligned to the assembled genome using
+BLAT \[Blat ref\] v. 34x12 with default parameters. The alignment was
+assessed using a software developed by the authors called baa.pl
+\[baa.pl ref\] later reformed into Isoblat \[github link to Isoblat\].
+The results were as follows:
 
 1)  99.4% of the transcripts were mapped with BLAT
 2)  98.2% of the positions in the mapped transcripts were aligned
@@ -131,56 +159,67 @@ hours up until 15 hours post-fertilization). These reads were mapped to
 their assembled genome using TopHat \[tophat ref\] and then assembled
 into 49,850 transcript fragments using Cufflinks \[cufflink ref\].
 
-They then loaded the 49,850 Cufflink fragments, the 15,752 publicly
-available ESTs, and additional 161 alleged publicly available cDNA
-sequences into PASA \[pasa ref\] without providing details of this step.
-They masked the genome with a repeat library, excluding from the masking
-regions where RNA-seq mappings overlapped, resulting in 53,244 regions
-and 7,387,140 base pairs of sequence. This data was then submitted to
-several prediction softwares: GENESH \[genesh ref\]; AUGUSTUS \[augustus
-ref\] (version\_2.3.1); HMMgene \[hmmgene ref\] (version\_1.1); and
-GenomeScan \[genomescan ref\] (version\_0.1). They evaluated the
-predicted models using Evidence Modeler (EVM version\_r03062010) \[EVM
-ref\]. In total, the authors established that the genome contains 16,548
+Next, the 49,850 Cufflink fragments, 15,752 publicly available ESTs, and
+additional 161 publicly available cDNA sequences were loaded into PASA
+\[pasa ref\] without providing details of this step. The genome was
+masked with a repeat library, excluding from masking regions where
+RNA-seq mappings overlapped, resulting in 53,244 regions and 7,387,140
+base pairs of sequence. Several prediction softwares were called
+including: GENESH \[genesh ref\]; AUGUSTUS \[augustus ref\]
+(version\_2.3.1); HMMgene \[hmmgene ref\] (version\_1.1); and GenomeScan
+\[genomescan ref\] (version\_0.1 and the predicted models were then
+evaluated using Evidence Modeler (EVM version\_r03062010) \[EVM ref\].
+
+In total, the authors established that the genome contains 16,548
 predicted genes (or protein-coding loci), making up 58% of its total
 length, with 44% of those loci being homologous to known genes in
 non-ctenophores.
 
 #### 1.2.4 Phylogenetic analysis
 
+The newly assembled *Mnemiopsis leidyi* genome was used in assessment of
+gene sequence evolution, to identify the phylogenetic placement of
+Ctenophora compared to other non-bilaterian clades. A ‘genome set’ with
+whole genomes from 13 animals (19.6% missing data)and an EST set which
+included partial data 58 animals (64,9% missing data), was analysed
+using maximum likelihood and Bayesian methods. The runs were
+computationally intensive, with runs taking 205 days on average for the
+Bayesian analysis of the EST data without convergence. Evidence
+supported a sister relationship between Cnidaria and Bilateria, however
+the study highlighted the importance of further analysis as more data
+becomes available.
+
 ### 1.3 Re-analysis
 
-This study was chosen, as the origins of multicellularity and
-particularly the phylogenetic position of Ctenophores compared to other
+This study was chosen as it provides a much needed reference genome to a
+model organism in studies related to the origins of multicellularity and
+particularly the phylogenetic organization of the earliest-branching
+Metazoans - the phylogenetic placement of Ctenophores compared to other
 non-bilaterans is still widely debated. The original study was
-undertaken in 2011 and published in 2013 \[ref 5?\], since then of the
-tools the paper used, some have changed, some are no longer maintained
-and more data has been made available for gene annotation.
+undertaken in 2011 and published in 2013 \[ref 5?\], since then, many of
+the tools that the paper used have either changed or received updates,
+while some are no longer maintained and more data has been made
+available for gene annotation.
 
 In our re-analysis, in the absence of raw reads we will investigate the
-files to confirm number of contigs and scaffolds before running the
+files to confirm the number of contigs and scaffolds before running the
 following analysis to assess for completeness of the assembly:
 
   - Replicate and validate the alignment of ESTs as seen in the original
     study using BLAT </br>
   - Replicate and validate the alignment of transcripts as seen in the
     original study using BLAT </br>
-  - Compare alignment of ESTs with original tool BLAT and Bowtie </br>
+  - Compare alignment of ESTs with original tool BLAT and Bowtie2 </br>
   - Design Perl script to assess GC content in absence of fastqc files
-    </br>
+    and compare the output with publicly available scripts </br>
 
 Following this assessment for correctness of assembly, we will undertake
-the following analysis:
+part of the following analyses:
 
   - Annotation </br>
   - Phylogeny </br>
 
 ## 2 Workflow: Methods and Results
-
-integrated data processing, QC, analysis, results, graphs, and other
-data, as well as written explanations for what is being done and why,
-and interpretations of results. This should flow in chronological order
-(e.g. starting with fastqs and ending with the last graph).
 
 ### 2.1 Data gathering
 
@@ -223,8 +262,10 @@ grep -c "^>" MlScaffold09.nt
 
 **LOADING ESTs**
 
-We also downloaded the 15,752 publicly available ESTs from:
+The 15,752 publicly available ESTs were identified and downloaded from
 <https://research.nhgri.nih.gov/mnemiopsis/download/download.cgi?dl=est>.
+Additionally we queried GenBank to confirm no additional ESTs had been
+added since the original study.
 
 ``` bash
 
@@ -638,68 +679,35 @@ When mapping back to the genome, we obtain 29,875 genes. This file can
 then be used to manually curate sequences following the previously
 mentioned BLASTp approach.
 
-### 2.5 Differential Expression
-
-First we download the temporal development expression profiles to from
-[GenBank](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60478).
-The introns of the genes are removed to form the mature mRNAs, so the
-reads that are counted correspond to the reads aligning to the exons of
-the genes.
-
-Load relevant libraries as required
-
-``` r
-# Load library for DESeq2
-library(DESeq2)
-
-# Load library for RColorBrewer
-library(RColorBrewer)
-
-# Load library for pheatmap
-library(pheatmap)
-
-# Load library for tidyverse
-library(tidyverse)
-```
-
-``` r
-#load the data
-load("GSE60478_RNAseq.RData") 
-
-#explore the counts data
-head(GSE60478_ML_exp.tab)
-
-#explore the metadata
-head(GSE60478_ML_GEO_sample_sheet.tab) 
-```
-
-### 2.5 Phylogeny
+### 2.4 Phylogeny
 
 In the original study, phylogenetic analysis was conducted using
 PhyloBayes “a Bayesian Monte Carlo Markov Chain (MCMC) sampler for
 phylogenetic reconstruction”, comparing the whole genomes of 13
 different animals in the ‘Genome set’ vs the EST data available in
-GenBank from 58 different animals in the ‘EST set’. Unfortunately, one
-of the runs for EST alone took 204 days and as such was not reproducible
-for this assignment.
+GenBank from 58 different animals in the ‘EST set’\[5\]. Unfortunately,
+one of the runs for EST alone took 204 days and as such was not
+reproducible for this assignment.
 
 Phylogenetic analysis allows researchers the opportunity to identify
-potential similarity between species, indicating lineage \[REF\]. In
-conjunction with annotation, phylogeny could be used to assess orthologs
-and genetically conserved regions that can be traced back to the root of
-metazoan divergence. Consequently, instead of replicating the whole
-genome or EST phylogenetics (due to the aforementioned time
-limitations), we compared a significant gene region of interest to
-scientists in the origins of animal multicellularity.
+potential similarity between species, indicating lineage and in the case
+of Ctenophora hopefully offer further insights into their placement as
+the most basa animal lineage\[6\]. In conjunction with annotation,
+phylogeny could be used to assess orthologs and genetically conserved
+regions that can be traced back to the root of metazoan divergence.
+Consequently, instead of replicating the whole genome or EST
+phylogenetics (due to the aforementioned time limitations), we have
+compared a significant gene region of interest to scientists in the
+origins of animal multicellularity.
 
 In the original study, Ryan et al. suggested through phylogenetic
 analysis that ionotropic glutamate receptors from *M. leidyi* form a
-sister clade to the bilaterian glutamate receptors. The gene model of
+sister clade to the bilaterian glutamate receptors. The gene region of
 interest was identified as ML00441a and both the transcript sequence and
 predicted protein sequence can be viewed
 [here](https://research.nhgri.nih.gov/mnemiopsis/wiki/index.php/ML00441a).
 
-#### 2.5.1 Mnemiopsis Genome Project Portal: Track Viewer
+#### 2.4.1 Mnemiopsis Genome Project Portal: Track Viewer
 
 The following is a snap shot from the Mnemiopsis leidyi genome portal
 track for the gene region of interest. This viewer can be interrogated
@@ -714,7 +722,7 @@ more information from the Reference sequence as well:
 ![Mnemiopsis leidyi Genome Portal Track for
 ML00441a](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/Track_Zoom.png)
 
-#### 2.5.2 BLAST
+#### 2.4.2 BLAST
 
 We extracted the nucleotide sequence, as well as the protein sequence
 for the target gene region ML00441, as identified in the supplementary
@@ -742,15 +750,38 @@ results](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Pr
 ![Protein Blast Search
 results](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/BLASTP_ML00441a.png)
 
-#### 2.5.3 Create a Phylogenetic Tree using FigTree.
+#### 2.4.3 Create a Phylogenetic Tree using FigTree.
 
 Firstly we downloaded the .fasta protein sequences identified above into
 a single file. Then we retrieved published sequences from GenBank for a
 number of AMPA (GRIA) and delta2-like (GRID) glutamate receptors, as
-described in the original study. These protein sequences (GRID1
+described in the original study. Human protein sequences (GRID1
 (Accession AAH39263.1), GRID2 (Accession AAH99654.1), GRIA1 (Accession
-XP\_016864881.1), GRIA2(Accession AAH10574.1)) were also added to .fasta
-file along with the sequence for ML00441a.
+XP\_016864881.1), GRIA2(Accession AAH10574.1)) and cnidaria sequences
+for glutamate receptorionotropic, kainate 2-like (Accession
+XP\_029213800.1, XP\_027046759.1 and XP\_022792571.1) were also added to
+.fasta file along with the sequence for ML00441a, in a slight
+modification to the supplementary material.
+
+| Description                                   | Scientific Name                 | Group           | Accession  |
+| --------------------------------------------- | ------------------------------- | --------------- | ---------- |
+| Lig\_chan domain-containing protein           | Thalassocalyce inconstans       | Ctenophora      | AHA51453.1 |
+| Lig\_chan domain-containing protein           | Bathyctena chuni                | Ctenophora      | AHA51228.1 |
+| Lig\_chan domain-containing protein           | Bathyctena chuni                | Ctenophora      | AHA51227.1 |
+| Lig\_chan domain-containing protein           | Bathyctena chuni                | Ctenophora      | AHA51230.1 |
+| ionotropic glutamate receptor-13              | Pleurobrachia bachei            | Ctenophora      | AEX15551.1 |
+| glutamate receptor                            | Lampea lactea                   | Ctenophora      | AHA51422.1 |
+| putative ionotropic glutamate receptor        | Hormiphora californensis        | Ctenophora      | AHA51400.2 |
+| Lig\_chan domain-containing protein           | Bathyctena chuni                | Ctenophora      | AHA51226.1 |
+| ionotropic glutamate receptor                 | Euplokamis dunlapae             | Ctenophora      | AQX17743.1 |
+| ionotropic glutamate receptor-5               | Pleurobrachia bachei            | Ctenophora      | AEX15543.1 |
+| GRID1 protein                                 | Homo sapiens Mammalia           | AAH39263.1      |            |
+| GRID2 protein                                 | Homo sapiens Mammalia           | AAH99654.1      |            |
+| GRIA1 glutamate receptor 1 isoform X1         | Homo sapiens Mammalia           | XP\_016864881.1 |            |
+| GRIA2 protein                                 | Homo sapiens Mammalia           | AAH10574.1      |            |
+| glutamate receptor ionotropic, kainate 2-like | Acropora millepora Cnidaria     | XP\_029213800.1 |            |
+| glutamate receptor ionotropic, kainate 2-like | Pocillopora damicornis Cnidaria | XP\_027046759.1 |            |
+| glutamate receptor ionotropic, kainate 2-like | Stylophora pistillata Cnidaria  | XP\_022792571.1 |            |
 
 Secondly, we generated a multiple sequence alignment using the EBI tool
 **MU**ltiple **S**equence **C**omparison by **L**og - **E**xpectation,
@@ -766,8 +797,9 @@ Finally we ran a Neighbor Joining analysis using the EBI phylogeny tool
 [Simple
 Phylogeny](https://www.ebi.ac.uk/Tools/phylogeny/simple_phylogeny/),
 which was used as the input to the FigTree software to generate the
-tree. FigTree was used to colour annotate the tree. FigTree is available
-[here](http://tree.bio.ed.ac.uk/software/figtree/).
+tree. FigTree was used to colour annotate the tree, with Biorender
+utilised to add some additional annotation. FigTree is available for
+download [here](http://tree.bio.ed.ac.uk/software/figtree/).
 
 ``` bash
 conda install -c bioconda muscle
@@ -777,51 +809,65 @@ muscle -in ./BLAST_P.fasta -quiet -fasta -out BLASTP_Aligned.fasta
 
 ![Phylogenetic Tree](BLAST_PTree1.jpg)
 
+In our tree we can see the Ctenophora as the earliest clade (the
+ML00441a gene region is annotated green), with the Cnidaria in a sister
+clade (branches annotated blue) to the human gene regions (branches
+annotated pink). Interestingly there is a lot of variation within the
+Ctenophora, with the ML00441a gene region sitting in a clade distinct
+from the other ctenophore species, with *Thalassocalyce inconstans*.
+
 ## 3\. Discussion
 
-Here, we attempted to familiarize with most of the fundamental steps of
+In this analysis, we attempted to validate some of the key findings of
 the *M. leidyi* sequencing project. The gap between sample collections
 and publishing of the Genome Portal/Science paper indicates that it took
 a minimum of two years to successfully assemble and annotate the genome
-of this relatively unknown early metazoan. Our attempts to replicate the
-BLAT alignment were partially successful, where we reported that 99.4%
-and 98.8% of the ESTs and transcripts respectively were mapped with
-BLAT. Indeed, the authors provided the scores of 99.4% and 99.2% (we
-consider this margin to be negligible) for the same statistic. Due to
-issues while running baa.pl/Isoblat, the other two meaningful statistics
-were not generated on our end. We speculate that this is due to
-incompatibilities of the tool with its dependencies - Isoblat was last
-updated three years ago. Nowadays, tools like GenomeQC \[GenomeQC ref\]
-are often used for assessment of assembly quality \[maybe add a review
-ref that says the same?\]
+of this relatively unknown early metazoan and as such, some of the
+analysis was out of scope for this project.
 
-We attempted to replicate the alignment using Bowtie2. Surprisingly,
-Bowtie2 alignment scores fell under 60% (55.63% and 53.37% for ESTs and
-transcripts alignment to the genome respectively). We attempted to
-assess the reasons that might explain the differences. BLAT is a tool
-that operates pretty much like BLAST \[BLAST ref\], but there are a few
-differences in its structure. While BLAST targets GenBank sequences,
-BLAT indexes the target genome, similarly to Bowtie2. BLAT indexing
-approach is known as hash-based - a data structure format that associate
-strings to a hash value through hash functions, resulting in a hash
-table \[hash ref\], and the tool builds this index by finding all the
-non-overlapping 11-mers not heavily involved in repeats \[BLAT ref\].
-Bowtie2, on the other hand, uses an FM-index based on a Burrows-Wheeler
-Approach \[bowtie2 ref\] through an algorithm known as Blockwise \[juha
-ref\].
+**Evaluation of Genome Completeness** Our attempts to replicate the BLAT
+alignment were partially successful, with a reported 99.4% and 98.8%
+alignment of the ESTs and transcripts respectively when mapped with
+BLAT, compared to the authors results of 99.4% and 99.2% respectively
+for the same statistics. When running baa.pl/Isoblat, we identified
+issues which prevented the generation of the additional two meaningful
+statistics. We speculate that this is due to incompatibilities of the
+tool with its dependencies as Isoblat is no longer regularly maintained
+and was last updated three years ago. Nowadays, tools like GenomeQC
+\[GenomeQC ref\] are often used for assessment of assembly quality
+\[maybe add a review ref that says the same?\].
+
+Our attempts to replicate the alignment using Bowtie2 as a comparison
+resulted in low alignment scores, all under 60% (55.63% and 53.37% for
+ESTs and transcripts alignment to the genome respectively). We
+ascertained that this could be due to the difference in the tools. BLAT
+operates similarly to BLAST \[BLAST ref\], with a few differences in its
+structure. While BLAST targets GenBank sequences, BLAT indexes the
+target genome, similarly to Bowtie2. BLAT indexing approach is known as
+hash-based - a data structure format that associate strings to a hash
+value through hash functions, resulting in a hash table \[hash ref\],
+and the tool builds this index by finding all the non-overlapping
+11-mers not heavily involved in repeats \[BLAT ref\]. Bowtie2, on the
+other hand, uses an FM-index based on a Burrows-Wheeler Approach
+\[bowtie2 ref\] through an algorithm known as Blockwise \[juha ref\].
 
 In spite of indexing being a compression step to speed up alignment, it
 is known that different compression algorithms and different data
-structure approaches can yield slightly differences in output. However,
-this is unlikely a reasonable explanation for the big discrepancies
-between Bowtie2 and BLAT outputs. However, BLAT applies a gap-aware
-approach, whereas Bowtie2 does not. Blat can also recognize and work
-around introns and exons, being generally designed to work better with
-the alignment of ESTs to a assembled genome. That could be a reasonable
-explanation, and it highlights that alignment softwares should be chosen
-according to the researcher’s main goals. For this specific dataset, it
-is unlikely that Bowtie2 is able to yield meaningful results, whereas
-BLAT clearly is able to.
+structure approaches can yield slight differences in output however, we
+are not confident this can explain the large discrepancy seen in this
+analysis. In addition, BLAT applies a gap-aware approach, whereas
+Bowtie2 does not. Blat also recognizes and work around introns and
+exons, being generally designed to work better with the alignment of
+ESTs to an assembled genome. The result of this comparison highlights
+the importance of choosing the appropriate alignment software for the
+research project. For this specific dataset, it is unlikely that Bowtie2
+is able to yield meaningful results, whereas BLAT was able to. However,
+as it is not regularly maintained other software may be more applicable.
+Furthermore, with the development of HiFi reads, a highly accurate long
+read generated from circular consensus sequencing (99% accuracy) \[ref
+9\], a useful future study would be to repeat the sequence study using
+HiFi reads. In this case a long read assembler such as minimap2 or Pbmm2
+may be preferential \[ref 10\].
 
 We report genomic GC content at around 37% in all our measurement
 approaches. The authors report 38.86%. We assume the 1% discrepancy
@@ -829,35 +875,90 @@ comes from the extra steps the authors employed to mask repeats detected
 using RepeatMasker \[repeatmasker ref\], and conclude that we achieve a
 satisfactory match, given this condition.
 
-Our genome annotation attempt using Augustus missed a few data
-processing steps they authors initially made, including masking repeats
-and incorporating additional 161 cDNA sequences. The authors reported
-29,359 predicted protein-coding loci. In comparison to HMMGene (that
-predicted 13,948 genes), it predicted 15,411 additional loci. Augustus
-consistently predicted a higher number of loci than every other employed
-tool. By the end, the authors opted for keeping FGENESH and PASA
-predictions, evaluated through EVM (EvidenceModeler) \[EvidenceModeler
-ref\], obtaining 16,845 genes, closer to the reported final number of
-16,548 genes after manual curation of additional sequences.
+**Genome Annotation** Our genome annotation attempt using Augustus
+missed a few data processing steps they authors initially made,
+including masking repeats and incorporating additional 161 cDNA
+sequences. The authors reported 29,359 predicted protein-coding loci. In
+comparison to HMMGene (that predicted 13,948 genes), it predicted 15,411
+additional loci. Augustus consistently predicted a higher number of loci
+than every other employed tool. By the end, the authors opted for
+keeping FGENESH and PASA predictions, evaluated through EVM
+(EvidenceModeler) \[EvidenceModeler ref\], obtaining 16,845 genes,
+closer to the reported final number of 16,548 genes after manual
+curation of additional sequences.
 
 Nevertheless, Augustus initial value predicted 33,354 genes, predicting
 aprox. 4,000 genes more than the expected. Intriguingly, when mapping
 the sequences back to the assembled genome using BED-tools, we obtain
-29,875 genes, a value much closer to their reported value As described,
-this increment is likely caused by the missing steps (and for the final
-value, likely cause by the missing 161 CDNA sequences incorporated on
-the hints file). Unsurprisingly, running our Augustus prediction
-sequences against the reference genome via BLASTp reveals that the
-predicted genes match consistently known annotated *M. leidyi* genes (we
-were able to consistently find sequences scoring high identity and
-significant e-value).
+29,875 genes, a value much closer to the reported value of the original
+study. As described, this increment is likely caused by the missing
+steps (and for the final value, likely cause by the missing 161 CDNA
+sequences incorporated on the hints file). Unsurprisingly, running our
+Augustus prediction sequences against the reference genome via BLASTp
+reveals that the predicted genes match consistently known annotated *M.
+leidyi* genes (we were able to consistently find sequences scoring high
+identity and significant e-value).
 
-## Conclusion
+**Phylogeny** The original study utilised maximum-likelihood analysis
+methods, in addition to Bayesian analysis (using PhyloBayes), of two
+datasets; a whole genome dataset comprised of 13 animals and a an EST
+set of 58 animals. As mentioned at the beginning of this assignment, on
+average the runs took 205 days to complete and were out of scope for
+this project. Instead we attempted to replicate the ionotropic glutamate
+receptor phylogeny of human and ctenophore as described in the
+supplementary material.
+
+We utilised the MUSCLE and Simple Phylogeny tools of EBI to do this and
+found results which supported that of the initial study. The tree
+demonstrates that the ionotropic glutamate receptors of ctenophores are
+not direct orthologs to AMPA (GRIA), or delta2-like (GRID) glutamate
+receptors of humans, however they support the theory that ctenophore
+receptors form a sister clade to the bilaterian glutamte receptors \[ref
+5\], as can be seen from the distinction between the Ctenophore and
+human cladesin our phylogenetic tree. As an addition to the the study we
+also included relevant sequences from Cnidaria species, which was also
+clearly in a distinct clade. Our tree shows Ctenophora at the base of
+metazoa, with Cnidaria sister to Bilateria (human), which confirms
+results seen by later studies \[ref 6\]. Interestingly, we can see a
+variety of gene content within the ctenophora as demonstrated by the
+phylogenetic tree, which may be worth further investigation in future
+studies.
+
+Extensive BLAST searches and querying of GenBank did not provide
+orthologs of these receptors in the sponge *Amphipedon queenslandica*,
+however this have been identified in eight other sponges \[ref 5\].
+Further investigation of these orthologs and their phylogenetic
+placement compared to the sequences in our tree and that of the original
+study, could be useful in providing insights to the phylogenetic
+placement of these non-bilaterian groups - particularly given the lack
+of a complex nerve system in sponges \[ref 5-6\]
+
+## 4\. Conclusion
 
 Here, we attempted to partially cover a 2-year long *M. leidyi* genome
-sequencing project. We were able to
+sequencing project. We were able to cover essentially 1/3 of the overall
+steps, obtaining values that were consistent with the reported by the
+authors of the original paper. We faced a number of technical problems
+and troubleshooting them forced us to change our planned structure
+several times. When we attempted to add novel approaches to a few of the
+steps, we realized that it would simply fall away from the original goal
+of the project. With that being said, it is clear that several advances
+in data transparency were made since 2011 and, although this particular
+paper presents most of its data and processes in a transparent and
+replicable way, there were steps that lack of clearer explanations made
+them unfeasible (e.g. running our data through PASA and masking portions
+of the genome). Nevertheless, we have shown several steps in a
+replicable way. More complex annotation, phylogeny analysis, and manual
+processes inbetween each major step were unreasonable for our
+time-scale. On a biological perspective, this reference genome surely
+can be improved with the application of novel approaches such as
+long-reads PacBio/Oxford Nanopore platforms. *M. leidyi* remains an
+interesting model organism for evolutionary and developmental studies at
+the earliest branching Metazoan groups, and said studies surely would
+benefit of having a wider community working on improving its reference
+genome.
 
-## Bibliography
+## 5\. Bibliography
 
 1.  Van Gestel J, Tarnita CE. On the origin of biological construction,
     with a focus on multicellularity. Proc Natl Acad Sci U S A.
@@ -873,12 +974,19 @@ sequencing project. We were able to
 5.  Ryan JF, Pang K, Schnitzler CE, et al. The genome of the ctenophore
     Mnemiopsis leidyi and its implications for cell type evolution.
     Science (80- ). 2013;342(6164). <doi:10.1126/science.1242592>
-6.  Ryan JF, Pang K, Mullikin JC, Martindale MQ, Baxevanis AD. The
+6.  Moroz LL, Kocot KM, Citarella MR, et al. The ctenophore genome and
+    the evolutionary origins of neural systems. Nature.
+    2014;510(7503):109-114. <doi:10.1038/nature13400>
+7.  Ryan JF, Pang K, Mullikin JC, Martindale MQ, Baxevanis AD. The
     homeodomain complement of the ctenophore Mnemiopsis leidyi suggests
     that Ctenophora and Porifera diverged prior to the ParaHoxozoa.
     Evodevo. 2010;1(1):1-18. <doi:10.1186/2041-9139-1-9>
-7.  Ryan JF. Did the ctenophore nervous system evolve independently?
+8.  Ryan JF. Did the ctenophore nervous system evolve independently?
     Zoology. 2014;117(4):225-226. <doi:10.1016/j.zool.2014.06.001>
-8.  Moroz LL, Kocot KM, Citarella MR, et al. The ctenophore genome and
-    the evolutionary origins of neural systems. Nature.
-    2014;510(7503):109-114. <doi:10.1038/nature13400>
+9.  Wenger AM, Peluso P, Rowell WJ, et al. Accurate circular consensus
+    long-read sequencing improves variant detection and assembly of a
+    human genome. Nat Biotechnol. 2019;37(10):1155-1162.
+    <doi:10.1038/s41587-019-0217-9>
+10. Amarasinghe SL, Su S, Dong X, Zappia L, Ritchie ME, Gouil Q.
+    Opportunities and challenges in long-read sequencing data analysis.
+    Genome Biol. 2020;21(1):1-16. <doi:10.1186/s13059-020-1935-5>
