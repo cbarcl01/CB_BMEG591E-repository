@@ -775,8 +775,7 @@ muscle -in ./BLAST_P.fasta -quiet -fasta -out BLASTP_Aligned.fasta
 /nfs/public/ro/es/appbin/linux-x86_64/clustalw-2.1/bin/clustalw2 -infile=simple_phylogeny-I20210422-022731-0145-87347698-p1m.upfile -tree -outputtree=phylip -clustering=Neighbour-joining
 ```
 
-![Phylogenetic
-Tree](C:\\Users\\cbarc\\Documents\\CB_BMEG591E-repository\\Group_Project\\BLAST_PTree1.jpg)
+![Phylogenetic Tree](BLAST_PTree1.jpg)
 
 ## 3\. Discussion
 
