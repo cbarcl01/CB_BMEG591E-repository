@@ -23,16 +23,15 @@ Charlotte Barclay and Gabriel Dall’Alba
           - [2.2.1 Bowtie x BLAT](#221-bowtie-x-blat)
       - [2.3 Assessing GC Content](#23-assessing-gc-content)
       - [2.4 Annotation](#24-annotation)
-      - [2.5 Differential Expression](#25-differential-expression)
-      - [2.5 Phylogeny](#25-phylogeny)
-          - [2.5.1 Mnemiopsis Genome Project Portal: Track
-            Viewer](#251-mnemiopsis-genome-project-portal-track-viewer)
-          - [2.5.2 BLAST](#252-blast)
-          - [2.5.3 Create a Phylogenetic Tree using
-            FigTree.](#253-create-a-phylogenetic-tree-using-figtree)
+      - [2.4 Phylogeny](#24-phylogeny)
+          - [2.4.1 Mnemiopsis Genome Project Portal: Track
+            Viewer](#241-mnemiopsis-genome-project-portal-track-viewer)
+          - [2.4.2 BLAST](#242-blast)
+          - [2.4.3 Create a Phylogenetic Tree using
+            FigTree.](#243-create-a-phylogenetic-tree-using-figtree)
   - [3. Discussion](#3-discussion)
-  - [Conclusion](#conclusion)
-  - [Bibliography](#bibliography)
+  - [4. Conclusion](#4-conclusion)
+  - [5. Bibliography](#5-bibliography)
 
 ## 1 Introduction
 
@@ -680,42 +679,7 @@ When mapping back to the genome, we obtain 29,875 genes. This file can
 then be used to manually curate sequences following the previously
 mentioned BLASTp approach.
 
-### 2.5 Differential Expression
-
-First we download the temporal development expression profiles to from
-[GenBank](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60478).
-The introns of the genes are removed to form the mature mRNAs, so the
-reads that are counted correspond to the reads aligning to the exons of
-the genes.
-
-Load relevant libraries as required
-
-``` r
-# Load library for DESeq2
-library(DESeq2)
-
-# Load library for RColorBrewer
-library(RColorBrewer)
-
-# Load library for pheatmap
-library(pheatmap)
-
-# Load library for tidyverse
-library(tidyverse)
-```
-
-``` r
-#load the data
-load("GSE60478_RNAseq.RData") 
-
-#explore the counts data
-head(GSE60478_ML_exp.tab)
-
-#explore the metadata
-head(GSE60478_ML_GEO_sample_sheet.tab) 
-```
-
-### 2.5 Phylogeny
+### 2.4 Phylogeny
 
 In the original study, phylogenetic analysis was conducted using
 PhyloBayes “a Bayesian Monte Carlo Markov Chain (MCMC) sampler for
@@ -743,7 +707,7 @@ interest was identified as ML00441a and both the transcript sequence and
 predicted protein sequence can be viewed
 [here](https://research.nhgri.nih.gov/mnemiopsis/wiki/index.php/ML00441a).
 
-#### 2.5.1 Mnemiopsis Genome Project Portal: Track Viewer
+#### 2.4.1 Mnemiopsis Genome Project Portal: Track Viewer
 
 The following is a snap shot from the Mnemiopsis leidyi genome portal
 track for the gene region of interest. This viewer can be interrogated
@@ -758,7 +722,7 @@ more information from the Reference sequence as well:
 ![Mnemiopsis leidyi Genome Portal Track for
 ML00441a](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/Track_Zoom.png)
 
-#### 2.5.2 BLAST
+#### 2.4.2 BLAST
 
 We extracted the nucleotide sequence, as well as the protein sequence
 for the target gene region ML00441, as identified in the supplementary
@@ -786,7 +750,7 @@ results](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Pr
 ![Protein Blast Search
 results](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/BLASTP_ML00441a.png)
 
-#### 2.5.3 Create a Phylogenetic Tree using FigTree.
+#### 2.4.3 Create a Phylogenetic Tree using FigTree.
 
 Firstly we downloaded the .fasta protein sequences identified above into
 a single file. Then we retrieved published sequences from GenBank for a
@@ -849,7 +813,8 @@ In our tree we can see the Ctenophora as the earliest clade (the
 ML00441a gene region is annotated green), with the Cnidaria in a sister
 clade (branches annotated blue) to the human gene regions (branches
 annotated pink). Interestingly there is a lot of variation within the
-Ctenophora,
+Ctenophora, with the ML00441a gene region sitting in a clade distinct
+from the other ctenophore species, with *Thalassocalyce inconstans*.
 
 ## 3\. Discussion
 
@@ -934,10 +899,41 @@ reveals that the predicted genes match consistently known annotated *M.
 leidyi* genes (we were able to consistently find sequences scoring high
 identity and significant e-value).
 
-**Phylogeny** The original study utilised PhyloBayes to run a Bayesian
-analysis of a whole genome dataset, comprised of 13 animals and a
+**Phylogeny** The original study utilised maximum-likelihood analysis
+methods, in addition to Bayesian analysis (using PhyloBayes), of two
+datasets; a whole genome dataset comprised of 13 animals and a an EST
+set of 58 animals. As mentioned at the beginning of this assignment, on
+average the runs took 205 days to complete and were out of scope for
+this project. Instead we attempted to replicate the ionotropic glutamate
+receptor phylogeny of human and ctenophore as described in the
+supplementary material.
 
-## Conclusion
+We utilised the MUSCLE and Simple Phylogeny tools of EBI to do this and
+found results which supported that of the initial study. The tree
+demonstrates that the ionotropic glutamate receptors of ctenophores are
+not direct orthologs to AMPA (GRIA), or delta2-like (GRID) glutamate
+receptors of humans, however they support the theory that ctenophore
+receptors form a sister clade to the bilaterian glutamte receptors \[ref
+5\], as can be seen from the distinction between the Ctenophore and
+human cladesin our phylogenetic tree. As an addition to the the study we
+also included relevant sequences from Cnidaria species, which was also
+clearly in a distinct clade. Our tree shows Ctenophora at the base of
+metazoa, with Cnidaria sister to Bilateria (human), which confirms
+results seen by later studies \[ref 6\]. Interestingly, we can see a
+variety of gene content within the ctenophora as demonstrated by the
+phylogenetic tree, which may be worth further investigation in future
+studies.
+
+Extensive BLAST searches and querying of GenBank did not provide
+orthologs of these receptors in the sponge *Amphipedon queenslandica*,
+however this have been identified in eight other sponges \[ref 5\].
+Further investigation of these orthologs and their phylogenetic
+placement compared to the sequences in our tree and that of the original
+study, could be useful in providing insights to the phylogenetic
+placement of these non-bilaterian groups - particularly given the lack
+of a complex nerve system in sponges \[ref 5-6\]
+
+## 4\. Conclusion
 
 Here, we attempted to partially cover a 2-year long *M. leidyi* genome
 sequencing project. We were able to cover essentially 1/3 of the overall
@@ -962,7 +958,7 @@ the earliest branching Metazoan groups, and said studies surely would
 benefit of having a wider community working on improving its reference
 genome.
 
-## Bibliography
+## 5\. Bibliography
 
 1.  Van Gestel J, Tarnita CE. On the origin of biological construction,
     with a focus on multicellularity. Proc Natl Acad Sci U S A.

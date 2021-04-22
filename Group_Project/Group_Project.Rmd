@@ -491,43 +491,7 @@ bedtools getfasta -fi MlScaffold09.fa -bed mlegenes.bed -fo mle.ffn
 When mapping back to the genome, we obtain 29,875 genes. This file can then be used to manually curate sequences following the previously mentioned BLASTp approach.
 
 
-### 2.5 Differential Expression
-
-First we download the temporal development expression profiles to from [GenBank](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60478). The introns of the genes are removed to form the mature mRNAs, so the reads that are counted correspond to the reads aligning to the exons of the genes.
-
-Load relevant libraries as required
-
-```{r, eval=FALSE}
-# Load library for DESeq2
-library(DESeq2)
-
-# Load library for RColorBrewer
-library(RColorBrewer)
-
-# Load library for pheatmap
-library(pheatmap)
-
-# Load library for tidyverse
-library(tidyverse)
-```
-
-```{r, eval=FALSE}
-#load the data
-load("GSE60478_RNAseq.RData") 
-
-#explore the counts data
-head(GSE60478_ML_exp.tab)
-
-#explore the metadata
-head(GSE60478_ML_GEO_sample_sheet.tab) 
-```
-
-```{r, eval=TRUE}
-
-```
-
-
-### 2.5 Phylogeny
+### 2.4 Phylogeny
 
 In the original study, phylogenetic analysis was conducted using PhyloBayes "a Bayesian Monte Carlo Markov Chain (MCMC) sampler for phylogenetic
 reconstruction", comparing the whole genomes of 13 different animals in the 'Genome set' vs the EST data available in GenBank from 58 different animals in the 'EST set'[5]. Unfortunately, one of the runs for EST alone took 204 days and as such was not reproducible for this assignment.
@@ -537,7 +501,7 @@ Phylogenetic analysis allows researchers the opportunity to identify potential s
 In the original study, Ryan et al. suggested through phylogenetic analysis that ionotropic glutamate receptors from *M. leidyi* form a sister clade to the bilaterian glutamate receptors. The gene region of interest was identified as ML00441a and both the transcript sequence and predicted protein sequence can be viewed [here](https://research.nhgri.nih.gov/mnemiopsis/wiki/index.php/ML00441a).
 
 
-#### 2.5.1 Mnemiopsis Genome Project Portal: Track Viewer
+#### 2.4.1 Mnemiopsis Genome Project Portal: Track Viewer
 
 The following is a snap shot from the Mnemiopsis leidyi genome portal track for the gene region of interest. This viewer can be interrogated similarly to the IGV. 
 
@@ -547,7 +511,7 @@ This region of interest can be further zoomed in, in order to see the more infor
 
 ![Mnemiopsis leidyi Genome Portal Track for ML00441a](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/Track_Zoom.png)
 
-#### 2.5.2 BLAST 
+#### 2.4.2 BLAST 
 
 We extracted the nucleotide sequence, as well as the protein sequence for the target gene region ML00441, as identified in the supplementary material as a ionotropic glutamate receptor region. Using [NCBI BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi), we blasted the first the nucleotide, followed by the protein sequence to identify similar sequences. The top results were ionotropic glutamate receptors for other ctenophore species. 
 
@@ -561,7 +525,7 @@ BLAST describe the E value (the expect value) as the random chance we could "exp
 
 ![Protein Blast Search results](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/BLASTP_ML00441a.png)
 
-#### 2.5.3 Create a Phylogenetic Tree using FigTree.
+#### 2.4.3 Create a Phylogenetic Tree using FigTree.
 
 Firstly we downloaded the .fasta protein sequences identified above into a single file. Then we retrieved published sequences from GenBank for a number of AMPA (GRIA) and delta2-like (GRID) glutamate receptors, as described in the original study. Human protein sequences (GRID1 (Accession AAH39263.1), GRID2 (Accession AAH99654.1), GRIA1 (Accession XP_016864881.1), GRIA2(Accession AAH10574.1)) and cnidaria sequences for glutamate receptorionotropic, kainate 2-like (Accession XP_029213800.1, XP_027046759.1 and XP_022792571.1) were also added to .fasta file along with the sequence for ML00441a, in a slight modification to the supplementary material.
 
@@ -602,7 +566,7 @@ muscle -in ./BLAST_P.fasta -quiet -fasta -out BLASTP_Aligned.fasta
 
 ![Phylogenetic Tree](BLAST_PTree1.jpg)
 
-In our tree we can see the Ctenophora as the earliest clade (the ML00441a gene region is annotated green), with the Cnidaria in a sister clade (branches annotated blue) to the human gene regions (branches annotated pink). Interestingly there is a lot of variation within the Ctenophora,  
+In our tree we can see the Ctenophora as the earliest clade (the ML00441a gene region is annotated green), with the Cnidaria in a sister clade (branches annotated blue) to the human gene regions (branches annotated pink). Interestingly there is a lot of variation within the Ctenophora, with the ML00441a gene region sitting in a clade distinct from the other ctenophore species, with *Thalassocalyce inconstans*.  
 
 ## 3. Discussion
 
@@ -620,17 +584,19 @@ We report genomic GC content at around 37% in all our measurement approaches. Th
 
 Nevertheless, Augustus initial value predicted 33,354 genes, predicting aprox. 4,000 genes more than the expected. Intriguingly, when mapping the sequences back to the assembled genome using BED-tools, we obtain 29,875 genes, a value much closer to the reported value of the original study.  As described, this increment is likely caused by the missing steps (and for the final value, likely cause by the missing 161 CDNA sequences incorporated on the hints file). Unsurprisingly, running our Augustus prediction sequences against the reference genome via BLASTp reveals that the predicted genes match consistently known annotated *M. leidyi* genes (we were able to consistently find sequences scoring high identity and significant e-value).
 
-**Phylogeny** The original study utilised PhyloBayes to run a Bayesian analysis of a whole genome dataset, comprised of 13 animals and a  
+**Phylogeny** The original study utilised maximum-likelihood analysis methods, in addition to Bayesian analysis (using PhyloBayes), of two datasets; a whole genome dataset comprised of 13 animals and a an EST set of 58 animals. As mentioned at the beginning of this assignment, on average the runs took 205 days to complete and were out of scope for this project. Instead we attempted to replicate the ionotropic glutamate receptor phylogeny of human and ctenophore as described in the supplementary material. 
+
+We utilised the MUSCLE and Simple Phylogeny tools of EBI to do this and found results which supported that of the initial study.  The tree demonstrates that the ionotropic glutamate receptors of ctenophores are not direct orthologs to AMPA (GRIA), or delta2-like (GRID) glutamate receptors of humans, however they support the theory that ctenophore receptors form a sister clade to the bilaterian glutamte receptors [ref 5], as can be seen from the distinction between the Ctenophore and human cladesin our phylogenetic tree. As an addition to the the study we also included relevant sequences from Cnidaria species, which was also clearly in a distinct clade. Our tree shows Ctenophora at the base of metazoa, with Cnidaria sister to Bilateria (human), which confirms results seen by later studies [ref 6]. Interestingly, we can see a variety of gene content within the ctenophora as demonstrated by the phylogenetic tree, which may be worth further investigation in future studies.
+
+Extensive BLAST searches and querying of GenBank did not provide orthologs of these receptors in the sponge *Amphipedon queenslandica*, however this have been identified in eight other sponges [ref 5]. Further investigation of these orthologs and their phylogenetic placement compared to the sequences in our tree and that of the original study, could be useful in providing insights to the phylogenetic placement of these non-bilaterian groups - particularly given the lack of a complex nerve system in sponges [ref 5-6]
 
 
-
-
-## Conclusion
+## 4. Conclusion
 
 Here, we attempted to partially cover a 2-year long *M. leidyi* genome sequencing project. We were able to cover essentially 1/3 of the overall steps, obtaining values that were consistent with the reported by the authors of the original paper. We faced a number of technical problems and troubleshooting them forced us to change our planned structure several times. When we attempted to add novel approaches to a few of the steps, we realized that it would simply fall away from the original goal of the project. With that being said, it is clear that several advances in data transparency were made since 2011 and, although this particular paper presents most of its data and processes in a transparent and replicable way, there were steps that lack of clearer explanations made them unfeasible (e.g. running our data through PASA and masking portions of the genome). Nevertheless, we have shown several steps in a replicable way. More complex annotation, phylogeny analysis, and manual processes inbetween each major step were unreasonable for our time-scale. On a biological perspective, this reference genome surely can be improved with the application of novel approaches such as long-reads PacBio/Oxford Nanopore platforms. *M. leidyi* remains an interesting model organism for evolutionary and developmental studies at the earliest branching Metazoan groups, and said studies surely would benefit of having a wider community working on improving its reference genome.
 
 
-## Bibliography
+## 5. Bibliography
 
 1.	Van Gestel J, Tarnita CE. On the origin of biological construction, with a focus on multicellularity. Proc Natl Acad Sci U S A. 2017;114(42):11018-11026. doi:10.1073/pnas.1704631114
 2. 	Niklas KJ, Newman SA. The many roads to and from multicellularity. J Exp Bot. 2020;71(11):3247-3253. doi:10.1093/jxb/erz547
