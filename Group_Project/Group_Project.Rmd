@@ -3,7 +3,7 @@ title: "Group Project: Investigating the validity of *Mnemiopsis leidyi* as a mo
 author: "Charlotte Barclay and Gabriel Dall'Alba"
 date: "31/03/2021"
 output:
-  github_document:
+  pdf:
     toc: true
     toc_depth: 4
 ---
