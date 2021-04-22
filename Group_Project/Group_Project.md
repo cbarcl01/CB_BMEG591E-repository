@@ -776,7 +776,7 @@ muscle -in ./BLAST_P.fasta -quiet -fasta -out BLASTP_Aligned.fasta
 ```
 
 ![Phylogenetic
-Tree](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/BLAST_PTree1.jpg)
+Tree](C:\\Users\\cbarc\\Documents\\CB_BMEG591E-repository\\Group_Project\\BLAST_PTree1.jpg)
 
 ## 3\. Discussion
 
