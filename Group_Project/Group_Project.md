@@ -30,6 +30,7 @@ Charlotte Barclay and Gabriel Dall’Alba
           - [2.5.2 BLAST](#252-blast)
           - [2.5.3 Create a Phylogenetic Tree using
             FigTree.](#253-create-a-phylogenetic-tree-using-figtree)
+  - [3. Discussion](#3-discussion)
   - [Conclusion](#conclusion)
   - [Bibliography](#bibliography)
 
@@ -569,7 +570,22 @@ We can run this prediction against Mnemiopsis protein models using BLASTp (https
 
 Multiple attempts to run PASA, HMMGene, and GENESH were made, but due to
 time constrains and technical challenges, we decided to run Augustus
-alone. Augustus predicted 33,354 protein-coding loci.
+alone. Augustus predicted 33,354 protein-coding loci. We then used
+BED-tools getfasta function to extract sequences:
+
+``` bash
+#filters every possible sequence type into a .bed file
+
+awk '($3=="CDS" || $3=="gene" || $3=="tRNA" || $3=="tmRNA" || $3=="ncRNA" || $3=="rRNA") {OFS="\t"; print $1,$4-1,$5}' augustus_annotation.gff > mlegenes.bed
+
+#getfasta function correlates predicted sequences in .bed file back to the assembled genome and store them on a .ffn file
+
+bedtools getfasta -fi MlScaffold09.fa -bed mlegenes.bed -fo mle.ffn
+```
+
+When mapping back to the genome, we obtain 29,875 genes. This file can
+then be used to manually curate sequences following the previously
+mentioned BLASTp approach.
 
 ### 2.5 Differential Expression
 
@@ -639,13 +655,13 @@ track for the gene region of interest. This viewer can be interrogated
 similarly to the IGV.
 
 ![Mnemiopsis leidyi Genome Portal Track for
-ML00441a](C:\\Users\\cbarc\\Documents\\CB_BMEG591E-repository\\Group_Project\\Track.png)
+ML00441a](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/Track.png)
 
 This region of interest can be further zoomed in, in order to see the
 more information from the Reference sequence as well:
 
 ![Mnemiopsis leidyi Genome Portal Track for
-ML00441a](C:\\Users\\cbarc\\Documents\\CB_BMEG591E-repository\\Group_Project\\Track_Zoom.png)
+ML00441a](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/Track_Zoom.png)
 
 #### 2.5.2 BLAST
 
@@ -668,12 +684,12 @@ The results can be seen below:
 **Nucleotide Blast search results** </br>
 
 ![Nucleotide Blast Search
-results](C:\\Users\\cbarc\\Documents\\CB_BMEG591E-repository\\Group_Project\\BLASTN_ML00441a.png)
+results](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/BLASTN_ML00441a.png)
 
 **Nucleotide Blast search results** </br>
 
 ![Protein Blast Search
-results](C:\\Users\\cbarc\\Documents\\CB_BMEG591E-repository\\Group_Project\\BLASTP_ML00441a.png)
+results](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/BLASTP_ML00441a.png)
 
 #### 2.5.3 Create a Phylogenetic Tree using FigTree.
 
@@ -711,11 +727,85 @@ muscle -in ./BLAST_P.fasta -quiet -fasta -out BLASTP_Aligned.fasta
 ![Phylogenetic
 Tree](C:\\Users\\cbarc\\Documents\\CB_BMEG591E-repository\\Group_Project)
 
+## 3\. Discussion
+
+Here, we attempted to familiarize with most of the fundamental steps of
+the *M. leidyi* sequencing project. The gap between sample collections
+and publishing of the Genome Portal/Science paper indicates that it took
+a minimum of two years to successfully assemble and annotate the genome
+of this relatively unknown early metazoan. Our attempts to replicate the
+BLAT alignment were partially successful, where we reported that 99.4%
+and 98.8% of the ESTs and transcripts respectively were mapped with
+BLAT. Indeed, the authors provided the scores of 99.4% and 99.2% (we
+consider this margin to be negligible) for the same statistic. Due to
+issues while running baa.pl/Isoblat, the other two meaningful statistics
+were not generated on our end. We speculate that this is due to
+incompatibilities of the tool with its dependencies - Isoblat was last
+updated three years ago. Nowadays, tools like GenomeQC \[GenomeQC ref\]
+are often used for assessment of assembly quality \[maybe add a review
+ref that says the same?\]
+
+We attempted to replicate the alignment using Bowtie2. Surprisingly,
+Bowtie2 alignment scores fell under 60% (55.63% and 53.37% for ESTs and
+transcripts alignment to the genome respectively). We attempted to
+assess the reasons that might explain the differences. BLAT is a tool
+that operates pretty much like BLAST \[BLAST ref\], but there are a few
+differences in its structure. While BLAST targets GenBank sequences,
+BLAT indexes the target genome, similarly to Bowtie2. BLAT indexing
+approach is known as hash-based - a data structure format that associate
+strings to a hash value through hash functions, resulting in a hash
+table \[hash ref\], and the tool builds this index by finding all the
+non-overlapping 11-mers not heavily involved in repeats \[BLAT ref\].
+Bowtie2, on the other hand, uses an FM-index based on a Burrows-Wheeler
+Approach \[bowtie2 ref\] through an algorithm known as Blockwise \[juha
+ref\].
+
+In spite of indexing being a compression step to speed up alignment, it
+is known that different compression algorithms and different data
+structure approaches can yield slightly differences in output. However,
+this is unlikely a reasonable explanation for the big discrepancies
+between Bowtie2 and BLAT outputs. However, BLAT applies a gap-aware
+approach, whereas Bowtie2 does not. Blat can also recognize and work
+around introns and exons, being generally designed to work better with
+the alignment of ESTs to a assembled genome. That could be a reasonable
+explanation, and it highlights that alignment softwares should be chosen
+according to the researcher’s main goals. For this specific dataset, it
+is unlikely that Bowtie2 is able to yield meaningful results, whereas
+BLAT clearly is able to.
+
+We report genomic GC content at around 37% in all our measurement
+approaches. The authors report 38.86%. We assume the 1% discrepancy
+comes from the extra steps the authors employed to mask repeats detected
+using RepeatMasker \[repeatmasker ref\], and conclude that we achieve a
+satisfactory match, given this condition.
+
+Our genome annotation attempt using Augustus missed a few data
+processing steps they authors initially made, including masking repeats
+and incorporating additional 161 cDNA sequences. The authors reported
+29,359 predicted protein-coding loci. In comparison to HMMGene (that
+predicted 13,948 genes), it predicted 15,411 additional loci. Augustus
+consistently predicted a higher number of loci than every other employed
+tool. By the end, the authors opted for keeping FGENESH and PASA
+predictions, evaluated through EVM (EvidenceModeler) \[EvidenceModeler
+ref\], obtaining 16,845 genes, closer to the reported final number of
+16,548 genes after manual curation of additional sequences.
+
+Nevertheless, Augustus initial value predicted 33,354 genes, predicting
+aprox. 4,000 genes more than the expected. Intriguingly, when mapping
+the sequences back to the assembled genome using BED-tools, we obtain
+29,875 genes, a value much closer to their reported value As described,
+this increment is likely caused by the missing steps (and for the final
+value, likely cause by the missing 161 CDNA sequences incorporated on
+the hints file). Unsurprisingly, running our Augustus prediction
+sequences against the reference genome via BLASTp reveals that the
+predicted genes match consistently known annotated *M. leidyi* genes (we
+were able to consistently find sequences scoring high identity and
+significant e-value).
+
 ## Conclusion
 
-Summarize your findings and contrast this with what the original study
-found. Remark on anything surprising or anything you would do
-differently next time.
+Here, we attempted to partially cover a 2-year long *M. leidyi* genome
+sequencing project. We were able to
 
 ## Bibliography
 
