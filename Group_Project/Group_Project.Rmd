@@ -11,10 +11,9 @@ output:
 
 ### 1.1 Motivation
 
-From ‘primordial soup’ to the vast array of biodiversity we see today, evolution and these origins of multicellularity still fascinate and elude scientists[reference 1].  Accounts of the number of independent events that led to multicellularity differ amongst the scientific community[reference 2], although there is a consensus that this happened once in the Animalia/Metazoan lineage[references 2,3]. Advances in sequencing and reduction in cost has led to increase in whole genomic sequences of non-bilateran animal species providing insight into the molecular mechanisms that govern multicellularity[reference 4]. The four non-bilaterian metazoan lineages are the Porifera (sponges), Placozoa, Cnidaria (corals, jellyfish and sea anemones) and Ctenophora (comb jellies)[5].
+From ‘primordial soup’ to the vast array of biodiversity we see today, evolution and these origins of multicellularity still fascinate and elude scientists[reference 1].  Accounts of the number of independent events that led to multicellularity differ amongst the scientific community[reference 2], although there is a consensus that this happened once in the Animalia/Metazoan lineage[references 2,3]. Advances in sequencing and reduction in cost has led to increase in whole genomic sequences of both the Bilateria (the clade of most animal species) and the non-bilateran species, providing insight into the molecular mechanisms that govern multicellularity [reference 4]. The four non-bilaterian metazoan lineages are the Porifera (sponges), Placozoa, Cnidaria (corals, jellyfish and sea anemones) and Ctenophora (comb jellies)[5].
 
-
-Ctenophores are a gelatinous phylum of marine metazoans with approximately 150 known species and in contrast to other basal metazoans they have both a nervous system and a mesoderm-derived muscular system[reference 8].Ctenophores have been proposed as a model organism for understanding the evolutionary mechanisms of multicellularity in animals[references 4,5], however their phylogenetic placement is still widely debated[references 5–7]. 
+Ctenophores are a gelatinous phylum of marine metazoans with approximately 150 known species and in contrast to other basal metazoans they have both a nervous system and a mesoderm-derived muscular system[reference 6]. Ctenophores have been proposed as a model organism for understanding the evolutionary mechanisms of multicellularity in animals[references 4,5], however their phylogenetic placement is still widely debated[references 5,7-8]. 
 
 ![Schema of phylogenetic position of Mnemiopsis leidyi](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/Mle.jpg)
 
@@ -163,6 +162,7 @@ conda install ucsc-blat
 ```
 
 **RUNNING BLAT**
+
 We ran BLAT with default parameters as described in the paper as follows:
 
 ```{bash, eval=FALSE}
@@ -212,6 +212,7 @@ Ratio of transcripts with a BLAT entry (15665/15752): 0.99447689182326
 As it can be seen, only one of the three expected statistics were yielded as output. We are unsure of the reasons why baa.pl/Isoblat algorithm fails to capture enough information for the other two calculations (% of transcripts positions successfully aligned and % of transcripts that mapped to a single scaffold). We attempted to troubleshoot the algorithm itself to no luck. The algorithm attempted to read non-existent lines, returning non-numeric values and divisions either by non-numeric values or by zero.
 
 **RUNNING BLAT + BAA.PL/ISOBLAT FOR RNA DATA**
+
 We repeated the above steps using Trinity-assembled transcripts:
 
 ```{bash, eval=FALSE}

@@ -45,29 +45,30 @@ events that led to multicellularity differ amongst the scientific
 community\[reference 2\], although there is a consensus that this
 happened once in the Animalia/Metazoan lineage\[references 2,3\].
 Advances in sequencing and reduction in cost has led to increase in
-whole genomic sequences of non-bilateran animal species providing
-insight into the molecular mechanisms that govern
-multicellularity\[reference 4\].
+whole genomic sequences of both the Bilateria (the clade of most animal
+species) and the non-bilateran species, providing insight into the
+molecular mechanisms that govern multicellularity \[reference 4\]. The
+four non-bilaterian metazoan lineages are the Porifera (sponges),
+Placozoa, Cnidaria (corals, jellyfish and sea anemones) and Ctenophora
+(comb jellies)\[5\].
 
-Ctenophores have been proposed as a model organism for understanding the
-evolutionary mechanisms of multicellularity in animals\[references
-4,5\], however their phylogenetic placement is still widely
-debated\[references 5–7\]. Ctenophores are a gelatinous phylum of marine
-metazoans with approximately 150 known species that form a clade of
-pre-bilateran animals\[reference 8\].
+Ctenophores are a gelatinous phylum of marine metazoans with
+approximately 150 known species and in contrast to other basal metazoans
+they have both a nervous system and a mesoderm-derived muscular
+system\[reference 6\]. Ctenophores have been proposed as a model
+organism for understanding the evolutionary mechanisms of
+multicellularity in animals\[references 4,5\], however their
+phylogenetic placement is still widely debated\[references 5,7-8\].
 
 ![Schema of phylogenetic position of Mnemiopsis
 leidyi](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/Mle.jpg)
 
 ### 1.2 Original Study
 
-overview of the original study, the scope of your re-analysis, and why
-you chose it
-
 ##### 1.2.1 Sample collection and Genome Assembly
 
-Ryan et al collected 2 wild animals from the Vineyard Sound near Woods
-Hole, Massachussets (Figure 2) \[Ryan paper ref\]. Those animals were
+Ryan et al collected two wild animals from the Vineyard Sound near Woods
+Hole, Massachussets (Fig. 2) \[Ryan paper ref\]. Those animals were
 self-fertilized and DNA was isolated from the resulting embryos of one
 of them. Details of the DNA isolation protocol were not disclosed, but
 the authors mention the use of “GS FLX Titanium Rapid Library
@@ -81,13 +82,13 @@ sequence.
 ![Location where wild ctenophores were
 collected.](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/woodshole.png)
 
-Those raw reads were then submitted for assembly using the Phusion
-assembler \[phusion reference\], resulting in 24,884 contigs with a
-total of 150,340,428 bases and a reported N50 of 11,936 bases. The
-authors proceeded to sequence the embryos of the second wild animal
-using Illumina GA-iiX system. The resulting paired-end reads were
-filtered, mapped to the 24,884 assembled contigs using Illumina’s short
-read aligner ELAND, and integrated into Phusion’s scaffolding step. This
+Raw reads were then submitted for assembly using the Phusion assembler
+\[phusion reference\], resulting in 24,884 contigs with a total of
+150,340,428 bases and a reported N50 of 11,936 bases. The authors
+proceeded to sequence the embryos of the second wild animal using
+Illumina GA-iiX system. The resulting paired-end reads were filtered,
+mapped to the 24,884 assembled contigs using Illumina’s short read
+aligner ELAND, and integrated into Phusion’s scaffolding step. This
 resulted in 5,100 scaffolds with an N50 of 187 Kb and an coverage of
 160X.
 
@@ -278,8 +279,10 @@ conda activate gdalba-conda
 conda install ucsc-blat
 ```
 
-**RUNNING BLAT** We ran BLAT with default parameters as described in the
-paper as follows:
+**RUNNING BLAT**
+
+We ran BLAT with default parameters as described in the paper as
+follows:
 
 ``` bash
 
@@ -335,8 +338,9 @@ troubleshoot the algorithm itself to no luck. The algorithm attempted to
 read non-existent lines, returning non-numeric values and divisions
 either by non-numeric values or by zero.
 
-**RUNNING BLAT + BAA.PL/ISOBLAT FOR RNA DATA** We repeated the above
-steps using Trinity-assembled transcripts:
+**RUNNING BLAT + BAA.PL/ISOBLAT FOR RNA DATA**
+
+We repeated the above steps using Trinity-assembled transcripts:
 
 ``` bash
 
