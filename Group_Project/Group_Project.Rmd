@@ -21,7 +21,6 @@ Ctenophores have been proposed as a model organism for understanding the evoluti
 
 ### 1.2 Original Study
 
-<<<<<<< HEAD
 The paper describes the first attempt to provide a reference genome to the ctenophore *Mnemiopsis leidyi*. Their results helped to propose Ctenophores as the sister-group to all other animals, also revealing a surprisingly complex set of neural genes similar to Sponges, providing another interesting question: if Ctenophores are the sister group and therefore, branching earlier than sponges, what happened to the nervous system in sponges? The results were provoking as they shook established hypothesis for the earliest branches of the animal tree of life. With the goal of understanding the emergence of multicellularity in animals, it only makes sense to spend efforts into having a reliable reference genome to one of the most promising model organisms for this research question [10].
 
 ##### 1.2.1 Sample collection and Genome Assembly
@@ -35,7 +34,7 @@ Raw reads were then submitted for assembly using the Phusion assembler [14], res
 #### 1.2.2 Evaluation of completeness and correctness of genome assembly
 
 The authors extracted 15,752 M. leidyi Expressed Sequence Tags (ESTs) and aligned them to their assembled genome using BLAT [15] v. 34x12 with default parameters. They evaluated their alignment using a software developed by their group called baa.pl [16] later reformed into Isoblat (https://github.com/josephryan/isoblat/blob/master/Makefile.PL) and obtained:
-=======
+
 The paper describes the first attempt to provide a reference genome to the ctenophore *Mnemiopsis leidyi*. Their results helped to propose Ctenophores as the sister-group to all other animals, also revealing a surprisingly complex set of neural genes similar to Sponges, providing another interesting question: if Ctenophores are the sister group and therefore, branching earlier than sponges, what happened to the nervous system in sponges? The results were provoking as they shook established hypothesis for the earliest branches of the animal tree of life. With the goal of understanding the emergence of multicellularity in animals, it only makes sense to spend efforts into having a relaible reference genome to one of the most promising model organisms for this research question.
 
 ##### 1.2.1 Sample collection and Genome Assembly
