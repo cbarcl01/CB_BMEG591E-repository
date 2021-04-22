@@ -443,9 +443,9 @@ Multiple attempts to run PASA, HMMGene, and GENESH were made, but due to time co
 
 First we download the temporal development expression profiles to from (GenBank)[https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60478]. The introns of the genes are removed to form the mature mRNAs, so the reads that are counted correspond to the reads aligning to the exons of the genes.
 
-Load relevant libraries
+Load relevant libraries as required
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 # Load library for DESeq2
 library(DESeq2)
 
@@ -459,7 +459,7 @@ library(pheatmap)
 library(tidyverse)
 ```
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 #load the data
 load("GSE60478_RNAseq.RData") 
 
@@ -480,22 +480,56 @@ head(GSE60478_ML_GEO_sample_sheet.tab)
 In the original study, phylogenetic analysis was conducted using PhyloBayes "a Bayesian Monte Carlo Markov Chain (MCMC) sampler for phylogenetic
 reconstruction", comparing the whole genomes of 13 different animals in the 'Genome set' vs the EST data available in GenBank from 58 different animals in the 'EST set'. Unfortunately, one of the runs for EST alone took 204 days and as such was not reproducible for this assignment.
 
-Phylogenetic analysis allows researchers the opportunity to identify potential similarity between species, indicating lineage {REF}. In conjunction with annotation, phylogeny could be used to assess orthologs and genetically conserved regions that can be traced back to the root of metazoan divergence. Consequently, instead of replicating the whole genome or EST phylogenetics (due to the aforementioned time limitations), we compared significant gene regions that are of interest to scientists in the origins of animal multicellularity. 
+Phylogenetic analysis allows researchers the opportunity to identify potential similarity between species, indicating lineage [REF]. In conjunction with annotation, phylogeny could be used to assess orthologs and genetically conserved regions that can be traced back to the root of metazoan divergence. Consequently, instead of replicating the whole genome or EST phylogenetics (due to the aforementioned time limitations), we compared significant gene regions that are of interest to scientists in the origins of animal multicellularity. 
 
-In the original study, Ryan et al. suggested through phylogenetic analysis that ionotropic glutamate receptors from *M. leidyi* form a sister clade to the bilaterian glutamate receptors. The gene model of interest was identified as ML00441a and both the transcript sequence and predicted protein sequence can be viewed (here)[https://research.nhgri.nih.gov/mnemiopsis/wiki/index.php/ML00441a].
+In the original study, Ryan et al. suggested through phylogenetic analysis that ionotropic glutamate receptors from *M. leidyi* form a sister clade to the bilaterian glutamate receptors. The gene model of interest was identified as ML00441a and both the transcript sequence and predicted protein sequence can be viewed [here](https://research.nhgri.nih.gov/mnemiopsis/wiki/index.php/ML00441a).
 
 
 #### 2.5.1 Mnemiopsis Genome Project Portal: Track Viewer
 
 The following is a snap shot from the Mnemiopsis leidyi genome portal track for the gene region of interest. This viewer can be interrogated similarly to the IGV. 
 
-!(Mnemiopsis leidyi Genome Portal Track for ML00441a)[C:\Users\cbarc\Documents\CB_BMEG591E-repository\Group_Project\Track.png]
+![Mnemiopsis leidyi Genome Portal Track for ML00441a](C:\Users\cbarc\Documents\CB_BMEG591E-repository\Group_Project\Track.png)
 
+This region of interest can be further zoomed in, in order to see the more information from the Reference sequence as well:
 
+![Mnemiopsis leidyi Genome Portal Track for ML00441a](C:\Users\cbarc\Documents\CB_BMEG591E-repository\Group_Project\Track_Zoom.png)
 
-Search for Ionotropic glutamate receptors (synaptic scaffolding) in other ctenophore transcriptomes
+#### 2.5.2 BLAST 
 
-We used human GRIA2 (accession= NP_000817), GRIN1 (accession= NP_000823), GRIK2 (accession= NP_001159719), and GRID2 (accession= NP_001501) as TBLASTN queries against the seven ctenophore transcriptomes and the Trinity assembly of the M. leidyi RNA-seq data
+We extracted the nucleotide sequence, as well as the protein sequence for the target gene region ML00441, as identified in the supplementary material as a ionotropic glutamate receptor region. Using [NCBI BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi), we blasted the first the nucleotide, followed by the protein sequence to identify similar sequences. The top results were ionotropic glutamate receptors for other ctenophore species. 
+
+BLAST describe the E value (the expect value) as the random chance we could "expect" to get a hit when searching the database of a particular size, in other words the E value describes the random background noise. The lower the E-value (the closer it is to zero), the more "significant" the match is[REF](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=FAQ#:~:text=The%20Expect%20value%20(E)%20is,describes%20the%20random%20background%20noise). The results can be seen below:
+
+**Nucleotide Blast search results** </br>
+
+![Nucleotide Blast Search results](C:\Users\cbarc\Documents\CB_BMEG591E-repository\Group_Project\BLASTN_ML00441a.png)
+
+**Nucleotide Blast search results** </br>
+
+![Protein Blast Search results](C:\Users\cbarc\Documents\CB_BMEG591E-repository\Group_Project\BLASTP_ML00441a.png)
+
+#### 2.5.3 Create a Phylogenetic Tree using FigTree.
+
+Firstly we downloaded the .fasta protein sequences identified above into a single file. Then we retrieved published sequences from GenBank for a number of AMPA (GRIA) and delta2-like (GRID) glutamate receptors, as described in the original study. These protein sequences (GRID1 (Accession AAH39263.1), GRID2 (Accession AAH99654.1), GRIA1 (Accession XP_016864881.1), GRIA2(Accession AAH10574.1)) were also added to .fasta file along with the sequence for ML00441a.
+
+Secondly, we generated a multiple sequence alignment using the EBI tool *MU*ltiple *S*equence *C*omparison by *L*og - *E*xpectation , known as [MUSCLE](https://www.ebi.ac.uk/Tools/msa/muscle/), with the output defined as Pearson/FASTA.
+
+```{bash, eval=FALSE}
+conda install -c bioconda muscle
+muscle -in ./BLAST_P.fasta -quiet -fasta -out BLASTP_Aligned.fasta
+```
+
+Finally we ran a Neighbor Joining analysis using the EBI phylogeny tool [Simple Phylogeny](https://www.ebi.ac.uk/Tools/phylogeny/simple_phylogeny/), which was used as the input to the FigTree software to generate the tree. FigTree was used to colour annotate the tree. FigTree is available [here](http://tree.bio.ed.ac.uk/software/figtree/).
+
+```{bash, eval=FALSE}
+conda install -c bioconda muscle
+muscle -in ./BLAST_P.fasta -quiet -fasta -out BLASTP_Aligned.fasta
+/nfs/public/ro/es/appbin/linux-x86_64/clustalw-2.1/bin/clustalw2 -infile=simple_phylogeny-I20210422-022731-0145-87347698-p1m.upfile -tree -outputtree=phylip -clustering=Neighbour-joining
+```
+
+![Phylogenetic Tree](C:\Users\cbarc\Documents\CB_BMEG591E-repository\Group_Project)
+
 
 ## Conclusion
 

@@ -27,6 +27,9 @@ Charlotte Barclay and Gabriel Dall’Alba
       - [2.5 Phylogeny](#25-phylogeny)
           - [2.5.1 Mnemiopsis Genome Project Portal: Track
             Viewer](#251-mnemiopsis-genome-project-portal-track-viewer)
+          - [2.5.2 BLAST](#252-blast)
+          - [2.5.3 Create a Phylogenetic Tree using
+            FigTree.](#253-create-a-phylogenetic-tree-using-figtree)
   - [Conclusion](#conclusion)
   - [Bibliography](#bibliography)
 
@@ -576,168 +579,21 @@ The introns of the genes are removed to form the mature mRNAs, so the
 reads that are counted correspond to the reads aligning to the exons of
 the genes.
 
-Load relevant libraries
+Load relevant libraries as required
 
 ``` r
 # Load library for DESeq2
 library(DESeq2)
-```
 
-    ## Loading required package: S4Vectors
-
-    ## Loading required package: stats4
-
-    ## Loading required package: BiocGenerics
-
-    ## Warning: package 'BiocGenerics' was built under R version 4.0.5
-
-    ## Loading required package: parallel
-
-    ## 
-    ## Attaching package: 'BiocGenerics'
-
-    ## The following objects are masked from 'package:parallel':
-    ## 
-    ##     clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
-    ##     clusterExport, clusterMap, parApply, parCapply, parLapply,
-    ##     parLapplyLB, parRapply, parSapply, parSapplyLB
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     IQR, mad, sd, var, xtabs
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     anyDuplicated, append, as.data.frame, basename, cbind, colnames,
-    ##     dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
-    ##     grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
-    ##     order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
-    ##     rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
-    ##     union, unique, unsplit, which.max, which.min
-
-    ## 
-    ## Attaching package: 'S4Vectors'
-
-    ## The following object is masked from 'package:base':
-    ## 
-    ##     expand.grid
-
-    ## Loading required package: IRanges
-
-    ## 
-    ## Attaching package: 'IRanges'
-
-    ## The following object is masked from 'package:grDevices':
-    ## 
-    ##     windows
-
-    ## Loading required package: GenomicRanges
-
-    ## Loading required package: GenomeInfoDb
-
-    ## Warning: package 'GenomeInfoDb' was built under R version 4.0.5
-
-    ## Loading required package: SummarizedExperiment
-
-    ## Loading required package: MatrixGenerics
-
-    ## Loading required package: matrixStats
-
-    ## Warning: package 'matrixStats' was built under R version 4.0.5
-
-    ## 
-    ## Attaching package: 'MatrixGenerics'
-
-    ## The following objects are masked from 'package:matrixStats':
-    ## 
-    ##     colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
-    ##     colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
-    ##     colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
-    ##     colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
-    ##     colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
-    ##     colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
-    ##     colWeightedMeans, colWeightedMedians, colWeightedSds,
-    ##     colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
-    ##     rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
-    ##     rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
-    ##     rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
-    ##     rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
-    ##     rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
-    ##     rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
-    ##     rowWeightedSds, rowWeightedVars
-
-    ## Loading required package: Biobase
-
-    ## Welcome to Bioconductor
-    ## 
-    ##     Vignettes contain introductory material; view with
-    ##     'browseVignettes()'. To cite Bioconductor, see
-    ##     'citation("Biobase")', and for packages 'citation("pkgname")'.
-
-    ## 
-    ## Attaching package: 'Biobase'
-
-    ## The following object is masked from 'package:MatrixGenerics':
-    ## 
-    ##     rowMedians
-
-    ## The following objects are masked from 'package:matrixStats':
-    ## 
-    ##     anyMissing, rowMedians
-
-``` r
 # Load library for RColorBrewer
 library(RColorBrewer)
 
 # Load library for pheatmap
 library(pheatmap)
-```
 
-    ## Warning: package 'pheatmap' was built under R version 4.0.5
-
-``` r
 # Load library for tidyverse
 library(tidyverse)
 ```
-
-    ## Warning: package 'tidyverse' was built under R version 4.0.5
-
-    ## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --
-
-    ## v ggplot2 3.3.3     v purrr   0.3.4
-    ## v tibble  3.1.0     v dplyr   1.0.5
-    ## v tidyr   1.1.3     v stringr 1.4.0
-    ## v readr   1.4.0     v forcats 0.5.1
-
-    ## Warning: package 'ggplot2' was built under R version 4.0.5
-
-    ## Warning: package 'tibble' was built under R version 4.0.5
-
-    ## Warning: package 'tidyr' was built under R version 4.0.5
-
-    ## Warning: package 'readr' was built under R version 4.0.5
-
-    ## Warning: package 'purrr' was built under R version 4.0.5
-
-    ## Warning: package 'dplyr' was built under R version 4.0.5
-
-    ## Warning: package 'stringr' was built under R version 4.0.5
-
-    ## Warning: package 'forcats' was built under R version 4.0.5
-
-    ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
-    ## x dplyr::collapse()   masks IRanges::collapse()
-    ## x dplyr::combine()    masks Biobase::combine(), BiocGenerics::combine()
-    ## x dplyr::count()      masks matrixStats::count()
-    ## x dplyr::desc()       masks IRanges::desc()
-    ## x tidyr::expand()     masks S4Vectors::expand()
-    ## x dplyr::filter()     masks stats::filter()
-    ## x dplyr::first()      masks S4Vectors::first()
-    ## x dplyr::lag()        masks stats::lag()
-    ## x ggplot2::Position() masks BiocGenerics::Position(), base::Position()
-    ## x purrr::reduce()     masks GenomicRanges::reduce(), IRanges::reduce()
-    ## x dplyr::rename()     masks S4Vectors::rename()
-    ## x dplyr::slice()      masks IRanges::slice()
 
 ``` r
 #load the data
@@ -745,119 +601,10 @@ load("GSE60478_RNAseq.RData")
 
 #explore the counts data
 head(GSE60478_ML_exp.tab)
-```
 
-    ##   X.Sample. Metazome_ML1_sample_0001 Metazome_ML1_sample_0002
-    ## 1 ML000110a                      127                      151
-    ## 2 ML000111a                        0                        0
-    ## 3 ML000112a                        0                        0
-    ## 4 ML000113a                        0                        0
-    ## 5 ML000114a                        0                        1
-    ## 6 ML000115a                        6                        7
-    ##   Metazome_ML1_sample_0003 Metazome_ML1_sample_0004 Metazome_ML1_sample_0005
-    ## 1                      101                       79                       22
-    ## 2                        0                        0                        0
-    ## 3                        0                        0                        4
-    ## 4                        0                        0                        0
-    ## 5                        0                        4                        1
-    ## 6                       13                       15                        0
-    ##   Metazome_ML1_sample_0006 Metazome_ML1_sample_0007 Metazome_ML1_sample_0008
-    ## 1                       66                       34                       70
-    ## 2                        0                        0                        0
-    ## 3                        0                        0                        0
-    ## 4                        0                        0                        0
-    ## 5                        0                        0                        2
-    ## 6                       21                        4                       19
-    ##   Metazome_ML1_sample_0009 Metazome_ML1_sample_0010 Metazome_ML1_sample_0011
-    ## 1                       70                       70                        9
-    ## 2                        0                        0                        0
-    ## 3                        0                        2                        0
-    ## 4                        3                        6                        0
-    ## 5                        0                        0                        0
-    ## 6                       31                       38                       28
-    ##   Metazome_ML1_sample_0012 Metazome_ML1_sample_0013 Metazome_ML1_sample_0014
-    ## 1                       21                       47                       70
-    ## 2                        0                        0                        0
-    ## 3                        0                        0                        3
-    ## 4                        2                        3                       14
-    ## 5                       17                        0                        1
-    ## 6                       25                        8                       27
-    ##   Metazome_ML1_sample_0015 Metazome_ML1_sample_0016 Metazome_ML1_sample_0017
-    ## 1                       12                        0                       61
-    ## 2                        0                        0                        0
-    ## 3                        0                        0                        0
-    ## 4                       11                        0                       57
-    ## 5                        0                        0                        2
-    ## 6                       10                        0                       37
-    ##   Metazome_ML1_sample_0018 Metazome_ML1_sample_0019 Metazome_ML1_sample_0020
-    ## 1                       68                       32                       27
-    ## 2                        0                        0                        0
-    ## 3                        1                        2                        1
-    ## 4                       42                       33                       21
-    ## 5                        1                        0                        0
-    ## 6                       23                       11                       14
-    ##   Metazome_ML1_sample_0021 Metazome_ML1_sample_0022 Metazome_ML1_sample_0023
-    ## 1                      150                       97                       24
-    ## 2                        0                        0                        0
-    ## 3                        0                        0                        0
-    ## 4                        0                        0                        0
-    ## 5                        0                        1                        0
-    ## 6                        5                        2                        0
-    ##   Metazome_ML1_sample_0024 Metazome_ML1_sample_0025 Metazome_ML1_sample_0026
-    ## 1                       26                       13                       69
-    ## 2                        0                        0                        0
-    ## 3                        1                        4                        0
-    ## 4                        0                        0                        0
-    ## 5                        3                        1                        0
-    ## 6                        3                        6                        6
-    ##   Metazome_ML1_sample_0027 Metazome_ML1_sample_0028 Metazome_ML1_sample_0029
-    ## 1                       65                        5                       75
-    ## 2                        0                        0                        0
-    ## 3                        0                        0                        4
-    ## 4                        0                        0                        1
-    ## 5                        0                        0                        0
-    ## 6                       28                        5                       18
-    ##   Metazome_ML1_sample_0030 Metazome_ML1_sample_0031 Metazome_ML1_sample_0032
-    ## 1                       23                       36                       24
-    ## 2                        0                        0                        0
-    ## 3                        6                        0                        0
-    ## 4                        2                        7                        1
-    ## 5                        0                        5                        0
-    ## 6                       10                       88                        6
-    ##   Metazome_ML1_sample_0033 Metazome_ML1_sample_0034 Metazome_ML1_sample_0035
-    ## 1                       83                        7                       17
-    ## 2                        0                        0                        0
-    ## 3                        0                        0                        0
-    ## 4                       18                        0                       14
-    ## 5                        0                        0                        0
-    ## 6                       32                        0                        2
-    ##   Metazome_ML1_sample_0036 Metazome_ML1_sample_0037 Metazome_ML1_sample_0038
-    ## 1                       34                       21                       12
-    ## 2                        0                        0                        0
-    ## 3                        0                        0                        0
-    ## 4                       14                       24                       69
-    ## 5                        0                        0                        0
-    ## 6                        7                       36                        8
-    ##   Metazome_ML1_sample_0039 Metazome_ML1_sample_0040
-    ## 1                       27                        6
-    ## 2                        0                        0
-    ## 3                        0                        2
-    ## 4                        4                       22
-    ## 5                        0                        1
-    ## 6                       12                       19
-
-``` r
 #explore the metadata
 head(GSE60478_ML_GEO_sample_sheet.tab) 
 ```
-
-    ##   X.id name   flocell series lane il_barcode cel_barcode  project comment
-    ## 1    1    1 C4HYTACXX    ML1 L003          6          20 Metazome     0.0
-    ## 2    2    2 C4HYTACXX    ML1 L003          6           5 Metazome     1.0
-    ## 3    3    3 C4HYTACXX    ML1 L003          6           7 Metazome     2.0
-    ## 4    4    4 C4HYTACXX    ML1 L003          6          13 Metazome     3.0
-    ## 5    5    5 C4HYTACXX    ML1 L003          6           4 Metazome     4.0
-    ## 6    6    6 C4HYTACXX    ML1 L003          6          18 Metazome     4.5
 
 ### 2.5 Phylogeny
 
@@ -870,7 +617,7 @@ of the runs for EST alone took 204 days and as such was not reproducible
 for this assignment.
 
 Phylogenetic analysis allows researchers the opportunity to identify
-potential similarity between species, indicating lineage {REF}. In
+potential similarity between species, indicating lineage \[REF\]. In
 conjunction with annotation, phylogeny could be used to assess orthologs
 and genetically conserved regions that can be traced back to the root of
 metazoan divergence. Consequently, instead of replicating the whole
@@ -883,7 +630,7 @@ analysis that ionotropic glutamate receptors from *M. leidyi* form a
 sister clade to the bilaterian glutamate receptors. The gene model of
 interest was identified as ML00441a and both the transcript sequence and
 predicted protein sequence can be viewed
-(here)\[<https://research.nhgri.nih.gov/mnemiopsis/wiki/index.php/ML00441a>\].
+[here](https://research.nhgri.nih.gov/mnemiopsis/wiki/index.php/ML00441a).
 
 #### 2.5.1 Mnemiopsis Genome Project Portal: Track Viewer
 
@@ -891,16 +638,78 @@ The following is a snap shot from the Mnemiopsis leidyi genome portal
 track for the gene region of interest. This viewer can be interrogated
 similarly to the IGV.
 
-\!(Mnemiopsis leidyi Genome Portal Track for
-ML00441a)\[C:\_BMEG591E-repository\_Project.png\]
+![Mnemiopsis leidyi Genome Portal Track for
+ML00441a](C:\\Users\\cbarc\\Documents\\CB_BMEG591E-repository\\Group_Project\\Track.png)
 
-Search for Ionotropic glutamate receptors (synaptic scaffolding) in
-other ctenophore transcriptomes
+This region of interest can be further zoomed in, in order to see the
+more information from the Reference sequence as well:
 
-We used human GRIA2 (accession= NP\_000817), GRIN1 (accession=
-NP\_000823), GRIK2 (accession= NP\_001159719), and GRID2 (accession=
-NP\_001501) as TBLASTN queries against the seven ctenophore
-transcriptomes and the Trinity assembly of the M. leidyi RNA-seq data
+![Mnemiopsis leidyi Genome Portal Track for
+ML00441a](C:\\Users\\cbarc\\Documents\\CB_BMEG591E-repository\\Group_Project\\Track_Zoom.png)
+
+#### 2.5.2 BLAST
+
+We extracted the nucleotide sequence, as well as the protein sequence
+for the target gene region ML00441, as identified in the supplementary
+material as a ionotropic glutamate receptor region. Using [NCBI
+BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi), we blasted the first
+the nucleotide, followed by the protein sequence to identify similar
+sequences. The top results were ionotropic glutamate receptors for other
+ctenophore species.
+
+BLAST describe the E value (the expect value) as the random chance we
+could “expect” to get a hit when searching the database of a particular
+size, in other words the E value describes the random background noise.
+The lower the E-value (the closer it is to zero), the more “significant”
+the match
+is[REF](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=FAQ#:~:text=The%20Expect%20value%20\(E\)%20is,describes%20the%20random%20background%20noise).
+The results can be seen below:
+
+**Nucleotide Blast search results** </br>
+
+![Nucleotide Blast Search
+results](C:\\Users\\cbarc\\Documents\\CB_BMEG591E-repository\\Group_Project\\BLASTN_ML00441a.png)
+
+**Nucleotide Blast search results** </br>
+
+![Protein Blast Search
+results](C:\\Users\\cbarc\\Documents\\CB_BMEG591E-repository\\Group_Project\\BLASTP_ML00441a.png)
+
+#### 2.5.3 Create a Phylogenetic Tree using FigTree.
+
+Firstly we downloaded the .fasta protein sequences identified above into
+a single file. Then we retrieved published sequences from GenBank for a
+number of AMPA (GRIA) and delta2-like (GRID) glutamate receptors, as
+described in the original study. These protein sequences (GRID1
+(Accession AAH39263.1), GRID2 (Accession AAH99654.1), GRIA1 (Accession
+XP\_016864881.1), GRIA2(Accession AAH10574.1)) were also added to .fasta
+file along with the sequence for ML00441a.
+
+Secondly, we generated a multiple sequence alignment using the EBI tool
+*MU*ltiple *S*equence *C*omparison by *L*og - *E*xpectation , known as
+[MUSCLE](https://www.ebi.ac.uk/Tools/msa/muscle/), with the output
+defined as Pearson/FASTA.
+
+``` bash
+conda install -c bioconda muscle
+muscle -in ./BLAST_P.fasta -quiet -fasta -out BLASTP_Aligned.fasta
+```
+
+Finally we ran a Neighbor Joining analysis using the EBI phylogeny tool
+[Simple
+Phylogeny](https://www.ebi.ac.uk/Tools/phylogeny/simple_phylogeny/),
+which was used as the input to the FigTree software to generate the
+tree. FigTree was used to colour annotate the tree. FigTree is available
+[here](http://tree.bio.ed.ac.uk/software/figtree/).
+
+``` bash
+conda install -c bioconda muscle
+muscle -in ./BLAST_P.fasta -quiet -fasta -out BLASTP_Aligned.fasta
+/nfs/public/ro/es/appbin/linux-x86_64/clustalw-2.1/bin/clustalw2 -infile=simple_phylogeny-I20210422-022731-0145-87347698-p1m.upfile -tree -outputtree=phylip -clustering=Neighbour-joining
+```
+
+![Phylogenetic
+Tree](C:\\Users\\cbarc\\Documents\\CB_BMEG591E-repository\\Group_Project)
 
 ## Conclusion
 
