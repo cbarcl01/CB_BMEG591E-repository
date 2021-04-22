@@ -11,6 +11,7 @@ output:
 
 ### 1.1 Motivation
 
+<<<<<<< HEAD
 The origins of multicellularity is likely one of the hardest questions to tackle and it still fascinates and eludes scientists[reference 1].  One of the main reasons is the fact that multicellularity was not a singular event in the history of life [bonner paper, Parfrey paper, Ruiz-trillo paper]. Accounts of the number of independent events that led to multicellularity differ amongst the scientific community [reference 2], although there is a consensus that this happened once in the Animalia/Metazoan lineage[references 2,3]. Recent molecular evidence indicates that the earliest metazoan (i.e. first multicellular animal) traces 600 million years back [morris, sebé-pedrós]. Ultimately, multicellularity is a fascinating topic of investigation as it highlights how convergent evolution can repeatedly employ the same strategy in face of a multitude of reasons, such as in response to selective pressures or, in a more speculative sense, due to some universal trajectory that life tends to follow.
 
 Investigating the mechanisms that allows multicellularity to emerge is fundamental to properly formulate meaningful hypotheses that can link or (reveal the independency of) the multiple emergency of multicellularity events. Independent of the approach, nowadays this research is inseparable of genomics. Advances in sequencing and reduction in cost has led an increase in whole genomic sequences of non-bilateran animal species, providing insights into the molecular mechanisms that govern multicellularity [reference 4].
@@ -21,15 +22,18 @@ Ctenophores have been proposed as a model organism for understanding the evoluti
 
 ### 1.2 Original Study
 
+<<<<<<< HEAD
 The paper describes the first attempt to provide a reference genome to the ctenophore *Mnemiopsis leidyi*. Their results helped to propose Ctenophores as the sister-group to all other animals, also revealing a surprisingly complex set of neural genes similar to Sponges, providing another interesting question: if Ctenophores are the sister group and therefore, branching earlier than sponges, what happened to the nervous system in sponges? The results were provoking as they shook established hypothesis for the earliest branches of the animal tree of life. With the goal of understanding the emergence of multicellularity in animals, it only makes sense to spend efforts into having a relaible reference genome to one of the most promising model organisms for this research question.
+
+=======
 
 ##### 1.2.1 Sample collection and Genome Assembly
 
-Ryan et al collected 2 wild animals from the Vineyard Sound near Woods Hole, Massachussets (Figure 2) [Ryan paper ref]. Those animals were self-fertilized and DNA was isolated from the resulting embryos of one of them. Details of the DNA isolation protocol were not disclosed, but the authors mention the use of "GS FLX Titanium Rapid Library Preparation Kit" and the "GS FLX Titanium Library Paired End Adaptors Kit". The resulting isolated DNA was used for sequencing using a Roche 454 Genome Sequencer FLX machine located at the Roche Applied Science centre in Indianapolis, IN. 7,334,972 raw reads with an Average read length of 339 bases were generated in nine runs, yielding 2.5 Gb of sequence.
+Ryan et al collected two wild animals from the Vineyard Sound near Woods Hole, Massachussets (Fig. 2) [Ryan paper ref]. Those animals were self-fertilized and DNA was isolated from the resulting embryos of one of them. Details of the DNA isolation protocol were not disclosed, but the authors mention the use of "GS FLX Titanium Rapid Library Preparation Kit" and the "GS FLX Titanium Library Paired End Adaptors Kit". The resulting isolated DNA was used for sequencing using a Roche 454 Genome Sequencer FLX machine located at the Roche Applied Science centre in Indianapolis, IN. 7,334,972 raw reads with an Average read length of 339 bases were generated in nine runs, yielding 2.5 Gb of sequence.
 
 ![Location where wild ctenophores were collected.](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/woodshole.png)
 
-Those raw reads were then submitted for assembly using the Phusion assembler [phusion reference], resulting in 24,884 contigs with a total of 150,340,428 bases and a reported N50 of 11,936 bases. The authors proceeded to sequence the embryos of the second wild animal using Illumina GA-iiX system. The resulting paired-end reads were filtered, mapped to the 24,884 assembled contigs using Illumina's short read aligner ELAND, and integrated into Phusion's scaffolding step. This resulted in 5,100 scaffolds with an N50 of 187 Kb and an coverage of 160X.
+Raw reads were then submitted for assembly using the Phusion assembler [phusion reference], resulting in 24,884 contigs with a total of 150,340,428 bases and a reported N50 of 11,936 bases. The authors proceeded to sequence the embryos of the second wild animal using Illumina GA-iiX system. The resulting paired-end reads were filtered, mapped to the 24,884 assembled contigs using Illumina's short read aligner ELAND, and integrated into Phusion's scaffolding step. This resulted in 5,100 scaffolds with an N50 of 187 Kb and an coverage of 160X.
 
 #### 1.2.2 Evaluation of completeness and correctness of genome assembly
 
@@ -166,6 +170,7 @@ conda install ucsc-blat
 ```
 
 **RUNNING BLAT**
+
 We ran BLAT with default parameters as described in the paper as follows:
 
 ```{bash, eval=FALSE}
@@ -215,6 +220,7 @@ Ratio of transcripts with a BLAT entry (15665/15752): 0.99447689182326
 As it can be seen, only one of the three expected statistics were yielded as output. We are unsure of the reasons why baa.pl/Isoblat algorithm fails to capture enough information for the other two calculations (% of transcripts positions successfully aligned and % of transcripts that mapped to a single scaffold). We attempted to troubleshoot the algorithm itself to no luck. The algorithm attempted to read non-existent lines, returning non-numeric values and divisions either by non-numeric values or by zero.
 
 **RUNNING BLAT + BAA.PL/ISOBLAT FOR RNA DATA**
+
 We repeated the above steps using Trinity-assembled transcripts:
 
 ```{bash, eval=FALSE}
@@ -575,7 +581,7 @@ muscle -in ./BLAST_P.fasta -quiet -fasta -out BLASTP_Aligned.fasta
 /nfs/public/ro/es/appbin/linux-x86_64/clustalw-2.1/bin/clustalw2 -infile=simple_phylogeny-I20210422-022731-0145-87347698-p1m.upfile -tree -outputtree=phylip -clustering=Neighbour-joining
 ```
 
-![Phylogenetic Tree](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/BLAST_PTree.jpg)
+![Phylogenetic Tree](BLAST_PTree1.jpg)
 
 ## 3. Discussion
 
