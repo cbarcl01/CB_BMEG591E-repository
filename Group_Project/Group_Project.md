@@ -162,7 +162,7 @@ following analysis to assess for completeness of the assembly: -
 Replicate and validate the alignment of ESTs as seen in the original
 study using BLAT - Replicate and validate the alignment of transcripts
 as seen in the original study using BLAT - Compare alignment of ESTs
-with original tool BLAT and Bowtie - Design PErl script to assess GC
+with original tool BLAT and Bowtie - Design Perl script to assess GC
 content in absence of fastqc files
 
 Following this assessment for correctness of assembly, we will undertake
@@ -470,6 +470,48 @@ perl -lane 'if (/^>(.+)/) {
 Resulting Average: 0,3754960784
 ```
 
+**Plot GC content**
+
+``` r
+library(readxl)
+```
+
+    ## Warning: package 'readxl' was built under R version 4.0.5
+
+``` r
+library(ggplot2)
+```
+
+    ## Warning: package 'ggplot2' was built under R version 4.0.5
+
+``` r
+#Import the data
+Gc_per_scaffold <- read_excel("C:/Users/cbarc/Documents/CB_BMEG591E-repository/Group_Project/GC_Per_Scaffold.xlsx",
+                            col_types = c("text", "numeric", "numeric",
+                                          "skip", "skip", "skip", "skip", "skip"))
+
+
+
+#Histogram with the average plotted
+ggplot(Gc_per_scaffold, aes(Values)) +
+  geom_histogram(binwidth= 0.01, colour = "black", fill="grey")+
+  geom_vline(aes(xintercept=mean(Values)),
+             color="blue", linetype="dashed", size=1)
+```
+
+![](Group_Project_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+
+``` r
+#Density and average line. NOTE y axis is density rather than Count
+ggplot(Gc_per_scaffold, aes(Values)) +
+  geom_histogram(aes(y=..density..), colour="black", fill="white",  binwidth= 0.01)+
+  geom_density(alpha=.2, fill="#FF6666") +
+  geom_vline(aes(xintercept=mean(Values)),
+              color="blue", linetype="dashed", size=1)
+```
+
+![](Group_Project_files/figure-gfm/unnamed-chunk-18-2.png)<!-- -->
+
 ### 2.4 Annotation
 
 We installed Augustus and its dependencies through conda:
@@ -725,7 +767,7 @@ muscle -in ./BLAST_P.fasta -quiet -fasta -out BLASTP_Aligned.fasta
 ```
 
 ![Phylogenetic
-Tree](C:\\Users\\cbarc\\Documents\\CB_BMEG591E-repository\\Group_Project)
+Tree](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/BLAST_PTree.jpg)
 
 ## 3\. Discussion
 
