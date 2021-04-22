@@ -504,11 +504,11 @@ In the original study, Ryan et al. suggested through phylogenetic analysis that 
 
 The following is a snap shot from the Mnemiopsis leidyi genome portal track for the gene region of interest. This viewer can be interrogated similarly to the IGV. 
 
-![Mnemiopsis leidyi Genome Portal Track for ML00441a](C:\Users\cbarc\Documents\CB_BMEG591E-repository\Group_Project\Track.png)
+![Mnemiopsis leidyi Genome Portal Track for ML00441a](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/Track.png)
 
 This region of interest can be further zoomed in, in order to see the more information from the Reference sequence as well:
 
-![Mnemiopsis leidyi Genome Portal Track for ML00441a](C:\Users\cbarc\Documents\CB_BMEG591E-repository\Group_Project\Track_Zoom.png)
+![Mnemiopsis leidyi Genome Portal Track for ML00441a](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/Track_Zoom.png)
 
 #### 2.5.2 BLAST 
 
@@ -518,11 +518,11 @@ BLAST describe the E value (the expect value) as the random chance we could "exp
 
 **Nucleotide Blast search results** </br>
 
-![Nucleotide Blast Search results](C:\Users\cbarc\Documents\CB_BMEG591E-repository\Group_Project\BLASTN_ML00441a.png)
+![Nucleotide Blast Search results](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/BLASTN_ML00441a.png)
 
 **Nucleotide Blast search results** </br>
 
-![Protein Blast Search results](C:\Users\cbarc\Documents\CB_BMEG591E-repository\Group_Project\BLASTP_ML00441a.png)
+![Protein Blast Search results](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/BLASTP_ML00441a.png)
 
 #### 2.5.3 Create a Phylogenetic Tree using FigTree.
 
