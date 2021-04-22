@@ -160,13 +160,13 @@ In our re-analysis, in the absence of raw reads we will investigate the
 files to confirm number of contigs and scaffolds before running the
 following analysis to assess for completeness of the assembly: -
 Replicate and validate the alignment of ESTs as seen in the original
-study using BLAT - Replicate and validate the alignment of transcripts
-as seen in the original study using BLAT - Compare alignment of ESTs
-with original tool BLAT and Bowtie - Design Perl script to assess GC
-content in absence of fastqc files
+study using BLAT </br> - Replicate and validate the alignment of
+transcripts as seen in the original study using BLAT </br> - Compare
+alignment of ESTs with original tool BLAT and Bowtie </br> - Design Perl
+script to assess GC content in absence of fastqc files </br>
 
 Following this assessment for correctness of assembly, we will undertake
-the following analysis: - Annotation - Phylogeny
+the following analysis: - Annotation </br> - Phylogeny </br>
 
 ## 2 Workflow: Methods and Results
 
@@ -185,13 +185,12 @@ leidyi*. The Portal is regularly maintained, with a BLAST interface as
 well as a visualization tool which allows exploration of the scaffolds
 and RNA seq data, similarly to the IGV Browser \[ref 4?\]. Alternatively
 the data from this study can be obtained from GenBank
-(here)\[<https://www.ncbi.nlm.nih.gov/assembly/GCA_000226015.1>\]. The
-files from both resources are the same, scaffold and contig .fasta
-files. Unfortunately after much searching for raw reads, that data is
-not publicly available and in order to get the raw data we would need to
-get this directly from the authors which was not feasible in the given
-time. Instead the genome was downloaded from:
-<https://research.nhgri.nih.gov/mnemiopsis/download/download.cgi?dl=genome>.
+[here](https://www.ncbi.nlm.nih.gov/assembly/GCA_000226015.1). The files
+from both resources are the same, scaffold and contig .fasta files.
+
+Unfortunately after much searching for raw reads, that data is not
+publicly available and in order to get the raw data we would need to get
+this directly from the authors which was not feasible in the given time.
 
 **LOADING GENOME**
 
@@ -632,7 +631,7 @@ mentioned BLASTp approach.
 ### 2.5 Differential Expression
 
 First we download the temporal development expression profiles to from
-(GenBank)\[<https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60478>\].
+[GenBank](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60478).
 The introns of the genes are removed to form the mature mRNAs, so the
 reads that are counted correspond to the reads aligning to the exons of
 the genes.
@@ -680,8 +679,8 @@ conjunction with annotation, phylogeny could be used to assess orthologs
 and genetically conserved regions that can be traced back to the root of
 metazoan divergence. Consequently, instead of replicating the whole
 genome or EST phylogenetics (due to the aforementioned time
-limitations), we compared significant gene regions that are of interest
-to scientists in the origins of animal multicellularity.
+limitations), we compared a significant gene region of interest to
+scientists in the origins of animal multicellularity.
 
 In the original study, Ryan et al. suggested through phylogenetic
 analysis that ionotropic glutamate receptors from *M. leidyi* form a
@@ -744,9 +743,9 @@ XP\_016864881.1), GRIA2(Accession AAH10574.1)) were also added to .fasta
 file along with the sequence for ML00441a.
 
 Secondly, we generated a multiple sequence alignment using the EBI tool
-*MU*ltiple *S*equence *C*omparison by *L*og - *E*xpectation , known as
-[MUSCLE](https://www.ebi.ac.uk/Tools/msa/muscle/), with the output
-defined as Pearson/FASTA.
+**MU**ltiple **S**equence **C**omparison by **L**og - **E**xpectation,
+known as [MUSCLE](https://www.ebi.ac.uk/Tools/msa/muscle/), with the
+output defined as Pearson/FASTA.
 
 ``` bash
 conda install -c bioconda muscle
