@@ -11,13 +11,21 @@ output:
 
 ### 1.1 Motivation
 
-From ‘primordial soup’ to the vast array of biodiversity we see today, evolution and these origins of multicellularity still fascinate and elude scientists[reference 1].  Accounts of the number of independent events that led to multicellularity differ amongst the scientific community[reference 2], although there is a consensus that this happened once in the Animalia/Metazoan lineage[references 2,3]. Advances in sequencing and reduction in cost has led to increase in whole genomic sequences of both the Bilateria (the clade of most animal species) and the non-bilateran species, providing insight into the molecular mechanisms that govern multicellularity [reference 4]. The four non-bilaterian metazoan lineages are the Porifera (sponges), Placozoa, Cnidaria (corals, jellyfish and sea anemones) and Ctenophora (comb jellies)[5].
+<<<<<<< HEAD
+The origins of multicellularity is likely one of the hardest questions to tackle and it still fascinates and eludes scientists[reference 1].  One of the main reasons is the fact that multicellularity was not a singular event in the history of life [bonner paper, Parfrey paper, Ruiz-trillo paper]. Accounts of the number of independent events that led to multicellularity differ amongst the scientific community [reference 2], although there is a consensus that this happened once in the Animalia/Metazoan lineage[references 2,3]. Recent molecular evidence indicates that the earliest metazoan (i.e. first multicellular animal) traces 600 million years back [morris, sebé-pedrós]. Ultimately, multicellularity is a fascinating topic of investigation as it highlights how convergent evolution can repeatedly employ the same strategy in face of a multitude of reasons, such as in response to selective pressures or, in a more speculative sense, due to some universal trajectory that life tends to follow.
 
-Ctenophores are a gelatinous phylum of marine metazoans with approximately 150 known species and in contrast to other basal metazoans they have both a nervous system and a mesoderm-derived muscular system[reference 6]. Ctenophores have been proposed as a model organism for understanding the evolutionary mechanisms of multicellularity in animals[references 4,5], however their phylogenetic placement is still widely debated[references 5,7-8]. 
+Investigating the mechanisms that allows multicellularity to emerge is fundamental to properly formulate meaningful hypotheses that can link or (reveal the independency of) the multiple emergency of multicellularity events. Independent of the approach, nowadays this research is inseparable of genomics. Advances in sequencing and reduction in cost has led an increase in whole genomic sequences of non-bilateran animal species, providing insights into the molecular mechanisms that govern multicellularity [reference 4].
+
+Ctenophores have been proposed as a model organism for understanding the evolutionary mechanisms of multicellularity in animals[references 4,5], however their phylogenetic placement is still widely debated[references 5–7]. Ctenophores are a gelatinous phylum of marine metazoans with approximately 150 known species that form a clade of pre-bilateran animals[reference 8]. Ctenophores haven't yet been fully explored and thus, they remain a promising and quite unknown group.
 
 ![Schema of phylogenetic position of Mnemiopsis leidyi](https://github.com/cbarcl01/CB_BMEG591E-repository/blob/master/Group_Project/Mle.jpg)
 
 ### 1.2 Original Study
+
+<<<<<<< HEAD
+The paper describes the first attempt to provide a reference genome to the ctenophore *Mnemiopsis leidyi*. Their results helped to propose Ctenophores as the sister-group to all other animals, also revealing a surprisingly complex set of neural genes similar to Sponges, providing another interesting question: if Ctenophores are the sister group and therefore, branching earlier than sponges, what happened to the nervous system in sponges? The results were provoking as they shook established hypothesis for the earliest branches of the animal tree of life. With the goal of understanding the emergence of multicellularity in animals, it only makes sense to spend efforts into having a relaible reference genome to one of the most promising model organisms for this research question.
+
+=======
 
 ##### 1.2.1 Sample collection and Genome Assembly
 
@@ -55,16 +63,16 @@ In total, the authors established that the genome contains 16,548 predicted gene
 
 ### 1.3 Re-analysis
 
-This study was chosen, as the origins of multicellularity and particularly the phylogenetic position of Ctenophores compared to other non-bilaterans is still widely debated. The original study was undertaken in 2011 and published in 2013 [ref 5?], since then of the tools the paper used, some have changed, some are no longer maintained and more data has been made available for gene annotation.
+This study was chosen as it provides a much needed reference genome to a model organism in studies related to the origins of multicellularity and particularly the phylogenetic organization of the earliest-branching Metazoans - the phylogenetic placement of Ctenophores compared to other non-bilaterans is still widely debated. The original study was undertaken in 2011 and published in 2013 [ref 5?], since then, many of the tools that the paper used have either changed or received updates, while some are no longer maintained and more data has been made available for gene annotation.
 
-In our re-analysis, in the absence of raw reads we will investigate the files to confirm number of contigs and scaffolds before running the following analysis to assess for completeness of the assembly: 
+In our re-analysis, in the absence of raw reads we will investigate the files to confirm the number of contigs and scaffolds before running the following analysis to assess for completeness of the assembly: 
 
  - Replicate and validate the alignment of ESTs as seen in the original study using BLAT </br>
  - Replicate and validate the alignment of transcripts as seen in the original study using BLAT </br>
- - Compare alignment of ESTs with original tool BLAT and Bowtie </br>
- - Design Perl script to assess GC content in absence of fastqc files </br>
+ - Compare alignment of ESTs with original tool BLAT and Bowtie2 </br>
+ - Design Perl script to assess GC content in absence of fastqc files and compare the output with publicly available scripts </br>
  
-Following this assessment for correctness of assembly, we will undertake the following analysis:
+Following this assessment for correctness of assembly, we will undertake part of the following analyses:
 
  - Annotation </br>
  - Phylogeny </br>
@@ -593,7 +601,7 @@ Nevertheless, Augustus initial value predicted 33,354 genes, predicting aprox. 4
 
 ## Conclusion
 
-Here, we attempted to partially cover a 2-year long *M. leidyi* genome sequencing project. We were able to 
+Here, we attempted to partially cover a 2-year long *M. leidyi* genome sequencing project. We were able to cover essentially 1/3 of the overall steps, obtaining values that were consistent with the reported by the authors of the original paper. We faced a number of technical problems and troubleshooting them forced us to change our planned structure several times. When we attempted to add novel approaches to a few of the steps, we realized that it would simply fall away from the original goal of the project. With that being said, it is clear that several advances in data transparency were made since 2011 and, although this particular paper presents most of its data and processes in a transparent and replicable way, there were steps that lack of clearer explanations made them unfeasible (e.g. running our data through PASA and masking portions of the genome). Nevertheless, we have shown several steps in a replicable way. More complex annotation, phylogeny analysis, and manual processes inbetween each major step were unreasonable for our time-scale. On a biological perspective, this reference genome surely can be improved with the application of novel approaches such as long-reads PacBio/Oxford Nanopore platforms. *M. leidyi* remains an interesting model organism for evolutionary and developmental studies at the earliest branching Metazoan groups, and said studies surely would benefit of having a wider community working on improving its reference genome.
 
 
 ## Bibliography
